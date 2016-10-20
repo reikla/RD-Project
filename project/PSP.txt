@@ -8,19 +8,21 @@
 	1.1 AP - Anforderungen analysieren (Art der Auswertungen, aufrufende Koponenten, Programmiersprachen)  
 	1.2 AP - Analyse vorhandene Software - Visualisierung (RBAC), festlegen RBAC (open sourvem vorhandene Software, sonst was)
 	1.3 AP - Analyse vorhandene Software (ERM)  
-	1.4 AP - Sytemarchitektur festlegen (OS; DB System, Programmiersprache)
+	1.4 AP - Sytemarchitektur festlegen (OS; DB System, Programmiersprache, RBAC)
 	1.5 AP - Funktionen des API festlegen
 	1.6 AP - ER festlegen (evtl in Verbindung mit )
 
 2 PH Umsetzung
 	2.1 AP - System einrichten (OS, DB System, Tabellen, IDE, ...)
 	2.2 AP - Datenbankzugriffe umsetzen
-	2.3 AP - einzelne Funktionen des API umsetzen inkl testen
+	2.3 AP - Rollen Definition implementieren 
+	2.4 AP - Importmodule umsetzen
+	2.5 AP - einzelne Funktionen des API umsetzen inkl testen
 	
 3 PH Integration
-	AP - API mit aufrufender Applikation verheiraten, testen.
+	3.1 AP - API mit aufrufender Applikation verheiraten, testen.
 
 4 PH - Abschluß
-	AP - Abnahme
-	AP - Präsentation erstellen
-	AP - offene Punkte und weiteres Vorgehen festlegen 
+	4.1 AP - Einsatz, Abnahme
+	4.2 AP - Präsentation erstellen
+	4.3 AP - offene Punkte und weiteres Vorgehen festlegen 
