@@ -1,4 +1,0 @@
-Was setzen wir ein: Open Source oder halten wir uns an das was die BAC1 Gruppe gemacht hat? 
-Was geht sonst?
-RED Daten in hoher Auflösung sind 11GB / Tag / Haushalt. Ich kann mir gut vorstellen, dass das ein typisches Szenario für BigData ist, wo die Analysen auf der Datenbank laufen und nur diese Ergebnisse nach außen gegeben werden. Ich finde hierfür klingt MongoDB recht interessant. https://www.mongodb.com/use-cases/real-time-analytics
-Die RED Daten sind passwortgeschützt, ich werde mal Anfragen ob wir hier die Zugangsdaten bekommen können.
