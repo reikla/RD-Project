@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1A80CF86-B68F-4E46-0497-6C344BF7DC87" name="meter_type">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>0C9EF045-D8C9-163C-041E-AC67B01F6EF3</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<abbreviation>GeräteType Smart Meter</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="type_id" id="8E0617B1-0E84-E7C7-A263-56BE478FFAFA">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>28B228B1-AA2E-040F-D21A-531B9E703D21</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="description" id="EF1DFFFC-72C4-16B1-5996-6BDA7D9698BB">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>820A8079-3ABE-456E-364D-176C578AA6C2</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A25DB282-3D72-9A77-8F74-04E50A566240" name="meter_type_PK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>4BD2284F-97F9-A716-E780-B68C1334D2D1</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8E0617B1-0E84-E7C7-A263-56BE478FFAFA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
