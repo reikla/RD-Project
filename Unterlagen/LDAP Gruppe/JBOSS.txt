@@ -1,0 +1,10 @@
+JBOSS:
+su ejbcaruntime
+
+Start/Stop Prozedur:
+	Starting JBOSS Appserver:	/home/ejbcaruntime/jboss-as-7.1.1.Final/bin/./standalone.sh &
+	Clean Shutdown:				/home/ejbcaruntime/jboss-as-7.1.1.Final/bin/jboss-cli.sh --connect command=:shutdown
+	Reload Server:				/home/ejbcaruntime/jboss-as-7.1.1.Final/bin/bin/jboss-cli.sh --connect --command=:reload
+
+EJBCA 7 Jboss Log:
+	sudo tail -n50 /home/ejbcaruntime/jboss-as-7.1.1.Final/standalone/log/server.log

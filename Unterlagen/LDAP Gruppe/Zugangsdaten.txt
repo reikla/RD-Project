@@ -1,0 +1,9 @@
+Debian VM:
+root PW: ejbca
+ejbcaruntime PW: ejbca (Unter diesem Benutzer den Appserver starten_siehe JBOSS.txt)
+
+EJBCA:
+per Clientzertifikat superadmin.p12 PW: ejbca
+LDAP:
+admin PW: ldapadmin
+
