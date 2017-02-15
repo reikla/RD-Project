@@ -10,7 +10,7 @@
 <identifying>false</identifying>
 <nameOnTarget>id_customer</nameOnTarget>
 <optionalSource>true</optionalSource>
-<optionalTarget>false</optionalTarget>
+<optionalTarget>true</optionalTarget>
 <sourceCardinality>1</sourceCardinality>
 <sourceEntity>4F3E9C70-35D8-99E3-68D6-150A8FDD72A8</sourceEntity>
 <targetCardinalityString>*</targetCardinalityString>

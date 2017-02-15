@@ -139,6 +139,7 @@
 <createdTime>2017-02-13 20:33:41 UTC</createdTime>
 <generatorID>22A3C88A-8B3A-8402-D231-49A57D096E9F</generatorID>
 <ownerDesignName>JRZdbERM</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>

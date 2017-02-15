@@ -34,21 +34,6 @@
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
 <bounds x="324" y="12" width="161" height="162"/>
 </OView>
-<OView class="oracle.dbtools.crest.swingui.TVNote" oid="B7E12DDB-7849-D879-9EB0-DB388463D7D9" otype="Note" vid="634F58C5-48B0-1E3C-7AF4-BEECB6D78D03">
-<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="104" y="344" width="140" height="56"/>
-<useCustomFormat>true</useCustomFormat>
-<useDefaultColor>false</useDefaultColor>
-<backgroundColor>-3355648</backgroundColor>
-<foregroundColor>-16777216</foregroundColor>
-<comment>Das ist noch nicht fertig!</comment>
-<fonts itemClass="oracle.dbtools.crest.model.design.FontObjectWr">
-<FontObject>
-<foType>Titel</foType>
-<colorRGB>-16777216</colorRGB>
-</FontObject>
-</fonts>
-</OView>
 <OView class="oracle.dbtools.crest.swingui.logical.TVEntity" oid="BFD14667-8001-379C-63A3-EDD8AEEDAF2F" otype="Entity" vid="8F483A50-E5C1-F526-48B6-9CF3C075F665">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
 <bounds x="15" y="10" width="249" height="282"/>
