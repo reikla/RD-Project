@@ -210,6 +210,81 @@
 <logicalDatatype>LOGDT020</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="reactive_P1" id="85FCDAC9-FEEF-FD55-EED7-D66FD981F4B7">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:40:50 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="reactive_P2" id="5D3516F4-39B6-45AA-8B8C-D4C84F0D31BF">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:41:14 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="reactive_P3" id="95F02D93-57B5-4234-9E42-0BA576832161">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:41:34 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="phi_P1" id="340CFAA9-4561-EC3D-B3EC-C3CA6E1DBCEE">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:17:53 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="phi_P2" id="91DC00A5-8447-D467-DE0C-9E414683F066">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:18:31 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="phi_P3" id="B09BAF79-D8CF-A90E-3FB4-FE293D51C198">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:18:42 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="6512AFE2-F65A-8EAF-EE34-5A523F0F69AD" name="meter_data PK">

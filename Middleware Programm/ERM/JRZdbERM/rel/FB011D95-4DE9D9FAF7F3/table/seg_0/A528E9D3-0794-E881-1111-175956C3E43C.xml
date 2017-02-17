@@ -136,9 +136,47 @@
 <ownDataTypeParameters>20,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="userAdmin_user_id" id="A428953F-61DD-30B0-65CF-8C81596F4AA2">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>A535B066-7CC9-D4A6-197A-8B468EE7E900</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="customer_customer_id" id="3E86B20C-C005-0443-1A68-4BB256247CF9">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>3B33F710-827C-3F35-D1FC-E8EAA5C0B850</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="92E16FDE-4CB7-BFEF-7770-321E9B907C08" referredColumn="B53F174D-3F63-2CC7-948B-CA025D4A1A1F"/>
+</associations>
+</Column>
+<Column name="userAdmin_userAdmin_ID" id="F549B6AB-31CB-BEAC-2C7A-EA4ADAAC4053">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:56:24 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="A216AD84-24C3-9583-E29D-3C28BF269E6C" name="customer_PK">
+<ind_PK_UK id="A216AD84-24C3-9583-E29D-3C28BF269E6C" name="customer_PKv2">
 <createdBy>maximilian</createdBy>
 <createdTime>2017-02-13 20:33:41 UTC</createdTime>
 <generatorID>EA244694-0004-CA10-563C-FE96FF396280</generatorID>
@@ -148,6 +186,45 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="B53F174D-3F63-2CC7-948B-CA025D4A1A1F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B0E28DBF-3061-8CE1-8C8D-BFCA7196ABE2" name="customer_PK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:56:24 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+</ind_PK_UK>
+<ind_PK_UK id="414AB5C7-4741-E998-3502-466748892EFF" name="customer__IDX">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>16B1BD0C-A525-49D8-A320-6FAFD60232DB</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="A428953F-61DD-30B0-65CF-8C81596F4AA2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="297D2126-100E-DBBE-BDEB-64F688A55978" name="customer__IDXv1">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:56:24 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>E3112C83-D3EC-B5A9-2A48-4DB50099E2AF</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="F549B6AB-31CB-BEAC-2C7A-EA4ADAAC4053"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="94FDF2F7-0253-DBEB-9B25-B57A05D012EC" name="customer_customer_FK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>1DB818F7-67B3-97D3-E68A-C0931918B5C3</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3E86B20C-C005-0443-1A68-4BB256247CF9"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

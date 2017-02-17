@@ -189,6 +189,75 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="reactive_P1" id="3B74AD18-F41B-27D4-3490-98A3D6FC4B07">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>85FCDAC9-FEEF-FD55-EED7-D66FD981F4B7</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="reactive_P2" id="28ABF37A-3879-CD52-D9C2-45B6B7800C17">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>5D3516F4-39B6-45AA-8B8C-D4C84F0D31BF</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="reactive_P3" id="302ECEDF-E1B5-1F25-D797-54A5454AB2D0">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>95F02D93-57B5-4234-9E42-0BA576832161</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="phi_P1" id="4BBC2E1B-B41D-C0F6-5BF1-374A0F7F0769">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:19:04 UTC</createdTime>
+<generatorID>340CFAA9-4561-EC3D-B3EC-C3CA6E1DBCEE</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="phi_P2" id="ACC6B592-0F35-D083-59BE-62558744F621">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:19:04 UTC</createdTime>
+<generatorID>91DC00A5-8447-D467-DE0C-9E414683F066</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="phi_P3" id="4171C4D9-AAEC-3B37-CCFA-A045904E3602">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:19:04 UTC</createdTime>
+<generatorID>B09BAF79-D8CF-A90E-3FB4-FE293D51C198</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="E191E3A9-CA71-60E6-3006-A438FD2EA42B" name="meter_data_PK">

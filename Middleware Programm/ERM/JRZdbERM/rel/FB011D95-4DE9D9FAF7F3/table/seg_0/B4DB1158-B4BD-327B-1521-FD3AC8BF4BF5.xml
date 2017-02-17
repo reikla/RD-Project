@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B4DB1158-B4BD-327B-1521-FD3AC8BF4BF5" name="userAdmin">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:59:11 UTC</createdTime>
+<commentInRDBMS>Diese Entität enthät die Verbindung von customer zu Systembenutzer, sie ist optional, auch Kunden die keinen Zugriff erhalten, zum Beispile Lieferanten offener Daten bekommen keine Benutzerberechtigung. in der Useris wird der Schlüssel zum rollenverwaltungssystem abgelegt.</commentInRDBMS>
+<generatorID>3A74A291-E5D8-3C66-7DB7-AF003F46605F</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="user_id" id="26769583-8075-4D5B-9DC7-8E0C6161395E">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:59:11 UTC</createdTime>
+<generatorID>F03AF843-9EB3-B272-9C6F-6B3A8ED13697</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="useridExtern" id="9CBA56A1-5C94-1389-426C-2A5E30CC5E3E">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:59:11 UTC</createdTime>
+<generatorID>51D52B7D-3B9C-913E-7395-3DA091111AEB</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="customer_customer_id" id="E197AD97-4BC9-3F1D-D166-37152E3706E9">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:02:57 UTC</createdTime>
+<generatorID>4B84B779-6106-FC72-20F9-40DB39C33B53</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C6DFDDA0-2A61-AF26-B897-2E6C552C7A91" referredColumn="B53F174D-3F63-2CC7-948B-CA025D4A1A1F"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="636B799B-E6F4-52B3-4B1C-00328C464B40" name="userAdmin_PK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:59:11 UTC</createdTime>
+<generatorID>FE26DFD4-A3FF-9615-632C-B34611D91073</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="26769583-8075-4D5B-9DC7-8E0C6161395E"/>
+<colUsage columnID="E197AD97-4BC9-3F1D-D166-37152E3706E9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="47C0B236-3186-A80F-361A-C1126F8FA725" name="userAdmin__IDX">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:02:57 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>E3112C83-D3EC-B5A9-2A48-4DB50099E2AF</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="E197AD97-4BC9-3F1D-D166-37152E3706E9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0D2C037F-4A52-B00D-3C43-0AF189B78630" name="userAdmin_customer_FK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:02:57 UTC</createdTime>
+<generatorID>E3112C83-D3EC-B5A9-2A48-4DB50099E2AF</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E197AD97-4BC9-3F1D-D166-37152E3706E9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

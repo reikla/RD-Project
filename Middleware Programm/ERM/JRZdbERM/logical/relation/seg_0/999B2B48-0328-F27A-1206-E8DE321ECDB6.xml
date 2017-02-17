@@ -7,8 +7,8 @@
 <item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
 </engineerTo>
 <sourcePk>EA244694-0004-CA10-563C-FE96FF396280</sourcePk>
+<targetPk>8353656C-EBC1-0993-C376-CDC0DBFCB92B</targetPk>
 <identifying>false</identifying>
-<nameOnTarget>id_customer</nameOnTarget>
 <optionalSource>true</optionalSource>
 <optionalTarget>true</optionalTarget>
 <sourceCardinality>1</sourceCardinality>

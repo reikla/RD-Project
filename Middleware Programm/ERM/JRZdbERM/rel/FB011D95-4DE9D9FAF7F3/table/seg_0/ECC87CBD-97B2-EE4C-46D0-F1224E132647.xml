@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="ECC87CBD-97B2-EE4C-46D0-F1224E132647" name="berät,_managet">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="ECC87CBD-97B2-EE4C-46D0-F1224E132647" name="berät_oder_verwaltet">
 <createdBy>maximilian</createdBy>
 <createdTime>2017-02-13 20:49:27 UTC</createdTime>
 <ownerDesignName>JRZdbERM</ownerDesignName>

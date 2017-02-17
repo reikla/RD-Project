@@ -153,15 +153,29 @@
 <dataTypeSize>20</dataTypeSize>
 <ownDataTypeParameters>20,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="customer_id1" id="3B33F710-827C-3F35-D1FC-E8EAA5C0B850">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:47:36 UTC</createdTime>
+<generatorID>1DB818F7-67B3-97D3-E68A-C0931918B5C3</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>D772A584-C6CB-EF87-07A6-EAB785692338</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="EA244694-0004-CA10-563C-FE96FF396280" name="customer PK">
 <createdBy>maximilian</createdBy>
 <createdTime>2017-02-13 20:05:02 UTC</createdTime>
 <ownerDesignName>JRZdbERM</ownerDesignName>
-<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="false"/>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

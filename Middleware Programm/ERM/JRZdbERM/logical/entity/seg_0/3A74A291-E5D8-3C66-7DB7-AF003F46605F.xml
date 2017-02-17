@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="3A74A291-E5D8-3C66-7DB7-AF003F46605F" name="userAdmin">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:36:00 UTC</createdTime>
+<commentInRDBMS>Diese Entität enthät die Verbindung von customer zu Systembenutzer, sie ist optional, auch Kunden die keinen Zugriff erhalten, zum Beispile Lieferanten offener Daten bekommen keine Benutzerberechtigung. in der Useris wird der Schlüssel zum rollenverwaltungssystem abgelegt.</commentInRDBMS>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="user_id" id="F03AF843-9EB3-B272-9C6F-6B3A8ED13697">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:36:08 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="useridExtern" id="51D52B7D-3B9C-913E-7395-3DA091111AEB">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:36:21 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="customer_id" id="4B84B779-6106-FC72-20F9-40DB39C33B53">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:02:51 UTC</createdTime>
+<generatorID>E3112C83-D3EC-B5A9-2A48-4DB50099E2AF</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<referedAttribute>D772A584-C6CB-EF87-07A6-EAB785692338</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="FE26DFD4-A3FF-9615-632C-B34611D91073" name="userAdmin PK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:36:18 UTC</createdTime>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>F03AF843-9EB3-B272-9C6F-6B3A8ED13697</attributeRef>
+<attributeRef>4B84B779-6106-FC72-20F9-40DB39C33B53</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

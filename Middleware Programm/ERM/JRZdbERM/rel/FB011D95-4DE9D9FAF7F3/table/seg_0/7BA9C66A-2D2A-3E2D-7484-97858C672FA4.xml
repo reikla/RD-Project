@@ -150,6 +150,19 @@
 <colAssociation fkAssociation="615315B2-C450-BDED-FB43-EAA779F0639C" referredColumn="B53F174D-3F63-2CC7-948B-CA025D4A1A1F"/>
 </associations>
 </Column>
+<Column name="NULL_SET_GENERATED_61" id="D93F2D50-2DA0-7BEA-95E1-34E1CF5B6DB1">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:56:24 UTC</createdTime>
+<generatorID>2523C57B-881D-60C9-651A-FE1201A27578</generatorID>
+<ownerDesignName>JRZdbERM</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="FCAB581A-3B29-E466-0266-0460881E29AE" name="meter_management_PK">
