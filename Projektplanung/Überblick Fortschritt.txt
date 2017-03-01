@@ -1,0 +1,11 @@
+Überblick über die fertiggestelten Kapitel in
+Zwischenbericht_Februar - nachbearbeitet - Version Max
+
+Struktur: ok
+
+ok 1. Einleitung
+ok 1.1. Problemstellung und Motivation
+ok 1.2. Umgebung
+
+   2. Anforderungen
+ok 2.1 Datenmodell
