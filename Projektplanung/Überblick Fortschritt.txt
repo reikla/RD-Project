@@ -1,4 +1,4 @@
-�berblick �ber die fertiggestelten Kapitel in
+﻿Überblick über die fertiggestelten Kapitel in
 Zwischenbericht_Februar - nachbearbeitet - Version Max
 
 Struktur: ok
@@ -7,5 +7,21 @@ ok 1. Einleitung
 ok 1.1. Problemstellung und Motivation
 ok 1.2. Umgebung
 
-   2. Anforderungen
+iP 2. Anforderungen
 ok 2.1 Datenmodell
+
+iP 2.3 Rollenbasierter Zugriff 
+
+
+-----------------------------------------------------------------------
+gebe ich nur dazu um alles beisammen zu haben:
+Achten auf:
+	- Bullet Listen konsistent gestalten (Ringerl oder Punkterl) Ausrichten der Absätze
+	- Das Literaturverzeichnis: Namen wie in IEEE abkürzen, wenns zwei sind: wie geht das richtig? Wie werden Gesetze und dergl in die LitListe aufgenommen?
+	- ER Modell der JRZ-DB: womit zeichnen? Visio?
+	- Frequenz mit der ein Meter maximal Messwerte liefert.
+	- Kapitel: 
+		○ Rollenbasiertes Zugreifen
+		○ Systemarchitektur
+		○ Mengen der Datensätze und Platz -> Big Data nicht definiert, Mengenmässiges zusammenfassen und mit dem MysqlCluster argumentieren dass es handhabbar ist, im Falle des Falles, dass die Performance einbricht, ist es von den Komponeten her so aufgeteilt, dass es auf eine BigTable/Hadoop was auch immer rausgelagert werden kann. Hier ist die Definition zu was ist big data: https://arxiv.org/pdf/1309.5821.pdf
+	- Auslesefrequenz: muss jeder alle 15 Minuten oder kann es auch seltener sein?
