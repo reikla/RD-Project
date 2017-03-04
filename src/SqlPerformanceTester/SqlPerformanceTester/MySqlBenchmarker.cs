@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 using MySql.Data.MySqlClient;
 
 namespace SqlPerformanceTester
@@ -14,9 +17,9 @@ namespace SqlPerformanceTester
 
       var connectionString = "server=localhost;user=root;database=load_profiles";
 
-      Insert(dataSet, connectionString, performanceResult);
+      Insert2(dataSet, connectionString, performanceResult);
 
-      Update(dataSet, connectionString, performanceResult);
+      //Update(dataSet, connectionString, performanceResult);
 
       var calculateCommandString =
         "select SQL_NO_CACHE avg(power) as power, day, month, meterId from redd group by meterId asc, month asc, day asc";
@@ -80,6 +83,40 @@ namespace SqlPerformanceTester
       performanceResult.InsertTimeMs = sw.ElapsedMilliseconds;
 
       insertConnection.Close();
+    }
+
+    private static void Insert2(ReddDataSet dataSet, string connectionString, PerformanceResult performanceResult)
+    {
+      using (MySqlConnection insertConnection = new MySqlConnection(connectionString))
+      {
+        insertConnection.Open();
+        var sw = Stopwatch.StartNew();
+        StringBuilder command = new StringBuilder("INSERT INTO redd (power, meterId, day, month)");
+        var rows = new List<string>();
+        foreach (var line in File.ReadLines(dataSet.FilePath))
+        {
+          var split = line.Split(' ');
+          var date = FromUnixTime(long.Parse(split[0]));
+          rows.Add($"('{split[1]}', '{dataSet.Id}','{date.Day}', '{date.Month}')");
+        }
+        command.Append(string.Join(",", rows));
+        command.Append(";");
+        using (var insertCommand = new MySqlCommand(command.ToString(), insertConnection)) 
+        {
+          insertCommand.CommandType = CommandType.Text;
+          insertCommand.CommandTimeout = 60*60;
+          insertCommand.ExecuteNonQuery();
+        }
+      }
+        
+
+
+    }
+
+    private static DateTime FromUnixTime(long unixTime)
+    {
+      var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+      return epoch.AddSeconds(unixTime);
     }
 
 

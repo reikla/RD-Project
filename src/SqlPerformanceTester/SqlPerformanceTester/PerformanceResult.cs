@@ -22,6 +22,8 @@ namespace SqlPerformanceTester
 
     public long UpdateTimeMs { get; set; }
 
+    public int TotalNumberOfRows { get; set; }
+
     public List<CaluclationResult> CalculationResults { get; set; }
   }
 
