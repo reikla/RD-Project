@@ -17,7 +17,7 @@ namespace SqlPerformanceTester
 
       var connectionString = "server=localhost;user=root;database=load_profiles";
 
-      Insert2(dataSet, connectionString, performanceResult);
+      Insert2(dataSet, connectionString, performanceResult, 50000);
 
       //Update(dataSet, connectionString, performanceResult);
 
@@ -85,20 +85,34 @@ namespace SqlPerformanceTester
       insertConnection.Close();
     }
 
-    private static void Insert2(ReddDataSet dataSet, string connectionString, PerformanceResult performanceResult)
+    private static void Insert2(ReddDataSet dataSet, string connectionString, PerformanceResult performanceResult, int bulkSize)
     {
       using (MySqlConnection insertConnection = new MySqlConnection(connectionString))
       {
         insertConnection.Open();
         var sw = Stopwatch.StartNew();
-        StringBuilder command = new StringBuilder("INSERT INTO redd (power, meterId, day, month)");
+        
         var rows = new List<string>();
+        int pos = 0;
         foreach (var line in File.ReadLines(dataSet.FilePath))
         {
           var split = line.Split(' ');
           var date = FromUnixTime(long.Parse(split[0]));
           rows.Add($"('{split[1]}', '{dataSet.Id}','{date.Day}', '{date.Month}')");
+          if(pos++ % bulkSize == 0)
+          {
+            InsertData(rows, insertConnection);
+          }
         }
+
+        InsertData(rows, insertConnection);
+      }
+    }
+
+    private static void InsertData(List<string> rows, MySqlConnection insertConnection)
+    {
+        StringBuilder command = new StringBuilder("INSERT INTO redd (power, meterId, day, month)");
+
         command.Append(string.Join(",", rows));
         command.Append(";");
         using (var insertCommand = new MySqlCommand(command.ToString(), insertConnection)) 
@@ -107,10 +121,7 @@ namespace SqlPerformanceTester
           insertCommand.CommandTimeout = 60*60;
           insertCommand.ExecuteNonQuery();
         }
-      }
-        
-
-
+        rows.Clear();
     }
 
     private static DateTime FromUnixTime(long unixTime)
