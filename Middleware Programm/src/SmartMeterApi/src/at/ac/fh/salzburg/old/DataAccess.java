@@ -1,10 +1,7 @@
-package at.ac.fh.salzburg.smartmeter;
+package at.ac.fh.salzburg.old;
 
-import at.ac.fh.salzburg.smartmeter.access.AccessMode;
-import at.ac.fh.salzburg.smartmeter.access.DataSourceContext;
-import at.ac.fh.salzburg.smartmeter.access.UserContext;
-import at.ac.fh.salzburg.smartmeter.data.DataSourceInformation;
-import at.ac.fh.salzburg.smartmeter.data.PaginatedData;
+import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
+import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import at.ac.fh.salzburg.smartmeter.data.QueryResult;
 
 /**
@@ -28,7 +25,7 @@ public interface DataAccess {
      * @param page the page number
      * @return an data access object
      */
-    PaginatedData getDataPerSource(UserContext userContext, AccessMode accessMode, DataSourceContext sourceContext, int pageSize, int page);
+    PaginatedData getDataPerSource(IUserContext userContext, IAccessMode accessMode, IDataSourceContext sourceContext, int pageSize, int page);
 
     /**
      * Access the SmartMeter data per datasource.
@@ -47,7 +44,7 @@ public interface DataAccess {
      * @param resolution the desired resolution
      * @return an data access object
      */
-    PaginatedData getDataPerSource(UserContext userContext, AccessMode accessMode, DataSourceContext sourceContext, int pageSize, int page, int resolution);
+    PaginatedData getDataPerSource(IUserContext userContext, IAccessMode accessMode, IDataSourceContext sourceContext, int pageSize, int page, int resolution);
 
     /**
      *
@@ -55,7 +52,7 @@ public interface DataAccess {
      * @param sourceName the unique name of the datasource
      * @return the information about the given datasource
      */
-    QueryResult<DataSourceInformation> getDataSourceInformation(UserContext userContext, String sourceName);
+    QueryResult<DataSourceInformation> getDataSourceInformation(IUserContext userContext, String sourceName);
 
 
     /**
@@ -68,7 +65,7 @@ public interface DataAccess {
      * @param dataSources an array of the names of data sources
      * @return
      */
-    QueryResult compareDataSources(UserContext userContext, AccessMode accessMode, int pageSize, int page, int resolution, DataSourceContext... dataSources);
+    QueryResult compareDataSources(IUserContext userContext, IAccessMode accessMode, int pageSize, int page, int resolution, IDataSourceContext... dataSources);
 
 
 }

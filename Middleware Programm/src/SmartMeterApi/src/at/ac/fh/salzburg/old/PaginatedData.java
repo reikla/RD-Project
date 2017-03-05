@@ -1,10 +1,13 @@
-package at.ac.fh.salzburg.smartmeter.data;
+package at.ac.fh.salzburg.old;
+
+import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
+import at.ac.fh.salzburg.smartmeter.data.QueryResult;
 
 /**
  * Class that encapsulates paginated data
  * @param <T> The datatype that is queried
  */
-public final class PaginatedData<T> extends QueryResult  {
+public final class PaginatedData<T> extends QueryResult {
 
     private T _data;
     private int _pageNum;
@@ -23,8 +26,8 @@ public final class PaginatedData<T> extends QueryResult  {
         _pageNum = pageNum;
     }
 
-    private PaginatedData(String errorMessage, StatusCode statusCode){
-        super(false, errorMessage, statusCode);
+    private PaginatedData(String errorMessage, QueryStatusCode queryStatusCode){
+        super(false, errorMessage, queryStatusCode);
         _data = null;
         _pageNum = -1;
         _numOfEntries = -1;
@@ -34,8 +37,8 @@ public final class PaginatedData<T> extends QueryResult  {
         return new PaginatedData(data,numOfEntries,pageNum);
     }
 
-    public static PaginatedData CreateErrorResult(String errorMessage, StatusCode statusCode){
-        return new PaginatedData(errorMessage,statusCode);
+    public static PaginatedData CreateErrorResult(String errorMessage, QueryStatusCode queryStatusCode){
+        return new PaginatedData(errorMessage, queryStatusCode);
     }
 
 

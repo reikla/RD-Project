@@ -1,10 +1,12 @@
 package at.ac.fh.salzburg.smartmeter.data;
 
+import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
+
 public abstract class QueryResult<T> {
 
     protected boolean _isSuccessful;
     protected String _errorMessage;
-    protected StatusCode _statusCode;
+    protected QueryStatusCode _statusCode;
 
 
     /**
@@ -13,19 +15,19 @@ public abstract class QueryResult<T> {
     protected QueryResult(){
         _isSuccessful = true;
         _errorMessage = null;
-        _statusCode = StatusCode.OK;
+        _statusCode = QueryStatusCode.OK;
     }
 
     /**
      * Constructor to specify error details
      * @param isSuccessful
      * @param errorMessage
-     * @param statusCode
+     * @param queryStatusCode
      */
-    protected QueryResult(boolean isSuccessful, String errorMessage, StatusCode statusCode){
+    protected QueryResult(boolean isSuccessful, String errorMessage, QueryStatusCode queryStatusCode){
         _isSuccessful = isSuccessful;
         _errorMessage = errorMessage;
-        _statusCode = statusCode;
+        _statusCode = queryStatusCode;
     }
 
     public boolean isSuccessful(){
@@ -36,7 +38,7 @@ public abstract class QueryResult<T> {
         return _errorMessage;
     }
 
-    public StatusCode getStatusCode(){
+    public QueryStatusCode getStatusCode(){
         return _statusCode;
     }
 
