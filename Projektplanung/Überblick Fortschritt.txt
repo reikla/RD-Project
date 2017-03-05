@@ -7,7 +7,7 @@ ok 1. Einleitung
 ok 1.1. Problemstellung und Motivation
 ok 1.2. Umgebung
 
-iP 2. Anforderungen
+iP 2. Anforderungsanalyse
 ok 2.1 Datenmodell (2x Tabellen zeichnen fehlt noch).
 
 ok 2.3 Rollenbasierter Zugriff (ziemlich fertig, das Konzept ist aber noch nicht dicht....)
