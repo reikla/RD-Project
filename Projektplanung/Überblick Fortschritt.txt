@@ -8,9 +8,9 @@ ok 1.1. Problemstellung und Motivation
 ok 1.2. Umgebung
 
 iP 2. Anforderungen
-ok 2.1 Datenmodell (2x Tabellen zeichnen fehlt nocht).
+ok 2.1 Datenmodell (2x Tabellen zeichnen fehlt noch).
 
-iP 2.3 Rollenbasierter Zugriff (ziemlich fertig, das Konzept ist aber noch nicht dicht....)
+ok 2.3 Rollenbasierter Zugriff (ziemlich fertig, das Konzept ist aber noch nicht dicht....)
 
 
 -----------------------------------------------------------------------
@@ -25,3 +25,7 @@ Achten auf:
 		○ Systemarchitektur
 		○ Mengen der Datensätze und Platz -> Big Data nicht definiert, Mengenmässiges zusammenfassen und mit dem MysqlCluster argumentieren dass es handhabbar ist, im Falle des Falles, dass die Performance einbricht, ist es von den Komponeten her so aufgeteilt, dass es auf eine BigTable/Hadoop was auch immer rausgelagert werden kann. Hier ist die Definition zu was ist big data: https://arxiv.org/pdf/1309.5821.pdf
 	- Auslesefrequenz: muss jeder alle 15 Minuten oder kann es auch seltener sein?
+---------------------------------------------------------------------------
+hier steht dass es personenbezogene Daten sind: https://www.wienernetze.at/eportal/ep/channelView.do/pageTypeId/65652/channelId/-45404
+
+http://eur-lex.europa.eu/legal-content/DE/TXT/PDF/?uri=OJ:L:2016:119:FULL&from=DE
