@@ -16,7 +16,7 @@ namespace SqlPerformanceTester
 
     public List<ReddDataSet> GetDataSets()
     {
-      List<ReddDataSet> dataSets = new List<ReddDataSet>();
+      var dataSets = new List<ReddDataSet>();
 
       var rootDir = new DirectoryInfo(_rootPath);
 

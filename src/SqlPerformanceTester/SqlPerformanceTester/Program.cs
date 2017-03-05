@@ -15,7 +15,7 @@ namespace SqlPerformanceTester
       var results = new List<PerformanceResult>();
       int totalNumberOfRows = 0;
 
-      foreach (var reddDataSet in rfl.GetDataSets().Where(x=>x.LineCount < 50000))
+      foreach (var reddDataSet in rfl.GetDataSets())
       {
         var lines = reddDataSet.LineCount;
         

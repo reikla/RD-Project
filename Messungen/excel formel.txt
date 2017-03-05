@@ -1,0 +1,1 @@
+=MEDIAN(WENN(B:B=[@FilePath];I:I))
