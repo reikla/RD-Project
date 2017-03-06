@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="unterstütztProtokoll" directorySegmentName="seg_0" id="5B165D3A-E3B9-F14F-D9E0-972EFDA068CA">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:57:34 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<sourcePk>9DC3CBB5-2D61-1177-BD9B-412411F7901D</sourcePk>
+<identifying>false</identifying>
+<nameOnTarget>id_protocol</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>29FB8F00-9CEA-3A4A-0F98-DC6C296BEF71</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>70426F8C-4154-0C2B-578E-45D403D32BD0</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

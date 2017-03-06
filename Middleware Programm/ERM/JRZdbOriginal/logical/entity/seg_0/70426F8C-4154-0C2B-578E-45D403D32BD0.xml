@@ -1,0 +1,179 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="70426F8C-4154-0C2B-578E-45D403D32BD0" name="meter_management">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:39:56 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>MeterManagement</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_meter" id="B67085AF-9F4A-6B09-C8EA-AAADE754E97B">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:40:28 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="description" id="49490E08-538C-4953-57CF-C17DF07E4D60">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:42:28 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="serial" id="6BF50BCB-0061-870E-F99D-115BA56F0C11">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:42:45 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15</dataTypeSize>
+<ownDataTypeParameters>15,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="key" id="15864691-7AB4-6071-C137-FB2FB9159AAB">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:43:00 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="period" id="EC078EC5-52DB-9A9E-B1ED-3787892B092F">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:47:36 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="active" id="70EB25AA-2892-F582-FD40-1A7E03E65FBB">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:45:51 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="port" id="63B80686-49F2-B720-A826-3E5557B781A2">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:46:10 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="type_id" id="0AFC8011-4A05-5F42-2679-A49FDB8B1798">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:54:23 UTC</createdTime>
+<generatorID>95FC2D26-2338-CE24-45C5-AA8C5D2CF5B7</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<referedAttribute>28B228B1-AA2E-040F-D21A-531B9E703D21</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="protocol_id" id="5CFD815C-8C86-3624-F50B-8EC1DDB487FF">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:57:34 UTC</createdTime>
+<generatorID>5B165D3A-E3B9-F14F-D9E0-972EFDA068CA</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<referedAttribute>928C669E-475A-A6E3-2C56-42F9E3BDFA05</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="manufactor_id" id="011070D0-D161-DF62-429B-AA635C81AD42">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:00:55 UTC</createdTime>
+<generatorID>B8150C2E-9632-935C-D332-BCAC7A7D15FD</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<referedAttribute>B2D8B20B-E42B-1E7B-EA8C-86F1359A2226</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="customer_id" id="22A3C88A-8B3A-8402-D231-49A57D096E9F">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:18:49 UTC</createdTime>
+<generatorID>999B2B48-0328-F27A-1206-E8DE321ECDB6</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>D772A584-C6CB-EF87-07A6-EAB785692338</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="8353656C-EBC1-0993-C376-CDC0DBFCB92B" name="meter_management PK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 19:40:51 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>B67085AF-9F4A-6B09-C8EA-AAADE754E97B</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

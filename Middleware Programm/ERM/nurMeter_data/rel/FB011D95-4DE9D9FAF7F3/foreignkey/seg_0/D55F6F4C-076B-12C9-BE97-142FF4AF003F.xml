@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="D55F6F4C-076B-12C9-BE97-142FF4AF003F" containerWithKeyObject="7BA9C66A-2D2A-3E2D-7484-97858C672FA4" localFKIndex="95E1F20B-1025-9CAC-C612-56437BA62F6B" name="meter_management_meter_protocol_FK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>5B165D3A-E3B9-F14F-D9E0-972EFDA068CA</generatorID>
+<ownerDesignName>nurMeter_data</ownerDesignName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>FF53BC23-F14E-9187-B736-D84ECD2D2DBE</referredTableID>
+<keyObject>4605C43A-68C3-EAC9-6A32-A89F9A6E7A8F</keyObject>
+<referredKeyID>4605C43A-68C3-EAC9-6A32-A89F9A6E7A8F</referredKeyID>
+<mandatory>true</mandatory>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

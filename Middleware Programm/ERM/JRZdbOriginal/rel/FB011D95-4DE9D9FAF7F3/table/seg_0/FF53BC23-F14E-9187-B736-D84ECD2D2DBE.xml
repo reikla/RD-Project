@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="FF53BC23-F14E-9187-B736-D84ECD2D2DBE" name="meter_protocol">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>29FB8F00-9CEA-3A4A-0F98-DC6C296BEF71</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="protocol_id" id="26BAB102-FA70-74F6-5BA1-E67D4C07376F">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>928C669E-475A-A6E3-2C56-42F9E3BDFA05</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="protocol" id="5C8FF013-CA20-A9AA-B4E6-7BF911D90137">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>1C379047-BB69-D8EF-B287-C618D2B75EFD</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="datascheme" id="E7A16999-CCD8-A14D-D313-FF682486B276">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>F3D15D4A-E6CA-0CB3-D3DB-4DB897C35F84</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="4605C43A-68C3-EAC9-6A32-A89F9A6E7A8F" name="meter_protocol_PK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>9DC3CBB5-2D61-1177-BD9B-412411F7901D</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="26BAB102-FA70-74F6-5BA1-E67D4C07376F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

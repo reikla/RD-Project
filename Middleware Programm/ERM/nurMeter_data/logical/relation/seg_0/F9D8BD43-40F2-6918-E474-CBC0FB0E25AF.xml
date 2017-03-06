@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="misst" directorySegmentName="seg_0" id="F9D8BD43-40F2-6918-E474-CBC0FB0E25AF">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:29:40 UTC</createdTime>
+<ownerDesignName>nurMeter_data</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<sourcePk>8353656C-EBC1-0993-C376-CDC0DBFCB92B</sourcePk>
+<identifying>false</identifying>
+<nameOnTarget>meter_id</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>70426F8C-4154-0C2B-578E-45D403D32BD0</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>BFD14667-8001-379C-63A3-EDD8AEEDAF2F</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

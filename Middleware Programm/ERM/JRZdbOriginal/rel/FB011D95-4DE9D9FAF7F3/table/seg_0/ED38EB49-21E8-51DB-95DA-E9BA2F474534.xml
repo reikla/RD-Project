@@ -1,0 +1,287 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="ED38EB49-21E8-51DB-95DA-E9BA2F474534" name="meter_data">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>BFD14667-8001-379C-63A3-EDD8AEEDAF2F</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<abbreviation>Messdatentupel</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="data_id" id="6D7A13D4-3671-F07D-5BB3-3AC93B5082CC">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>8D57DC93-268F-AD9F-65C0-B9EBC36B4740</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="meter_management_id_meter" id="48B24D32-7218-C642-3B35-F710235717D5">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>A4E0CDB8-3010-DA9D-7D0D-2843BE3054D9</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2A7B42AA-E493-C9A4-06CD-54D72A57DE01" referredColumn="0980A50B-E11D-4DEA-E5F7-9DBD078CDBE5"/>
+</associations>
+</Column>
+<Column name="timestamp" id="A4570A67-F845-0712-F596-4E2703C05156">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>69F55CE2-CE5C-63D0-7F08-0957BAF36E7A</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT046</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="count_total" id="25821791-97BE-D210-5BE5-DFFA8880C6B5">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>FADEE13A-2771-09ED-1FC4-C11D6510E506</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="count_register_1" id="F81580ED-B10A-A8EE-263E-9AE197952552">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>7443807F-054F-CF82-45C7-C85043AA04DC</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="count_register_2" id="11E8BB2C-5386-516E-33F6-DD5656BB43E1">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>37C4A9D6-5056-E256-0CDA-73895CDB4E85</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="count_register_3" id="5624D707-54E0-F32D-D146-3D7DCC6615E0">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>FBCAB5B7-293B-7083-17B0-F0021E9A035A</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="count_register_4" id="C198CBBA-D308-919D-32EE-75164B15E40F">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>6D43F830-3C2D-C833-7980-6FFBBFFB99BC</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="power_p1" id="637EED22-C685-0EBB-D81E-EE12FCBC032C">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>E4E41BC8-5323-EDD5-E2BC-1C419B987DF9</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="power_p2" id="1EEBD6AF-679A-AAFF-F7EE-642C185C3FA4">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>AAB7DF47-DB4B-C5D9-B1E5-F5D093A14653</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="power_p3" id="0203FC7C-D79A-6B0F-013F-5AAFD71CB292">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>EADFD47C-2B80-7D6E-D449-00F19C51F103</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="work_p1" id="B19E40B3-E8B8-E11A-AB74-4602E11CEC6C">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>65427623-73CD-82E4-72C7-D743E23F62EE</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="work_p2" id="E1248774-FED1-5F26-F51A-E44E992C1D9F">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>43C34494-532D-5E6B-6FD2-92F8E2081826</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="work_p3" id="E5750ECE-716A-2E8B-0FAD-F921349A9126">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>7F5DC9F2-8C70-3DAA-79E9-CFECC40C0CE9</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="frequency" id="A7161034-7674-C33F-16F2-0BD4437772BB">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>299E400C-DC3B-6AB0-43FD-D77773C38F0B</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="voltage" id="CAD8626C-A312-7B74-8937-54D3ACF9EF62">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>0FB94D24-98B0-685D-0070-18A0CED1AE29</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="reactive_P1" id="3B74AD18-F41B-27D4-3490-98A3D6FC4B07">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>85FCDAC9-FEEF-FD55-EED7-D66FD981F4B7</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="reactive_P2" id="28ABF37A-3879-CD52-D9C2-45B6B7800C17">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>5D3516F4-39B6-45AA-8B8C-D4C84F0D31BF</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="reactive_P3" id="302ECEDF-E1B5-1F25-D797-54A5454AB2D0">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 11:50:38 UTC</createdTime>
+<generatorID>95F02D93-57B5-4234-9E42-0BA576832161</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="phi_P1" id="4BBC2E1B-B41D-C0F6-5BF1-374A0F7F0769">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:19:04 UTC</createdTime>
+<generatorID>340CFAA9-4561-EC3D-B3EC-C3CA6E1DBCEE</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="phi_P2" id="ACC6B592-0F35-D083-59BE-62558744F621">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:19:04 UTC</createdTime>
+<generatorID>91DC00A5-8447-D467-DE0C-9E414683F066</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="phi_P3" id="4171C4D9-AAEC-3B37-CCFA-A045904E3602">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-17 12:19:04 UTC</createdTime>
+<generatorID>B09BAF79-D8CF-A90E-3FB4-FE293D51C198</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="E191E3A9-CA71-60E6-3006-A438FD2EA42B" name="meter_data_PK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>6512AFE2-F65A-8EAF-EE34-5A523F0F69AD</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6D7A13D4-3671-F07D-5BB3-3AC93B5082CC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E41423C6-B6B0-7F50-EB8C-7A2DEF6C4C9D" name="meter_data_meter_management_FK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:33:41 UTC</createdTime>
+<generatorID>F9D8BD43-40F2-6918-E474-CBC0FB0E25AF</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="48B24D32-7218-C642-3B35-F710235717D5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

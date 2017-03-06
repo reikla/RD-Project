@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="berät oder verwaltet" directorySegmentName="seg_0" id="19053790-2D92-A660-3631-10CF1A6CD451">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:48:17 UTC</createdTime>
+<ownerDesignName>nurMeter_data</ownerDesignName>
+<engineerTo>
+<item key="FB011D95-2206-0158-1B6A-4DE9D9FAF7F3" value="true"/>
+</engineerTo>
+<sourcePk>8353656C-EBC1-0993-C376-CDC0DBFCB92B</sourcePk>
+<targetPk>EA244694-0004-CA10-563C-FE96FF396280</targetPk>
+<identifying>false</identifying>
+<nameOnSource>id_meter</nameOnSource>
+<nameOnTarget>id_customer</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>70426F8C-4154-0C2B-578E-45D403D32BD0</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>4F3E9C70-35D8-99E3-68D6-150A8FDD72A8</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

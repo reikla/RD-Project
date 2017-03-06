@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="loadprofiles.redd" id="2F852FF7-F284-D03E-5626-3DD5AEC6CC5D" version="3.5">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-03-06 21:39:40 UTC</createdTime>
+<ownerDesignName>loadprofiles.redd</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>2F852FF7-F284-D03E-5626-3DD5AEC6CC5D</designId>
+</OSDM_Design>

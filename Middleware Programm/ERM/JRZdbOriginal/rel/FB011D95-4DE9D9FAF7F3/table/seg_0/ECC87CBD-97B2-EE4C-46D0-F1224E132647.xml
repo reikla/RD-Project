@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="ECC87CBD-97B2-EE4C-46D0-F1224E132647" name="berät_oder_verwaltet">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:49:27 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="meter_management_id_meter" id="D312B48E-3B1F-13CA-5479-275A7C7B86A4">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:49:27 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C56B0B40-C4FF-58BF-F88E-1BC0CB22A33A" referredColumn="0980A50B-E11D-4DEA-E5F7-9DBD078CDBE5"/>
+</associations>
+</Column>
+<Column name="customer_customer_id" id="E330A5F9-19E2-16D9-C5C3-943F21E59832">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:49:27 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F25FE16F-62B3-5D8D-EF82-87D35DF7B762" referredColumn="B53F174D-3F63-2CC7-948B-CA025D4A1A1F"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FCAC9403-60B1-11EF-99EF-20FA8AB2E5AE" name="berät_PK">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:49:27 UTC</createdTime>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D312B48E-3B1F-13CA-5479-275A7C7B86A4"/>
+<colUsage columnID="E330A5F9-19E2-16D9-C5C3-943F21E59832"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9F2868F0-9083-30A8-3709-5B12884240C3" name="FK_ASS_13">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:49:27 UTC</createdTime>
+<generatorID>19053790-2D92-A660-3631-10CF1A6CD451</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D312B48E-3B1F-13CA-5479-275A7C7B86A4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="EAAE480D-0BEA-61AA-EF73-A604AB1FCD66" name="FK_ASS_14">
+<createdBy>maximilian</createdBy>
+<createdTime>2017-02-13 20:49:27 UTC</createdTime>
+<generatorID>19053790-2D92-A660-3631-10CF1A6CD451</generatorID>
+<ownerDesignName>JRZdbOriginal</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E330A5F9-19E2-16D9-C5C3-943F21E59832"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
