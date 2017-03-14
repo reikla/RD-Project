@@ -1,2 +1,5 @@
-rootProject.name = 'SmartValAPI'
+include 'api'
+include 'app'
+include 'common'
+include 'ldap'
 

@@ -7,11 +7,11 @@ import at.ac.fh.salzburg.smartmeter.data.QueryResult;
  */
 public class DataAccess {
 
-    private final ILdapPermissionManager _permissionManager;
+    private final IPermissionManager _permissionManager;
     private final IDatabaseAccess _databaseAccess;
 
 
-    public DataAccess(ILdapPermissionManager permissionManager, IDatabaseAccess databaseAccess){
+    public DataAccess(IPermissionManager permissionManager, IDatabaseAccess databaseAccess){
         _permissionManager = permissionManager;
         _databaseAccess = databaseAccess;
     }
