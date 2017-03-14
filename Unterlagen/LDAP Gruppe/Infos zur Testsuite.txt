@@ -1,0 +1,24 @@
+Hallo Maximilian
+
+Anbei übermittle ich euch unsere Demoanwendung zum Test eines TLS Verbindungsaufbaus mit CRL Check und einem beispielhaften LDAP Query. Dokumentation sollte soweit Inline enthalten sein.
+Grundsätzlich ist eine Server und Clientanwendung enthalten, die jeweils ein jks-file sowohl als trust- als auch keystore nutzen. In den mitgelieferten .store files sind bereits Zertifikate enthalten. Eine Kurzanleitung zum importieren von eigenen Zertifikaten liegt bei.
+Die Serveranwendung ist dahingehend parametrisiert, dass nur Verbindung mit Clientauthentifizierung hergestellt werden können. Nach dem Verbindungsaufbau durch den Client stellt der Server eine Verbindung zum LDAP Server her und fragt aufgrund des vom Client bereitgestellten Zertifikats die Gruppenzugehörigkeit des Clients im LDAP Verzeichnis ab. (Dieser Codeabschnitt ist aus der Oracle Community übernommen. Hab den Autor bereits angeschrieben, ob wir den Code für unsere Arbeit übernehmen dürfen. Da der Beitrag jedoch aus 2004 stammt bin ich mir nicht sicher ob ich dazu noch eine Rückmeldung bekomme)
+Noch ein Hinweis:
+Um den Verbindungsaufbau zw. Client und Server verfolgen zu können und etwaige Handshake Probleme zu eruieren dürfte es sinnvoll sein SSL Debugging in der Entwicklungsumgebung zu aktivieren (Bsp Eclipse: Project Settings->Run/Debug settings->VM Arguments: -Djavax.net.debug=ssl)
+
+Hoffe die kleine Anwendung hilft euch weiter, bei Rückfragen bitte einfach nochmal melden. Wir werden versuchen trotz knapper Zeit soweit möglich Unterstützung zu leisten.
+
+lg 
+Thomas, Michael und Wolfgang
+
+
+Server:
+keytool -import -file ManagementCA-chain.cer -keystore server.store
+keytool -importkeystore -srckeystore testdevice1.p12 -srcstoretype PKCS12 -keystore server.store
+
+Client:
+keytool -import -file ManagementCA-chain.cer -keystore client.store
+keytool -importkeystore -srckeystore testdevice2.p12 -srcstoretype PKCS12 -keystore client.store
+
+delete a specific certificate:
+keytool -delete -alias testclt1 -keystore client.store
