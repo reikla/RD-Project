@@ -1,7 +1,12 @@
-
+apply plugin: 'application'
 
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile project(':api')
     compile project(':common')
 }
+
+
+
+mainClassName = 'MyApplication'
