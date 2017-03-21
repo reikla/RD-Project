@@ -81,8 +81,7 @@ public class Server {
 	            System.out.println("Remote Cert Serial Number: " + cert.getSerialNumber());		//print out Client Cert Serial Number
 	            
 	            //perform LDAP search for memberof Attribute
-	            ldapquery query = new ldapquery();
-	            query.memberof(dn);
+
 	                        
 	            
 	            //client<->server Console Text Transfer

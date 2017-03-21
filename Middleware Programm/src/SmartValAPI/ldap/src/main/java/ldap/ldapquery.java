@@ -4,41 +4,96 @@ import java.util.Hashtable;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
-import javax.naming.ldap.InitialLdapContext;
-import javax.naming.ldap.LdapContext;
+import javax.naming.directory.*;
 
-/**
- * memberof.java
- * December 2004
- * Sample JNDI application to determine what groups a user belongs to
- * https://community.oracle.com/thread/1157430
- * 
- */
+class ldapsearch{
 
+     public static void main(String[] args) {
+
+          ldapquery ldap = new ldapquery();
+
+         try {
+             ldap.doFilterSearch();
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+
+
+     }
+}
 
 public class ldapquery {
+
+    public DirContext getDirContext() throws Exception{
+        Hashtable<String, String> env = new Hashtable<String, String>();
+        env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(Context.PROVIDER_URL, "ldap://193.170.119.66:389");
+        env.put(Context.SECURITY_AUTHENTICATION,"simple");
+        env.put(Context.SECURITY_PRINCIPAL,"cn=Manager,dc=maxcrc,dc=com"); // specify the username
+        env.put(Context.SECURITY_CREDENTIALS,"secret");
+        DirContext ctx = new InitialDirContext(env);
+        return ctx;
+
+    }
+
+    public void doFilterSearch() throws Exception{
+        DirContext ctx=  getDirContext();
+
+        SearchControls ctls = new SearchControls();
+        ctls. setReturningObjFlag (true);
+        ctls.setSearchScope(SearchControls.OBJECT_SCOPE);
+        String filter = "(&(objectclass=organizationalunit))";
+        NamingEnumeration answer = ctx.search("ou=People", filter, ctls);
+        formatResults(answer);
+        ctx.close();
+
+
+    }
+    public  void formatResults(NamingEnumeration answer) throws Exception{
+        int count=0;
+        try {
+            while (answer.hasMore()) {
+                SearchResult sr = (SearchResult)answer.next();
+                System.out.println("SEARCH RESULT:" + sr.getName());
+                formatAttributes(sr.getAttributes());
+                System.out.println("====================================================");
+                count++;
+            }
+
+            System.out.println("Search returned "+ count+ " results");
+
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public  void formatAttributes(Attributes attrs) throws Exception{
+        if (attrs == null) {
+            System.out.println("This result has no attributes");
+        } else {
+            try {
+                for (NamingEnumeration answer = attrs.getAll(); answer.hasMore();) {
+                    Attribute attrib = (Attribute)answer.next();
+                    System.out.println("ATTRIBUTE :" + attrib.getID());
+                    for (NamingEnumeration e = attrib.getAll();e.hasMore();)
+                        System.out.println("\t\t        = " + e.next());
+                }
+
+            } catch (NamingException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+    /*
      public void memberof (String DN)     {
-          //setting up connection parameters
-          Hashtable<String, String> env = new Hashtable<String, String>();
-          String ldapURL = "ldap://192.168.199.1:389";
-          env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
-          //set security credentials, note using simple cleartext authentication
-          env.put(Context.SECURITY_AUTHENTICATION,"simple");
-          env.put(Context.SECURITY_PRINCIPAL,"cn=admin,dc=opennes,dc=local");
-          env.put(Context.SECURITY_CREDENTIALS,"ldapadmin");
-                    
-          //connect to my domain controller
-          env.put(Context.PROVIDER_URL,ldapURL);
-          
+
           try {
 
-               //Create the initial directory context
-               LdapContext ctx = new InitialLdapContext(env,null);
-          
+              DirContext ctx=  getDirContext();
+
                //Create the search controls           
                SearchControls searchCtls = new SearchControls();
           
@@ -49,7 +104,7 @@ public class ldapquery {
                String searchFilter = DN;
           
                //Specify the Base for the search
-               String searchBase = "ou=Austria,ou=Europe,ou=World,dc=opennes,dc=local";
+               String searchBase = "ou=People,dc=maxcrc,dc=com";
 
                //initialize counter to total the group members
                int totalResults = 0;
@@ -94,10 +149,21 @@ public class ldapquery {
                System.out.println("Total groups: " + totalResults);
                ctx.close();
 
+
+
+
+
+
           } 
           
           catch (NamingException e) {
                System.err.println("Problem searching directory: " + e);
                 }
+
+          catch (Exception e) {
+              e.printStackTrace();
+          }
+
      }
+     */
 }

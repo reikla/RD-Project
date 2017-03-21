@@ -28,7 +28,7 @@ public class Client {
 	public static void main(String[] args) throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException, UnrecoverableKeyException, KeyManagementException {
 		//import jks truststore from filesystem	
 		KeyStore trustStore = KeyStore.getInstance("jks");
-		InputStream truststore=new FileInputStream("client.store");
+		InputStream truststore= new FileInputStream("client.store");
 		trustStore.load(truststore, "123456".toCharArray());
 		TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
 		trustManagerFactory.init(trustStore);
