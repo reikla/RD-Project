@@ -8,5 +8,7 @@ import ldap.ldapquery;
  */
 public interface ILdapPermissionManager extends IPermissionManager {
 
+    void doFilterSearch(String name, String group);
+
 
 }

@@ -1,5 +1,9 @@
 package ldap;
 
+import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
+import at.ac.fh.salzburg.smartmeter.access.IUserContext;
+import at.ac.fh.salzburg.smartmeter.ldap.ILdapPermissionManager;
+
 import java.util.Hashtable;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -13,7 +17,7 @@ class ldapsearch{
           ldapquery ldap = new ldapquery();
 
          try {
-             ldap.doFilterSearch();
+             ldap.doFilterSearch("a","People");
          } catch (Exception e) {
              e.printStackTrace();
          }
@@ -22,7 +26,31 @@ class ldapsearch{
      }
 }
 
-public class ldapquery {
+
+
+public class ldapquery implements ILdapPermissionManager{
+
+    @Override
+    public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
+        return false;
+    }
+
+    @Override
+    public void doFilterSearch(String name, String group) {
+
+        try {
+            DirContext ctx=  getDirContext();
+            BasicAttributes searchAttrs = new BasicAttributes();
+            searchAttrs.put("sn", name);
+            NamingEnumeration answer = ctx.search("ldap://193.170.119.66:389/ou="+group+", dc=maxcrc, dc=com",searchAttrs);
+            formatResults(answer);
+            ctx.close();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public DirContext getDirContext() throws Exception{
         Hashtable<String, String> env = new Hashtable<String, String>();
@@ -33,22 +61,8 @@ public class ldapquery {
         env.put(Context.SECURITY_CREDENTIALS,"secret");
         DirContext ctx = new InitialDirContext(env);
         return ctx;
-
     }
 
-    public void doFilterSearch() throws Exception{
-        DirContext ctx=  getDirContext();
-
-        SearchControls ctls = new SearchControls();
-        ctls. setReturningObjFlag (true);
-        ctls.setSearchScope(SearchControls.OBJECT_SCOPE);
-        String filter = "(&(objectclass=organizationalunit))";
-        NamingEnumeration answer = ctx.search("ou=People", filter, ctls);
-        formatResults(answer);
-        ctx.close();
-
-
-    }
     public  void formatResults(NamingEnumeration answer) throws Exception{
         int count=0;
         try {
@@ -82,88 +96,6 @@ public class ldapquery {
             } catch (NamingException e) {
                 e.printStackTrace();
             }
-
         }
     }
-
-
-    /*
-     public void memberof (String DN)     {
-
-          try {
-
-              DirContext ctx=  getDirContext();
-
-               //Create the search controls           
-               SearchControls searchCtls = new SearchControls();
-          
-               //Specify the search scope
-               searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-
-               //specify the LDAP search filter
-               String searchFilter = DN;
-          
-               //Specify the Base for the search
-               String searchBase = "ou=People,dc=maxcrc,dc=com";
-
-               //initialize counter to total the group members
-               int totalResults = 0;
-
-               //Specify the attributes to return
-               String returnedAtts[]={"memberOf"};
-               searchCtls.setReturningAttributes(returnedAtts);
-          
-               //Search for objects using the filter
-               NamingEnumeration<?> answer = ctx.search(searchBase, searchFilter, searchCtls);
-
-               //Loop through the search results
-               while (answer.hasMoreElements()) {
-                    SearchResult sr = (SearchResult)answer.next();
-
-                    System.out.println(">>>" + sr.getName());
-
-                    //Print out the groups
- 
-                    Attributes attrs = sr.getAttributes();
-                    if (attrs != null) {
-
-                         try {
-                              for (NamingEnumeration<?> ae = attrs.getAll();ae.hasMore();) {
-                                   Attribute attr = (Attribute)ae.next();
-                                   System.out.println("Attribute: " + attr.getID());
-                                   for (NamingEnumeration<?> e = attr.getAll();e.hasMore();totalResults++) {
-
-                                        System.out.println(" " +  totalResults + ". " +  e.next());
-                                   }
-
-                              }
-
-                         }      
-                         catch (NamingException e)     {
-                              System.err.println("Problem listing membership: " + e);
-                         }
-                    
-                    }
-               }
-
-               System.out.println("Total groups: " + totalResults);
-               ctx.close();
-
-
-
-
-
-
-          } 
-          
-          catch (NamingException e) {
-               System.err.println("Problem searching directory: " + e);
-                }
-
-          catch (Exception e) {
-              e.printStackTrace();
-          }
-
-     }
-     */
 }
