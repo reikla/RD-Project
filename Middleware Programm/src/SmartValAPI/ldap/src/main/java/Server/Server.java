@@ -26,6 +26,8 @@ import ldap.ldapquery;
 public class Server {
 
 	public static void main(String[] args) throws IOException, InterruptedException, NoSuchAlgorithmException, InvalidKeySpecException, CertificateException, KeyStoreException, UnrecoverableKeyException, KeyManagementException {
+
+		/*
 		//Enable CRL check
 		System.setProperty("com.sun.security.enableCRLDP", "true");
 		System.setProperty("com.sun.net.ssl.checkRevocation","true");
@@ -43,7 +45,7 @@ public class Server {
 		keyStore.load(keystore, "123456".toCharArray());
 		KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
 		keyManagerFactory.init(keyStore, "1234".toCharArray());
-		
+
 		try {
 			 	//create SSLContext - https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html
 			 	SSLContext context = SSLContext.getInstance("TLS");
@@ -98,7 +100,7 @@ public class Server {
 	        } catch (Exception exception) {
 	            exception.printStackTrace();
 	        }
-	        
+	       */
 	}
 
 }
