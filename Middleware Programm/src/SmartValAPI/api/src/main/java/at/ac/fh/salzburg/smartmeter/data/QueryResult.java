@@ -42,5 +42,5 @@ public abstract class QueryResult<T> {
         return _statusCode;
     }
 
-    public abstract T GetData();
+    public abstract T getData();
 }

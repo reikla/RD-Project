@@ -50,7 +50,7 @@ public final class PaginatedData<T> extends QueryResult {
     }
 
     @Override
-    public T GetData() {
+    public T getData() {
         return _data;
     }
 }

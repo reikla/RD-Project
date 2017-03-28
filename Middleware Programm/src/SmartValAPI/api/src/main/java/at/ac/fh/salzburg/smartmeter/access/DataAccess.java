@@ -35,7 +35,7 @@ public class DataAccess {
                 "Not allowed to access datasource",
                 QueryStatusCode.Error) {
             @Override
-            public Object GetData() {
+            public Object getData() {
                 return null;
             }
         };
