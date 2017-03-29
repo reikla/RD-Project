@@ -22,8 +22,8 @@ class ldapsearch{
 
      public static void main(String[] args) throws Exception {
 
-          ldapquery ldap = new ldapquery();
-         //ldap.SSLConnection();
+         ldapquery ldap = new ldapquery();
+         ldap.SSLConnection();
          ldap.doFilterSearch("a","People");
      }
 }
@@ -101,14 +101,14 @@ public class ldapquery implements ILdapPermissionManager{
 
         //import jks truststore from filesystem
         KeyStore trustStore = KeyStore.getInstance("jks");
-        InputStream truststore=new FileInputStream("zertifikat.pem");
+        InputStream truststore=new FileInputStream("development.cer");
         trustStore.load(truststore, "123456".toCharArray());
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("PKIX");
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
         trustManagerFactory.init(trustStore);
 
         //import jks keystore from filesystem
         KeyStore keyStore = KeyStore.getInstance("jks");
-        InputStream keystore=new FileInputStream("schluessel.key");
+        InputStream keystore=new FileInputStream("development.cer");
         keyStore.load(keystore, "123456".toCharArray());
         KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
         keyManagerFactory.init(keyStore, "1234".toCharArray());
