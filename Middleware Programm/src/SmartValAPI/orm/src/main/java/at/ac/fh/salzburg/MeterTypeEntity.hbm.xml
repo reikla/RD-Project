@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="at.ac.fh.salzburg.MeterTypeEntity" table="meter_type" schema="SmartValDB">
+        <id name="typeId" column="type_id"/>
+        <property name="description" column="description"/>
+    </class>
+</hibernate-mapping>

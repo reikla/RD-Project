@@ -15,7 +15,7 @@ public class MyApplication {
 
         IDatabaseAccess dba = new SqlDatabaseAccess();
 
-        DataAccess access = new DataAccess(permManager,dba);
+        DataAccess access = new DataAccess(permManager, dba);
         QueryResult<List<String>> queryResult = access.QueryDataSource(new QueryBase(null, null) {
             @Override
             public String getQuery() {
