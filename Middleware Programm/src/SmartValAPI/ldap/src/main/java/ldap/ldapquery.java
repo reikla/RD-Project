@@ -16,42 +16,77 @@ import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.*;
+import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
 import javax.net.ssl.*;
 
-class ldapsearch{
+import static java.lang.System.*;
 
-     public static void main(String[] args) throws Exception {
+public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSourceContext{
 
-         ldapquery ldap = new ldapquery();
-         ldap.SSLConnection();
-         ldap.doFilterSearch("a","People");
-     }
-}
+    public static void main(String[] args) throws Exception {
 
-public class ldapquery implements ILdapPermissionManager{
-
-    @Override
-    public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
-        return false;
+        ldapquery ldap = new ldapquery();
+        //ldap.SSLConnection();
+        //ldap.IsAllowedToAccess();
+        //ldap.SearchUserGroup("Kunde","People");
+        if((ldap.SearchMeterID("Kunde", "People","1234567890")) == true){
+            System.out.println("EZPZ");
+        }
     }
 
     @Override
-    public void doFilterSearch(String name, String group) throws Exception {
+    public String name() {
+        return "Kunde";
+    }
+
+    @Override
+    public String password() {
+        return null;
+    }
+
+    @Override
+    public String MeterID() {
+        return null;
+    }
+
+    @Override
+    public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
+
+        return false;
+    }
+
+    public void SearchUserGroup(String name, String group) throws Exception {
 
         DirContext ctx = getDirContext();
         BasicAttributes searchAttrs = new BasicAttributes();
-        searchAttrs.put("sn", name);
-        NamingEnumeration answer = ctx.search("ldaps://193.170.119.66:636/ou="+group+", dc=maxcrc, dc=com",searchAttrs);
+        searchAttrs.put("givenName", name);
+        NamingEnumeration answer = ctx.search("ldap://193.170.119.66:389/ou="+group+", dc=maxcrc, dc=com",searchAttrs);
         formatResults(answer);
         ctx.close();
+    }
+
+    public boolean SearchMeterID(String name, String group, String ID) throws Exception {
+
+        DirContext ctx = getDirContext();
+        BasicAttributes searchAttrs = new BasicAttributes();
+        searchAttrs.put("gecos", ID);
+        NamingEnumeration answer = ctx.search("ldap://193.170.119.66:389/ou="+group+", dc=maxcrc, dc=com",searchAttrs);
+        formatResults(answer);
+        ctx.close();
+        if(answer != null) {
+            return true;
+        }
+        else
+            return false;
     }
 
     public DirContext getDirContext() throws Exception{
         Hashtable<String, String> env = new Hashtable<String, String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
-        env.put(Context.PROVIDER_URL, "ldaps://193.170.119.66:636");
+        env.put(Context.PROVIDER_URL, "ldap://193.170.119.66:389");
         env.put(Context.SECURITY_AUTHENTICATION,"simple");
-        env.put(Context.SECURITY_PROTOCOL, "ssl");
+        //env.put(Context.SECURITY_PROTOCOL, "ssl");
         env.put(Context.SECURITY_PRINCIPAL,"cn=Manager,dc=maxcrc,dc=com"); // specify the username
         env.put(Context.SECURITY_CREDENTIALS,"secret");
         DirContext ctx = new InitialDirContext(env);
@@ -62,13 +97,13 @@ public class ldapquery implements ILdapPermissionManager{
         try {
             while (answer.hasMore()) {
                 SearchResult sr = (SearchResult)answer.next();
-                System.out.println("SEARCH RESULT:" + sr.getName());
+                out.println("SEARCH RESULT:" + sr.getName());
                 formatAttributes(sr.getAttributes());
-                System.out.println("====================================================");
+                out.println("====================================================");
                 count++;
             }
 
-            System.out.println("Search returned "+ count+ " results");
+            out.println("Search returned "+ count+ " results");
 
         } catch (NamingException e) {
             e.printStackTrace();
@@ -76,14 +111,14 @@ public class ldapquery implements ILdapPermissionManager{
     }
     public  void formatAttributes(Attributes attrs) throws Exception{
         if (attrs == null) {
-            System.out.println("This result has no attributes");
+            out.println("This result has no attributes");
         } else {
             try {
                 for (NamingEnumeration answer = attrs.getAll(); answer.hasMore();) {
                     Attribute attrib = (Attribute)answer.next();
-                    System.out.println("ATTRIBUTE :" + attrib.getID());
+                    out.println("ATTRIBUTE :" + attrib.getID());
                     for (NamingEnumeration e = attrib.getAll();e.hasMore();)
-                        System.out.println("\t\t        = " + e.next());
+                        out.println("\t\t        = " + e.next());
                 }
 
             } catch (NamingException e) {
@@ -96,8 +131,8 @@ public class ldapquery implements ILdapPermissionManager{
         try {
 
         //Enable CRL check
-        System.setProperty("com.sun.security.enableCRLDP", "true");
-        System.setProperty("com.sun.net.ssl.checkRevocation","true");
+        setProperty("com.sun.security.enableCRLDP", "true");
+        setProperty("com.sun.net.ssl.checkRevocation","true");
 
         //import jks truststore from filesystem
         KeyStore trustStore = KeyStore.getInstance("jks");
@@ -123,10 +158,10 @@ public class ldapquery implements ILdapPermissionManager{
             SSLServerSocket sslserversocket = (SSLServerSocket) sslserversocketfactory.createServerSocket(9999);
 
             //display SSL Parameter
-            System.out.println("SSL Parameters: " + sslserversocket.getSSLParameters());
+            out.println("SSL Parameters: " + sslserversocket.getSSLParameters());
 
             //display initial client auth settings
-            System.out.println("initial Clientauth: " + sslserversocket.getNeedClientAuth());
+            out.println("initial Clientauth: " + sslserversocket.getNeedClientAuth());
 
             //enable, to request client authentication
             sslserversocket.setNeedClientAuth( true );
@@ -134,7 +169,7 @@ public class ldapquery implements ILdapPermissionManager{
             sslserversocket.setEnabledCipherSuites(sslserversocketfactory.getSupportedCipherSuites());
 
             //display final client auth settings
-            System.out.println("final Clientauth: " + sslserversocket.getNeedClientAuth());
+            out.println("final Clientauth: " + sslserversocket.getNeedClientAuth());
 
             //create sslsocket
             SSLSocket sslsocket = (SSLSocket) sslserversocket.accept();
@@ -146,8 +181,8 @@ public class ldapquery implements ILdapPermissionManager{
             X509Certificate[] x509 = (X509Certificate[]) session.getPeerCertificates();
             X509Certificate cert = x509[0];													//select first certificate in Array, which is the client certificate
             String dn = cert.getSubjectDN().getName();										//save remote Subject DN for further Use (eg. Ldap Queries)
-            System.out.println("Remote Cert SubjectDN: " + cert.getSubjectDN().getName());	//print out remote SubjectDN
-            System.out.println("Remote Cert Serial Number: " + cert.getSerialNumber());		//print out Client Cert Serial Number
+            out.println("Remote Cert SubjectDN: " + cert.getSubjectDN().getName());	//print out remote SubjectDN
+            out.println("Remote Cert Serial Number: " + cert.getSerialNumber());		//print out Client Cert Serial Number
 
             //client<->server Console Text Transfer
             InputStream inputstream = sslsocket.getInputStream();
@@ -156,11 +191,12 @@ public class ldapquery implements ILdapPermissionManager{
 
             String string = null;
             while ((string = bufferedreader.readLine()) != null) {
-                System.out.println(string);
-                System.out.flush();
+                out.println(string);
+                out.flush();
             }
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
+
 }

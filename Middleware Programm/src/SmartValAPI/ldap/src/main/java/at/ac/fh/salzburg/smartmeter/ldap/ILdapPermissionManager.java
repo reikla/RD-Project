@@ -7,6 +7,5 @@ import at.ac.fh.salzburg.smartmeter.access.IPermissionManager;
  */
 public interface ILdapPermissionManager extends IPermissionManager {
 
-    void doFilterSearch(String name, String group) throws Exception;
 
 }

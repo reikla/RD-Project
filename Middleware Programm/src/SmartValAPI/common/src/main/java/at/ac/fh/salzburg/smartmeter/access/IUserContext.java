@@ -5,4 +5,7 @@ package at.ac.fh.salzburg.smartmeter.access;
  * rights of the user that is querying
  */
 public interface IUserContext {
+
+    String name();
+    String password();
 }
