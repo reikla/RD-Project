@@ -16,28 +16,20 @@ import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.*;
-import javax.naming.ldap.InitialLdapContext;
-import javax.naming.ldap.LdapContext;
 import javax.net.ssl.*;
 
 import static java.lang.System.*;
 
 public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSourceContext{
 
-    public static void main(String[] args) throws Exception {
-
-        ldapquery ldap = new ldapquery();
-        //ldap.SSLConnection();
-        //ldap.IsAllowedToAccess();
-        //ldap.SearchUserGroup("Kunde","People");
-        if((ldap.SearchMeterID("Kunde", "People","1234567890")) == true){
-            System.out.println("EZPZ");
-        }
+    @Override
+    public String givenname() {
+        return "Max";
     }
 
     @Override
-    public String name() {
-        return "Kunde";
+    public String surname() {
+        return "Mustermann";
     }
 
     @Override
@@ -47,38 +39,41 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
 
     @Override
     public String MeterID() {
-        return null;
+        return "1234567890";
     }
 
+    //mitgegebener User darf auf mitgegebenen Smartmeter zugreifen
     @Override
     public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
 
-        return false;
-    }
+       String givenname =  userContext.givenname();
+       String surname =  userContext.surname();
+       String password = "";
+       String ID = dataSourceContext.MeterID();
 
-    public void SearchUserGroup(String name, String group) throws Exception {
+        try {
+            DirContext ctx;
+            ctx = getDirContext();
 
-        DirContext ctx = getDirContext();
-        BasicAttributes searchAttrs = new BasicAttributes();
-        searchAttrs.put("givenName", name);
-        NamingEnumeration answer = ctx.search("ldap://193.170.119.66:389/ou="+group+", dc=maxcrc, dc=com",searchAttrs);
-        formatResults(answer);
-        ctx.close();
-    }
+            BasicAttributes searchAttrs = new BasicAttributes();
+            searchAttrs.put("givenName", givenname);
+            searchAttrs.put("sn", surname);
+            searchAttrs.put("gecos", ID);
+            NamingEnumeration answer = ctx.search("ldap://193.170.119.66:389/ou=People, dc=maxcrc, dc=com", searchAttrs);
 
-    public boolean SearchMeterID(String name, String group, String ID) throws Exception {
-
-        DirContext ctx = getDirContext();
-        BasicAttributes searchAttrs = new BasicAttributes();
-        searchAttrs.put("gecos", ID);
-        NamingEnumeration answer = ctx.search("ldap://193.170.119.66:389/ou="+group+", dc=maxcrc, dc=com",searchAttrs);
-        formatResults(answer);
-        ctx.close();
-        if(answer != null) {
-            return true;
+            if (formatResults(answer) != 0) {
+                ctx.close();
+                return true;
+            }
+            else{
+                ctx.close();
+                return false;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
-        else
-            return false;
+
+        return false;
     }
 
     public DirContext getDirContext() throws Exception{
@@ -92,7 +87,7 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
         DirContext ctx = new InitialDirContext(env);
         return ctx;
     }
-    public  void formatResults(NamingEnumeration answer) throws Exception{
+    public  int formatResults(NamingEnumeration answer) throws Exception{
         int count=0;
         try {
             while (answer.hasMore()) {
@@ -108,6 +103,7 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
         } catch (NamingException e) {
             e.printStackTrace();
         }
+        return count;
     }
     public  void formatAttributes(Attributes attrs) throws Exception{
         if (attrs == null) {
