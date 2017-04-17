@@ -1,9 +1,9 @@
 ########################################################################
-# Todo: die meter_protocol muss noch dazu 
-# Todo: meter_data dazu 
+# Description: leert bestehende Tabellen aus und legt danach 
+#              konsistente Stammdaten an.
 #
-#
-#
+# Die Tabellen müssen bereits bestehen, also mit EER..... angelegt 
+# worden sein.
 #
 ########################################################################
 
@@ -94,16 +94,37 @@ INSERT INTO `meter_manufactor` (`manufactor_id`, `description`) VALUES
 
 -- Meter Geräte
 INSERT INTO `meter_management` (`id_meter`, `description`, `serial`, `key`, `id_type`, `id_manufactor`, `id_protocol`, `id_customer`, `period`, `active`, `port`) VALUES
-(1, 'MT830-3080', '35770817', NULL, 1, 1, 1, 1, 15, 0, '/dev/ttyUSB0'),
-(2, 'Echelon', 'GO00005358', NULL, 1, 3, 2, 1, 30, 1, '/dev/ttyUSB0'),
-(3, 'Kamstrup Mul402', '1234', NULL, 1, 2, 3, 4, 15, 0, '/dev/ttyUSB0'),
-(4, 'Kaifa MA304', '5678', NULL, 1, 2, 3, 4, 15, 0, '/dev/ttyUSB0'),
-(5, 'Kaifa DTSF67', '91011', NULL, 1, 2, 3, 4, 15, 0, '/dev/ttyUSB0'),
-(6, 'Kaifa MA310', '12131', NULL, 1, 2, 3, 4, 15, 0, '/dev/ttyUSB0'),
-(7, 'EDMI Mk10A', '4151617', NULL, 1, 2, 3, 4, 15, 0, '/dev/ttyUSB0'),
-(8, 'EDMI Mk10B', '18192', NULL, 1, 2, 3, 4, 15, 0, '/dev/ttyUSB0'),
-(9, 'EDMI Mk10D', '02122', NULL, 1, 2, 3, 4, 15, 0, '/dev/ttyUSB0');
+(1, 'MT830-3080', '35770817',   NULL, 1, 1, 1, 1, 15, 0, '/dev/ttyUSB0'),
+(2, 'Echelon', 'GO00005358',    NULL, 1, 3, 1, 1, 30, 1, '/dev/ttyUSB0'),
+(3, 'Kamstrup Mul402', '1234',  NULL, 1, 4, 1, 4, 15, 0, '/dev/ttyUSB0'),
+(4, 'Kaifa MA304', '5678',      NULL, 1, 6, 1, 4, 15, 0, '/dev/ttyUSB0'),
+(5, 'Kaifa DTSF67', '91011',    NULL, 1, 6, 1, 4, 15, 0, '/dev/ttyUSB0'),
+(6, 'Kaifa MA310', '12131',     NULL, 1, 6, 1, 4, 15, 0, '/dev/ttyUSB0'),
+(7, 'EDMI Mk10A', '4151617',    NULL, 1, 5, 1, 4, 15, 0, '/dev/ttyUSB0'),
+(8, 'EDMI Mk10B', '18192',      NULL, 1, 5, 1, 5, 15, 0, '/dev/ttyUSB0'),
+(9, 'EDMI Mk10D', '02122',      NULL, 1, 5, 1, 5, 15, 0, '/dev/ttyUSB0'),
+(10, 'Polyphase R300', 'ITR23', NULL, 1, 2, 1, 1, 15, 1, '/dev/ttyUSB0'),
+(11, 'Kaifa MA310', '19720122', NULL, 1, 5, 1, 22, 15, 0, '/dev/ttyUSB0'),
+(12, 'Polyphase R300', '12453', NULL, 1, 5, 1, 23, 15, 0, '/dev/ttyUSB0'),
+(13, 'Kamstrup Mul402', '1482', NULL, 1, 5, 1, 24, 15, 0, '/dev/ttyUSB0'),
+(14, 'Echelon', '197501025',    NULL, 1, 5, 1, 25, 15, 0, '/dev/ttyUSB0'),
+(15, 'Echelon', '197501026',    NULL, 1, 5, 1, 26, 15, 0, '/dev/ttyUSB0'),
+(16, 'Echelon', '197501026',    NULL, 1, 5, 1, 27, 15, 0, '/dev/ttyUSB0'),
+(17, 'EDMI Mk10D', '02123',     NULL, 1, 5, 1, 6, 15, 0, '/dev/ttyUSB0'),
+(18, 'EDMI Mk10D', '02124',     NULL, 1, 5, 1, 7, 15, 0, '/dev/ttyUSB0'),
+(19, 'EDMI Mk10D', '02125',     NULL, 1, 5, 1, 8, 15, 0, '/dev/ttyUSB0'),
+(20, 'EDMI Mk10D', '02126',     NULL, 1, 5, 1, 9, 15, 0, '/dev/ttyUSB0'),
+(21, 'Kamstrup Mu4020', '070304-150-1',  NULL, 1, 4, 1, 10, 15, 0, '/dev/ttyUSB0'),
+(22, 'Kamstrup Mu4020', '070304-150-2',  NULL, 1, 4, 1, 11, 15, 0, '/dev/ttyUSB0'),
+(23, 'Kamstrup Mu4020', '070304-150-3',  NULL, 1, 4, 1, 12, 15, 0, '/dev/ttyUSB0'),
+(24, 'Kamstrup Mu4020', '070304-150-4',  NULL, 1, 4, 1, 13, 15, 0, '/dev/ttyUSB0'),
+(25, 'Kamstrup Mu4020', '070304-150-5',  NULL, 1, 4, 1, 14, 15, 0, '/dev/ttyUSB0'),
+(26, 'Kamstrup Mu4020', '070304-150-6',  NULL, 1, 4, 1, 15, 15, 0, '/dev/ttyUSB0'),
+(27, 'Echelon', '2016-01a',    NULL, 1, 5, 1, 2, 15, 0, '/dev/ttyUSB0'),
+(28, 'EDMI Mk10D', '2017-02a',     NULL, 1, 5, 1, 3, 15, 0, '/dev/ttyUSB0');
+
+
 
 -- meter_data itself
-INSERT INTO `meter_data` (`data_id`, `meter_id`, `timestamp`, `count_total`, `count_register1`, `count_register2`, `count_register3`, `count_register4`, `power_p1`, `power_p2`, `power_p3`, `work_p1`, `work_p2`, `work_p3`, `frequency`, `voltage`) VALUES
-(1, 2, '2016-11-05 18:15:13', 241.52, 116.97, 124.56, 0, 0, 0, -1, -1, -1, -1, -1, 50.02, 237.59);
+--INSERT INTO `meter_data` (`data_id`, `meter_id`, `timestamp`, `count_total`, `count_register1`, `count_register2`, `count_register3`, `count_register4`, `power_p1`, `power_p2`, `power_p3`, `work_p1`, `work_p2`, `work_p3`, `frequency`, `voltage`) VALUES
+--(1, 2, '2016-11-05 18:15:13', 241.52, 116.97, 124.56, 0, 0, 0, -1, -1, -1, -1, -1, 50.02, 237.59);
