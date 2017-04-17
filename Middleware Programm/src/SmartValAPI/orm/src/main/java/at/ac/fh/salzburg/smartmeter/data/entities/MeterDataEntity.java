@@ -1,11 +1,12 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
-public class LastDataEntity {
+@Entity
+@Table(name = "meter_data", schema = "smart_meter", catalog = "")
+@IdClass(MeterDataEntityPK.class)
+public class MeterDataEntity {
     private int dataId;
     private int meterId;
     private Timestamp timestamp;
@@ -23,6 +24,8 @@ public class LastDataEntity {
     private Double frequency;
     private Double voltage;
 
+    @Id
+    @Column(name = "data_id")
     public int getDataId() {
         return dataId;
     }
@@ -31,6 +34,8 @@ public class LastDataEntity {
         this.dataId = dataId;
     }
 
+    @Id
+    @Column(name = "meter_id")
     public int getMeterId() {
         return meterId;
     }
@@ -39,6 +44,8 @@ public class LastDataEntity {
         this.meterId = meterId;
     }
 
+    @Basic
+    @Column(name = "timestamp")
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -47,6 +54,8 @@ public class LastDataEntity {
         this.timestamp = timestamp;
     }
 
+    @Basic
+    @Column(name = "count_total")
     public Double getCountTotal() {
         return countTotal;
     }
@@ -55,6 +64,8 @@ public class LastDataEntity {
         this.countTotal = countTotal;
     }
 
+    @Basic
+    @Column(name = "count_register1")
     public Double getCountRegister1() {
         return countRegister1;
     }
@@ -63,6 +74,8 @@ public class LastDataEntity {
         this.countRegister1 = countRegister1;
     }
 
+    @Basic
+    @Column(name = "count_register2")
     public Double getCountRegister2() {
         return countRegister2;
     }
@@ -71,6 +84,8 @@ public class LastDataEntity {
         this.countRegister2 = countRegister2;
     }
 
+    @Basic
+    @Column(name = "count_register3")
     public Double getCountRegister3() {
         return countRegister3;
     }
@@ -79,6 +94,8 @@ public class LastDataEntity {
         this.countRegister3 = countRegister3;
     }
 
+    @Basic
+    @Column(name = "count_register4")
     public Double getCountRegister4() {
         return countRegister4;
     }
@@ -87,6 +104,8 @@ public class LastDataEntity {
         this.countRegister4 = countRegister4;
     }
 
+    @Basic
+    @Column(name = "power_p1")
     public Double getPowerP1() {
         return powerP1;
     }
@@ -95,6 +114,8 @@ public class LastDataEntity {
         this.powerP1 = powerP1;
     }
 
+    @Basic
+    @Column(name = "power_p2")
     public Double getPowerP2() {
         return powerP2;
     }
@@ -103,6 +124,8 @@ public class LastDataEntity {
         this.powerP2 = powerP2;
     }
 
+    @Basic
+    @Column(name = "power_p3")
     public Double getPowerP3() {
         return powerP3;
     }
@@ -111,6 +134,8 @@ public class LastDataEntity {
         this.powerP3 = powerP3;
     }
 
+    @Basic
+    @Column(name = "work_p1")
     public Double getWorkP1() {
         return workP1;
     }
@@ -119,6 +144,8 @@ public class LastDataEntity {
         this.workP1 = workP1;
     }
 
+    @Basic
+    @Column(name = "work_p2")
     public Double getWorkP2() {
         return workP2;
     }
@@ -127,6 +154,8 @@ public class LastDataEntity {
         this.workP2 = workP2;
     }
 
+    @Basic
+    @Column(name = "work_p3")
     public Double getWorkP3() {
         return workP3;
     }
@@ -135,6 +164,8 @@ public class LastDataEntity {
         this.workP3 = workP3;
     }
 
+    @Basic
+    @Column(name = "frequency")
     public Double getFrequency() {
         return frequency;
     }
@@ -143,6 +174,8 @@ public class LastDataEntity {
         this.frequency = frequency;
     }
 
+    @Basic
+    @Column(name = "voltage")
     public Double getVoltage() {
         return voltage;
     }
@@ -156,7 +189,7 @@ public class LastDataEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LastDataEntity that = (LastDataEntity) o;
+        MeterDataEntity that = (MeterDataEntity) o;
 
         if (dataId != that.dataId) return false;
         if (meterId != that.meterId) return false;

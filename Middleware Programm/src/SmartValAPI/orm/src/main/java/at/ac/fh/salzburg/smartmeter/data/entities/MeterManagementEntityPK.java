@@ -1,10 +1,9 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.io.Serializable;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
 public class MeterManagementEntityPK implements Serializable {
     private int idMeter;
     private int idType;
@@ -12,6 +11,8 @@ public class MeterManagementEntityPK implements Serializable {
     private int idProtocol;
     private int idCustomer;
 
+    @Column(name = "id_meter")
+    @Id
     public int getIdMeter() {
         return idMeter;
     }
@@ -20,6 +21,8 @@ public class MeterManagementEntityPK implements Serializable {
         this.idMeter = idMeter;
     }
 
+    @Column(name = "id_type")
+    @Id
     public int getIdType() {
         return idType;
     }
@@ -28,6 +31,8 @@ public class MeterManagementEntityPK implements Serializable {
         this.idType = idType;
     }
 
+    @Column(name = "id_manufactor")
+    @Id
     public int getIdManufactor() {
         return idManufactor;
     }
@@ -36,6 +41,8 @@ public class MeterManagementEntityPK implements Serializable {
         this.idManufactor = idManufactor;
     }
 
+    @Column(name = "id_protocol")
+    @Id
     public int getIdProtocol() {
         return idProtocol;
     }
@@ -44,6 +51,8 @@ public class MeterManagementEntityPK implements Serializable {
         this.idProtocol = idProtocol;
     }
 
+    @Column(name = "id_customer")
+    @Id
     public int getIdCustomer() {
         return idCustomer;
     }

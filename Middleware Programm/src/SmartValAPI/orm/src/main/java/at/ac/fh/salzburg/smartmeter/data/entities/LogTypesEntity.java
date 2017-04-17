@@ -1,12 +1,15 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "log_types", schema = "smart_meter", catalog = "")
 public class LogTypesEntity {
     private int typesId;
     private String typesDescription;
 
+    @Id
+    @Column(name = "types_id")
     public int getTypesId() {
         return typesId;
     }
@@ -15,6 +18,8 @@ public class LogTypesEntity {
         this.typesId = typesId;
     }
 
+    @Basic
+    @Column(name = "types_description")
     public String getTypesDescription() {
         return typesDescription;
     }

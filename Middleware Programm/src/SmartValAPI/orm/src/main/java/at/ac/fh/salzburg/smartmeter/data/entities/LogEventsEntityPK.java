@@ -1,14 +1,15 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.io.Serializable;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
 public class LogEventsEntityPK implements Serializable {
     private int logId;
     private int idType;
 
+    @Column(name = "log_id")
+    @Id
     public int getLogId() {
         return logId;
     }
@@ -17,6 +18,8 @@ public class LogEventsEntityPK implements Serializable {
         this.logId = logId;
     }
 
+    @Column(name = "id_type")
+    @Id
     public int getIdType() {
         return idType;
     }

@@ -1,10 +1,13 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
+
+@Table(name = "last_events", schema = "smart_meter", catalog = "")
 public class LastEventsEntity {
     private int logId;
     private int idType;
@@ -12,6 +15,8 @@ public class LastEventsEntity {
     private String sourceTarget;
     private Timestamp timestamp;
 
+    @Basic
+    @Column(name = "log_id")
     public int getLogId() {
         return logId;
     }
@@ -20,6 +25,8 @@ public class LastEventsEntity {
         this.logId = logId;
     }
 
+    @Basic
+    @Column(name = "id_type")
     public int getIdType() {
         return idType;
     }
@@ -28,6 +35,8 @@ public class LastEventsEntity {
         this.idType = idType;
     }
 
+    @Basic
+    @Column(name = "content")
     public String getContent() {
         return content;
     }
@@ -36,6 +45,8 @@ public class LastEventsEntity {
         this.content = content;
     }
 
+    @Basic
+    @Column(name = "source_target")
     public String getSourceTarget() {
         return sourceTarget;
     }
@@ -44,6 +55,8 @@ public class LastEventsEntity {
         this.sourceTarget = sourceTarget;
     }
 
+    @Basic
+    @Column(name = "timestamp")
     public Timestamp getTimestamp() {
         return timestamp;
     }

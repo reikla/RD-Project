@@ -1,14 +1,15 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.io.Serializable;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
 public class MeterDataEntityPK implements Serializable {
     private int dataId;
     private int meterId;
 
+    @Column(name = "data_id")
+    @Id
     public int getDataId() {
         return dataId;
     }
@@ -17,6 +18,8 @@ public class MeterDataEntityPK implements Serializable {
         this.dataId = dataId;
     }
 
+    @Column(name = "meter_id")
+    @Id
     public int getMeterId() {
         return meterId;
     }

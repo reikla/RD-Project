@@ -1,8 +1,10 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "meter_management", schema = "smart_meter", catalog = "")
+@IdClass(MeterManagementEntityPK.class)
 public class MeterManagementEntity {
     private int idMeter;
     private String description;
@@ -16,6 +18,8 @@ public class MeterManagementEntity {
     private Byte active;
     private String port;
 
+    @Id
+    @Column(name = "id_meter")
     public int getIdMeter() {
         return idMeter;
     }
@@ -24,6 +28,8 @@ public class MeterManagementEntity {
         this.idMeter = idMeter;
     }
 
+    @Basic
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -32,6 +38,8 @@ public class MeterManagementEntity {
         this.description = description;
     }
 
+    @Basic
+    @Column(name = "serial")
     public String getSerial() {
         return serial;
     }
@@ -40,6 +48,8 @@ public class MeterManagementEntity {
         this.serial = serial;
     }
 
+    @Basic
+    @Column(name = "key")
     public String getKey() {
         return key;
     }
@@ -48,6 +58,8 @@ public class MeterManagementEntity {
         this.key = key;
     }
 
+    @Id
+    @Column(name = "id_type")
     public int getIdType() {
         return idType;
     }
@@ -56,6 +68,8 @@ public class MeterManagementEntity {
         this.idType = idType;
     }
 
+    @Id
+    @Column(name = "id_manufactor")
     public int getIdManufactor() {
         return idManufactor;
     }
@@ -64,6 +78,8 @@ public class MeterManagementEntity {
         this.idManufactor = idManufactor;
     }
 
+    @Id
+    @Column(name = "id_protocol")
     public int getIdProtocol() {
         return idProtocol;
     }
@@ -72,6 +88,8 @@ public class MeterManagementEntity {
         this.idProtocol = idProtocol;
     }
 
+    @Id
+    @Column(name = "id_customer")
     public int getIdCustomer() {
         return idCustomer;
     }
@@ -80,6 +98,8 @@ public class MeterManagementEntity {
         this.idCustomer = idCustomer;
     }
 
+    @Basic
+    @Column(name = "period")
     public Integer getPeriod() {
         return period;
     }
@@ -88,6 +108,8 @@ public class MeterManagementEntity {
         this.period = period;
     }
 
+    @Basic
+    @Column(name = "active")
     public Byte getActive() {
         return active;
     }
@@ -96,6 +118,8 @@ public class MeterManagementEntity {
         this.active = active;
     }
 
+    @Basic
+    @Column(name = "port")
     public String getPort() {
         return port;
     }

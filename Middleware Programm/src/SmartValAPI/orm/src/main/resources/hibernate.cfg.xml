@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"/>
+        <property name="connection.url">jdbc:mysql://localhost:3306/smart_meter</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <mapping class="at.ac.fh.salzburg.smartmeter.data.entities.CustomerEntity"/>
+        <mapping class="at.ac.fh.salzburg.smartmeter.data.entities.LogEventsEntity"/>
+        <mapping class="at.ac.fh.salzburg.smartmeter.data.entities.LogTypesEntity"/>
+        <mapping class="at.ac.fh.salzburg.smartmeter.data.entities.MeterDataEntity"/>
+        <mapping class="at.ac.fh.salzburg.smartmeter.data.entities.MeterManagementEntity"/>
+        <mapping class="at.ac.fh.salzburg.smartmeter.data.entities.MeterManufactorEntity"/>
+        <mapping class="at.ac.fh.salzburg.smartmeter.data.entities.MeterProtocolEntity"/>
+        <mapping class="at.ac.fh.salzburg.smartmeter.data.entities.MeterTypeEntity"/>
+        <!--<mapping class="at.ac.fh.salzburg.smartmeter.data.entities.LastDataEntity"/>-->
+        <!--<mapping class="at.ac.fh.salzburg.smartmeter.data.entities.LastEventsEntity"/>-->
+        <!-- <property name="connection.username"/> -->
+        <!-- <property name="connection.password"/> -->
+
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

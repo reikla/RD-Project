@@ -1,20 +1,25 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
-public class MeterManufactorEntity {
-    private int manufactorId;
+import javax.persistence.*;
+
+@Entity
+@Table(name = "meter_type", schema = "smart_meter", catalog = "")
+public class MeterTypeEntity {
+    private int typeId;
     private String description;
 
-    public int getManufactorId() {
-        return manufactorId;
+    @Id
+    @Column(name = "type_id")
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setManufactorId(int manufactorId) {
-        this.manufactorId = manufactorId;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
+    @Basic
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -28,9 +33,9 @@ public class MeterManufactorEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MeterManufactorEntity that = (MeterManufactorEntity) o;
+        MeterTypeEntity that = (MeterTypeEntity) o;
 
-        if (manufactorId != that.manufactorId) return false;
+        if (typeId != that.typeId) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
 
         return true;
@@ -38,7 +43,7 @@ public class MeterManufactorEntity {
 
     @Override
     public int hashCode() {
-        int result = manufactorId;
+        int result = typeId;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }

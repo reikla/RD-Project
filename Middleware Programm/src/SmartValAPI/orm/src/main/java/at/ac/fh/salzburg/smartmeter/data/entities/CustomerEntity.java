@@ -1,8 +1,9 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "customer", schema = "smart_meter", catalog = "")
 public class CustomerEntity {
     private int customerId;
     private String lastname;
@@ -15,6 +16,8 @@ public class CustomerEntity {
     private String signature;
     private String key;
 
+    @Id
+    @Column(name = "customer_id")
     public int getCustomerId() {
         return customerId;
     }
@@ -23,6 +26,8 @@ public class CustomerEntity {
         this.customerId = customerId;
     }
 
+    @Basic
+    @Column(name = "lastname")
     public String getLastname() {
         return lastname;
     }
@@ -31,6 +36,8 @@ public class CustomerEntity {
         this.lastname = lastname;
     }
 
+    @Basic
+    @Column(name = "firstname")
     public String getFirstname() {
         return firstname;
     }
@@ -39,6 +46,8 @@ public class CustomerEntity {
         this.firstname = firstname;
     }
 
+    @Basic
+    @Column(name = "street")
     public String getStreet() {
         return street;
     }
@@ -47,6 +56,8 @@ public class CustomerEntity {
         this.street = street;
     }
 
+    @Basic
+    @Column(name = "postal_code")
     public String getPostalCode() {
         return postalCode;
     }
@@ -55,6 +66,8 @@ public class CustomerEntity {
         this.postalCode = postalCode;
     }
 
+    @Basic
+    @Column(name = "city")
     public String getCity() {
         return city;
     }
@@ -63,6 +76,8 @@ public class CustomerEntity {
         this.city = city;
     }
 
+    @Basic
+    @Column(name = "alias")
     public String getAlias() {
         return alias;
     }
@@ -71,6 +86,8 @@ public class CustomerEntity {
         this.alias = alias;
     }
 
+    @Basic
+    @Column(name = "company_customer_id")
     public String getCompanyCustomerId() {
         return companyCustomerId;
     }
@@ -79,6 +96,8 @@ public class CustomerEntity {
         this.companyCustomerId = companyCustomerId;
     }
 
+    @Basic
+    @Column(name = "signature")
     public String getSignature() {
         return signature;
     }
@@ -87,6 +106,8 @@ public class CustomerEntity {
         this.signature = signature;
     }
 
+    @Basic
+    @Column(name = "key")
     public String getKey() {
         return key;
     }

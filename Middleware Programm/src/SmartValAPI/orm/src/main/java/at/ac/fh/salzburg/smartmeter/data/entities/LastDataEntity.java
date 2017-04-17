@@ -1,11 +1,14 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
-public class MeterDataEntity {
+@Entity
+@Table(name = "last_data", schema = "smart_meter", catalog = "")
+public class LastDataEntity {
     private int dataId;
     private int meterId;
     private Timestamp timestamp;
@@ -23,6 +26,8 @@ public class MeterDataEntity {
     private Double frequency;
     private Double voltage;
 
+    @Basic
+    @Column(name = "data_id")
     public int getDataId() {
         return dataId;
     }
@@ -31,6 +36,8 @@ public class MeterDataEntity {
         this.dataId = dataId;
     }
 
+    @Basic
+    @Column(name = "meter_id")
     public int getMeterId() {
         return meterId;
     }
@@ -39,6 +46,8 @@ public class MeterDataEntity {
         this.meterId = meterId;
     }
 
+    @Basic
+    @Column(name = "timestamp")
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -47,6 +56,8 @@ public class MeterDataEntity {
         this.timestamp = timestamp;
     }
 
+    @Basic
+    @Column(name = "count_total")
     public Double getCountTotal() {
         return countTotal;
     }
@@ -55,6 +66,8 @@ public class MeterDataEntity {
         this.countTotal = countTotal;
     }
 
+    @Basic
+    @Column(name = "count_register1")
     public Double getCountRegister1() {
         return countRegister1;
     }
@@ -63,6 +76,8 @@ public class MeterDataEntity {
         this.countRegister1 = countRegister1;
     }
 
+    @Basic
+    @Column(name = "count_register2")
     public Double getCountRegister2() {
         return countRegister2;
     }
@@ -71,6 +86,8 @@ public class MeterDataEntity {
         this.countRegister2 = countRegister2;
     }
 
+    @Basic
+    @Column(name = "count_register3")
     public Double getCountRegister3() {
         return countRegister3;
     }
@@ -79,6 +96,8 @@ public class MeterDataEntity {
         this.countRegister3 = countRegister3;
     }
 
+    @Basic
+    @Column(name = "count_register4")
     public Double getCountRegister4() {
         return countRegister4;
     }
@@ -87,6 +106,8 @@ public class MeterDataEntity {
         this.countRegister4 = countRegister4;
     }
 
+    @Basic
+    @Column(name = "power_p1")
     public Double getPowerP1() {
         return powerP1;
     }
@@ -95,6 +116,8 @@ public class MeterDataEntity {
         this.powerP1 = powerP1;
     }
 
+    @Basic
+    @Column(name = "power_p2")
     public Double getPowerP2() {
         return powerP2;
     }
@@ -103,6 +126,8 @@ public class MeterDataEntity {
         this.powerP2 = powerP2;
     }
 
+    @Basic
+    @Column(name = "power_p3")
     public Double getPowerP3() {
         return powerP3;
     }
@@ -111,6 +136,8 @@ public class MeterDataEntity {
         this.powerP3 = powerP3;
     }
 
+    @Basic
+    @Column(name = "work_p1")
     public Double getWorkP1() {
         return workP1;
     }
@@ -119,6 +146,8 @@ public class MeterDataEntity {
         this.workP1 = workP1;
     }
 
+    @Basic
+    @Column(name = "work_p2")
     public Double getWorkP2() {
         return workP2;
     }
@@ -127,6 +156,8 @@ public class MeterDataEntity {
         this.workP2 = workP2;
     }
 
+    @Basic
+    @Column(name = "work_p3")
     public Double getWorkP3() {
         return workP3;
     }
@@ -135,6 +166,8 @@ public class MeterDataEntity {
         this.workP3 = workP3;
     }
 
+    @Basic
+    @Column(name = "frequency")
     public Double getFrequency() {
         return frequency;
     }
@@ -143,6 +176,8 @@ public class MeterDataEntity {
         this.frequency = frequency;
     }
 
+    @Basic
+    @Column(name = "voltage")
     public Double getVoltage() {
         return voltage;
     }
@@ -156,7 +191,7 @@ public class MeterDataEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MeterDataEntity that = (MeterDataEntity) o;
+        LastDataEntity that = (LastDataEntity) o;
 
         if (dataId != that.dataId) return false;
         if (meterId != that.meterId) return false;

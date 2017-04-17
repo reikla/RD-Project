@@ -1,13 +1,16 @@
-package at.ac.fh.salzburg;
+package at.ac.fh.salzburg.smartmeter.data.entities;
 
-/**
- * Created by reimarklammer on 28.03.17.
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "meter_protocol", schema = "smart_meter", catalog = "")
 public class MeterProtocolEntity {
     private int protocolId;
     private String protocol;
     private String dataScheme;
 
+    @Id
+    @Column(name = "protocol_id")
     public int getProtocolId() {
         return protocolId;
     }
@@ -16,6 +19,8 @@ public class MeterProtocolEntity {
         this.protocolId = protocolId;
     }
 
+    @Basic
+    @Column(name = "protocol")
     public String getProtocol() {
         return protocol;
     }
@@ -24,6 +29,8 @@ public class MeterProtocolEntity {
         this.protocol = protocol;
     }
 
+    @Basic
+    @Column(name = "data_scheme")
     public String getDataScheme() {
         return dataScheme;
     }
