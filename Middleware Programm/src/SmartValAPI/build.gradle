@@ -1,15 +1,17 @@
 subprojects{
     apply plugin: 'java'
+    apply plugin: 'idea'
     sourceCompatibility = 1.8
 
     repositories{
         mavenCentral()
-        maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+        //maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
 
     }
 }
-
 allprojects{
     group 'at.ac.fh-salzburg'
     version '1.0-SNAPSHOT'
+    ext { springBootVersion = '1.5.2.RELEASE' }
+
 }

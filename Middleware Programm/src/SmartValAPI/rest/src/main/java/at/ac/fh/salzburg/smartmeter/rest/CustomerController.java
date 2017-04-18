@@ -18,14 +18,6 @@ public class CustomerController {
     @Autowired
     private CustomerDao customerDao;
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-
-    @RequestMapping("/greeting")
-    public String greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return "Hello World";
-    }
-
     @RequestMapping("/admin/customer")
     @ResponseBody
     public CustomerEntity findByCustomerId( int id){

@@ -14,5 +14,4 @@ import java.util.List;
 @Repository
 public interface CustomerDao extends CrudRepository<CustomerEntity, Long> {
     CustomerEntity findByCustomerId(int customerId);
-    List<CustomerEntity> findAllByCustomerIdGreaterThan(int customerId);
 }

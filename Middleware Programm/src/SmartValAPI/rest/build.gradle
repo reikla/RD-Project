@@ -2,13 +2,10 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
-    }
+
 }
-
-
-apply plugin: 'org.springframework.boot'
+plugins { id "io.spring.dependency-management" version "1.0.0.RELEASE" }
+apply plugin: 'java'
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
@@ -27,4 +24,6 @@ jar {
     baseName = 'gs-rest-service'
     version =  '0.1.0'
 }
-
+dependencyManagement {
+    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
+}
