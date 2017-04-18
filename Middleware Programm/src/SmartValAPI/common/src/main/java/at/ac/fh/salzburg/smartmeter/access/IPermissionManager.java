@@ -5,4 +5,5 @@ package at.ac.fh.salzburg.smartmeter.access;
  */
 public interface IPermissionManager {
     boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext);
+    String GiveGroupName(IUserContext userContext);
 }

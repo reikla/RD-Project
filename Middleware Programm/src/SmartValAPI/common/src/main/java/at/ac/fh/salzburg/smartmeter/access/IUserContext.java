@@ -6,7 +6,6 @@ package at.ac.fh.salzburg.smartmeter.access;
  */
 public interface IUserContext {
 
-    String givenname();
-    String surname();
+    String userid();
     String password();
 }
