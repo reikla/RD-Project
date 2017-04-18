@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 
-@Entity
 @Table(name = "last_data", schema = "smart_meter", catalog = "")
 public class LastDataEntity {
     private int dataId;

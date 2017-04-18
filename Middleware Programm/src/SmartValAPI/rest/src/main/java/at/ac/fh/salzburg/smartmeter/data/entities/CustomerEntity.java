@@ -1,5 +1,8 @@
 package at.ac.fh.salzburg.smartmeter.data.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.annotation.Generated;
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +20,8 @@ public class CustomerEntity {
     private String key;
 
     @Id
+    @GenericGenerator(name="generator", strategy="increment")
+    @GeneratedValue(generator="generator")
     @Column(name = "customer_id")
     public int getCustomerId() {
         return customerId;
@@ -107,7 +112,7 @@ public class CustomerEntity {
     }
 
     @Basic
-    @Column(name = "key")
+    @Column(name = "`key")
     public String getKey() {
         return key;
     }

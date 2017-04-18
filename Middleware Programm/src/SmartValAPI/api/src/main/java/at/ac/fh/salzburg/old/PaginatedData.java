@@ -1,7 +1,7 @@
 package at.ac.fh.salzburg.old;
 
 import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
-import at.ac.fh.salzburg.smartmeter.data.QueryResult;
+import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
 
 /**
  * Class that encapsulates paginated data

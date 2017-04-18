@@ -1,5 +1,3 @@
-import at.ac.fh.salzburg.smartmeter.data.CustomerManager;
-import at.ac.fh.salzburg.smartmeter.data.entities.CustomerEntity;
 
 /**
  * Created by reimarklammer on 14.03.17.
@@ -27,9 +25,9 @@ public class MyApplication {
 //
 //        queryResult.getData();
 
-        CustomerManager manager = new CustomerManager();
+       // CustomerManager manager = new CustomerManager();
 
-        final CustomerEntity customer = manager.getCustomer(1);
-        System.out.println("Customer: " + customer.getFirstname());
+        //final CustomerEntity customer = manager.getCustomer(1);
+        //System.out.println("Customer: " + customer.getFirstname());
     }
 }

@@ -2,7 +2,6 @@ package at.ac.fh.salzburg.smartmeter.data.entities;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 

@@ -1,8 +1,8 @@
 package at.ac.fh.salzburg.smartmeter.access;
 
 import at.ac.fh.salzburg.smartmeter.Constants;
-import at.ac.fh.salzburg.smartmeter.data.QueryResult;
-import at.ac.fh.salzburg.smartmeter.data.StringListQueryResult;
+import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
+import at.ac.fh.salzburg.smartmeter.data.data.StringListQueryResult;
 
 import java.sql.*;
 

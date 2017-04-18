@@ -1,6 +1,6 @@
 package at.ac.fh.salzburg.smartmeter.access;
 
-import at.ac.fh.salzburg.smartmeter.data.QueryResult;
+import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
 
 /**
  * The central class to query the Database

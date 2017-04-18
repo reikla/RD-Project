@@ -2,7 +2,7 @@ package at.ac.fh.salzburg.old;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
-import at.ac.fh.salzburg.smartmeter.data.QueryResult;
+import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
 
 /**
  * Interface used for Paginated data Access
