@@ -23,6 +23,12 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
     {
         ldapquery neu = new ldapquery();
 
+        IUserContext kundea = new IUserContext() {
+            @Override
+            public String userid() { return "kunde.a";}
+            @Override
+            public String password() { return "kunde.a";}
+        };
         IUserContext kundeb = new IUserContext() {
             @Override
             public String userid() { return "kunde.b";}
@@ -35,19 +41,14 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
             @Override
             public String password() { return "max.mustermann";}
         };
-        IUserContext kundea = new IUserContext() {
-            @Override
-            public String userid() { return "kunde.a";}
-            @Override
-            public String password() { return "kunde.a";}
-        };
 
         IDataSourceContext ID1234567890 = () -> "1234567890";
+        IDataSourceContext ID9876543210 = () -> "9876543210";
         IDataSourceContext ID12345 = () -> "12345";
+        IDataSourceContext ID123456 = () -> "123456";
 
-
-        System.out.print(neu.IsAllowedToAccess(maxmustermann,ID1234567890));
-        System.out.print(neu.GiveGroupName(maxmustermann));
+        System.out.print(neu.IsAllowedToAccess(kundea,ID123456));
+        System.out.print(neu.GiveGroupName(kundea));
     }
 
     //mitgegebener User darf auf mitgegebenen Smartmeter zugreifen
@@ -78,7 +79,7 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
 
         return false;
     }
-    //
+    //gibt die Gruppenzugehörigkeit des mitgegebenen users mit in String
     public String GiveGroupName(IUserContext userContext) {
 
         try {
@@ -86,28 +87,27 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
             ctx = getDirContext();
 
             //Hier noch Suche nach allen gruppen des LDAP einfügen
-            String Groups = "Forschungszentrum";
+            String[] Groups = new String[5];
+            Groups[0] = "Administrator";
+            Groups[1] = "Energieberater";
+            Groups[2] = "Forschungszentrum";
+            Groups[3] = "Kunden";
+            Groups[4] = "Netzbetreiber";
 
             String searchBase = "OU=Groups,DC=maxcrc,DC=com";
 
-            String searchFilter = "(&(cn="+Groups+")(memberUid="+userContext.userid()+"))";
-            //String searchFilter = ("objectClass=posixGroup");
-            SearchControls sCtrl = new SearchControls();
-            sCtrl.setSearchScope(SearchControls.SUBTREE_SCOPE);
-            NamingEnumeration answer = ctx.search(searchBase, searchFilter, sCtrl);
+            for(int i = 0; i< 5; i++){
 
-            boolean pass = false;
-            if (answer.hasMoreElements()) {
+                String searchFilter = "(&(cn="+Groups[i]+")(memberUid="+userContext.userid()+"))";
+                SearchControls sCtrl = new SearchControls();
+                sCtrl.setSearchScope(SearchControls.SUBTREE_SCOPE);
+                NamingEnumeration answer = ctx.search(searchBase, searchFilter, sCtrl);
 
-                pass = true;
+                if(answer.hasMoreElements()){
+                    return "\n"+Groups[i];
+                }
             }
 
-            if (pass) {
-
-                return "\nI ghea zua Gruppe: "+ Groups;
-            } else {
-                return "\nI ghea ned zua Gruppe: " + Groups;
-            }
         } catch (NamingException ex) {
             //Do something with the exception...
         } catch (Exception e) {
