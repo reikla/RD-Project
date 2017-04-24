@@ -8,7 +8,9 @@ import java.io.*;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -17,29 +19,43 @@ import javax.net.ssl.*;
 
 import static java.lang.System.*;
 
-public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSourceContext{
+public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSourceContext {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         ldapquery neu = new ldapquery();
 
         IUserContext kundea = new IUserContext() {
             @Override
-            public String userid() { return "kunde.a";}
+            public String userid() {
+                return "kunde.a";
+            }
+
             @Override
-            public String password() { return "kunde.a";}
+            public String password() {
+                return "kunde.a";
+            }
         };
         IUserContext kundeb = new IUserContext() {
             @Override
-            public String userid() { return "kunde.b";}
+            public String userid() {
+                return "kunde.b";
+            }
+
             @Override
-            public String password() { return "kunde.b";}
+            public String password() {
+                return "kunde.b";
+            }
         };
         IUserContext maxmustermann = new IUserContext() {
             @Override
-            public String userid() { return "max.mustermann";}
+            public String userid() {
+                return "max.mustermann";
+            }
+
             @Override
-            public String password() { return "max.mustermann";}
+            public String password() {
+                return "max.mustermann";
+            }
         };
 
         IDataSourceContext ID1234567890 = () -> "1234567890";
@@ -47,13 +63,15 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
         IDataSourceContext ID12345 = () -> "12345";
         IDataSourceContext ID123456 = () -> "123456";
 
-        System.out.print(neu.IsAllowedToAccess(kundea,ID123456));
+        System.out.print(neu.IsAllowedToAccess(kundea, ID12345));
         System.out.print(neu.GiveGroupName(kundea));
     }
 
     //mitgegebener User darf auf mitgegebenen Smartmeter zugreifen
     @Override
     public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
+
+        //List MeterIDs = new ArrayList();
 
         try {
             DirContext ctx;
@@ -62,17 +80,26 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
             BasicAttributes searchAttrs = new BasicAttributes();
             searchAttrs.put("uid",userContext.userid());
             searchAttrs.put("userPassword", userContext.password());
-            searchAttrs.put("gecos", dataSourceContext.MeterID());
-            NamingEnumeration answer = ctx.search("ldap://193.170.119.66:389/ou=People, dc=maxcrc, dc=com", searchAttrs);
+            searchAttrs.put("description", dataSourceContext.MeterID());
+            NamingEnumeration<SearchResult> answer = ctx.search("ldap://193.170.119.66:389/ou=People, dc=maxcrc, dc=com", searchAttrs);
 
-            if (formatResults(answer) != 0) {
-                ctx.close();
-                return true;
+            while (answer.hasMore()) {
+
+                SearchResult searchResult = answer.next();
+                Attributes attributes = searchResult.getAttributes();
+                Attribute MeterID = attributes.get("description");
+
+                for(int i = 0; i < MeterID.size(); i++) {
+                    String ID = MeterID.get(i).toString();
+                    if (MeterID != null && (ID.equals(dataSourceContext.MeterID()))) {
+                        ctx.close();
+                        return true;
+                    }
+                }
             }
-            else{
                 ctx.close();
                 return false;
-            }
+
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -127,20 +154,6 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
         env.put(Context.SECURITY_CREDENTIALS,"secret");
         DirContext ctx = new InitialDirContext(env);
         return ctx;
-    }
-    public  int formatResults(NamingEnumeration answer) throws Exception{
-        int result=0;
-        try {
-            while (answer.hasMore()) {
-                SearchResult sr = (SearchResult)answer.next();
-                out.println(sr.getName());
-
-                result++;
-            }
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
     public void SSLConnection(){
 
