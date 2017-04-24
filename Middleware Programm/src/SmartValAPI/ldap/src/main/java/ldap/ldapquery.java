@@ -3,6 +3,7 @@ package ldap;
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import at.ac.fh.salzburg.smartmeter.ldap.ILdapPermissionManager;
+import com.sun.org.apache.xml.internal.serializer.utils.Utils;
 
 import java.io.*;
 import java.security.KeyStore;
@@ -31,6 +32,11 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
             }
 
             @Override
+            public String useridnumber() {
+                return null;
+            }
+
+            @Override
             public String password() {
                 return "kunde.a";
             }
@@ -45,6 +51,10 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
             public String password() {
                 return "kunde.b";
             }
+            @Override
+            public String useridnumber() {
+                return null;
+            }
         };
         IUserContext maxmustermann = new IUserContext() {
             @Override
@@ -56,6 +66,28 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
             public String password() {
                 return "max.mustermann";
             }
+            @Override
+            public String useridnumber() {
+                return null;
+            }
+        };
+
+        //Neu erstellen
+        IUserContext JNDI = new IUserContext() {
+            @Override
+            public String userid() {
+                return "jn.di";
+            }
+
+            @Override
+            public String password() {
+                return "JNDI";
+            }
+
+            @Override
+            public String useridnumber() {
+                return "54321";
+            }
         };
 
         IDataSourceContext ID1234567890 = () -> "1234567890";
@@ -63,15 +95,16 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
         IDataSourceContext ID12345 = () -> "12345";
         IDataSourceContext ID123456 = () -> "123456";
 
-        System.out.print(neu.IsAllowedToAccess(kundea, ID12345));
-        System.out.print(neu.GiveGroupName(kundea));
+        ///neu.CreateUser(JNDI, ID12345);
+        //neu.DeleteUser(JNDI);
+
+        //System.out.print(neu.IsAllowedToAccess(maxmustermann, ID1234567890));
+        //System.out.print(neu.GiveGroupName(maxmustermann));
     }
 
     //mitgegebener User darf auf mitgegebenen Smartmeter zugreifen
     @Override
     public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
-
-        //List MeterIDs = new ArrayList();
 
         try {
             DirContext ctx;
@@ -83,7 +116,7 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
             searchAttrs.put("description", dataSourceContext.MeterID());
             NamingEnumeration<SearchResult> answer = ctx.search("ldap://193.170.119.66:389/ou=People, dc=maxcrc, dc=com", searchAttrs);
 
-            while (answer.hasMore()) {
+            while (answer.hasMoreElements()) {
 
                 SearchResult searchResult = answer.next();
                 Attributes attributes = searchResult.getAttributes();
@@ -97,13 +130,12 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
                     }
                 }
             }
-                ctx.close();
-                return false;
+            ctx.close();
+            return false;
 
         } catch (Exception e){
             e.printStackTrace();
         }
-
         return false;
     }
     //gibt die Gruppenzugehörigkeit des mitgegebenen users mit in String
@@ -142,6 +174,64 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
         }
 
         return "";
+    }
+    //Erstellt einen User und pusht Ihn ins LDAP
+    @Override
+    public boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
+
+        try {
+            DirContext ctx;
+            ctx = getDirContext();
+
+            //User Attributes
+            Attribute userCn = new BasicAttribute("cn", userContext.userid());
+            Attribute userUid = new BasicAttribute("uidNumber", userContext.useridnumber());
+            Attribute userGid = new BasicAttribute("gidNumber", "0");
+            Attribute homeDirectory = new BasicAttribute("homeDirectory", "/home/user/");
+            Attribute userSn = new BasicAttribute("sn", userContext.userid());
+            Attribute userPassword = new BasicAttribute("userPassword",userContext.password());
+            Attribute MeterID = new BasicAttribute("description",dataSourceContext.MeterID());
+
+            //ObjectClass attributes
+            Attribute oc = new BasicAttribute("objectClass");
+            oc.add("top");
+            oc.add("PosixAccount");
+            oc.add("inetOrgPerson");
+
+            Attributes entry = new BasicAttributes();
+            entry.put(userCn);
+            entry.put(MeterID);
+            entry.put(userUid);
+            entry.put(userGid);
+            entry.put(homeDirectory);
+            entry.put(userSn);
+            entry.put(userPassword);
+            entry.put(oc);
+
+            ctx.createSubcontext("uid="+userContext.userid()+",ou=People,dc=maxcrc,dc=com", entry);
+            return true;
+
+        } catch (NamingException e) {
+            System.err.println("AddUser: error adding entry." + e);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    //Löscht mitgegebenen Benutzer aus dem LDAP
+    @Override
+    public boolean DeleteUser(IUserContext userContext) {
+
+        try {
+            DirContext ctx;
+            ctx = getDirContext();
+            ctx.destroySubcontext("uid=" + userContext.userid() + ",ou=People,dc=maxcrc,dc=com");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public DirContext getDirContext() throws Exception{
@@ -232,15 +322,16 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
     public String userid() {
         return null;
     }
-
+    @Override
+    public String useridnumber() {
+        return null;
+    }
     @Override
     public String password() {
         return null;
     }
-
     @Override
     public String MeterID() {
         return null;
     }
-
 }
