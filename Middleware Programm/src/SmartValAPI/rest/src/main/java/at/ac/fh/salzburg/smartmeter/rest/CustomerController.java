@@ -18,16 +18,10 @@ public class CustomerController {
     @Autowired
     private CustomerDao customerDao;
 
-    @RequestMapping("/admin/customer")
+    @RequestMapping("/admin/customer/{id}")
     @ResponseBody
-    public CustomerEntity findByCustomerId( int id){
-        return customerDao.findByCustomerId(id);
-    }
-
-    @RequestMapping("/admin/customers")
-    @ResponseBody
-    public List<CustomerEntity> findCustomersById(int id){
-        return customerDao.findAllByCustomerIdGreaterThan(id);
+    public CustomerEntity readCustomer(@PathVariable int id){
+        return customerDao.findOne(id);
     }
 
     @RequestMapping(value = "/admin/customer", method = RequestMethod.PUT)
@@ -36,4 +30,16 @@ public class CustomerController {
         return customerDao.save(customer);
     }
 
+    @RequestMapping(value = "/admin/customer/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public CustomerEntity updateCustomer(@RequestBody CustomerEntity customer){
+        return customerDao.save(customer);
+    }
+
+    @RequestMapping(value = "/admin/customer/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public boolean deleteCustomer(@PathVariable int id){
+        customerDao.delete(id);
+        return true;
+    }
 }
