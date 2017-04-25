@@ -24,12 +24,6 @@ public class CustomerController {
         return customerDao.findByCustomerId(id);
     }
 
-    @RequestMapping("/admin/customers")
-    @ResponseBody
-    public List<CustomerEntity> findCustomersById(int id){
-        return customerDao.findAllByCustomerIdGreaterThan(id);
-    }
-
     @RequestMapping(value = "/admin/customer", method = RequestMethod.PUT)
     @ResponseBody
     public CustomerEntity createCustomer(@RequestBody CustomerEntity customer){
