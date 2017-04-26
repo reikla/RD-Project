@@ -17,12 +17,12 @@ public class LDAPContactDAO implements ContactDAO{
         this.ldapTemplate = ldapTemplate;
     }
 
-    public List getAllContactNames() {
+    public List getAllUserID() {
         return ldapTemplate.search("", "(objectClass=inetOrgPerson)",
                 new AttributesMapper() {
                     public Object mapFromAttributes(Attributes attrs)
                             throws NamingException {
-                        return attrs.get("cn").get();
+                        return attrs.get("uid").get();
                     }
                 });
     }
@@ -32,6 +32,5 @@ public class LDAPContactDAO implements ContactDAO{
         andFilter.and(new EqualsFilter("objectClass",objectclass));
         System.out.println("LDAP Query " + andFilter.encode());
         return ldapTemplate.search("", andFilter.encode(),new ContactAttributeMapper());
-
     }
 }

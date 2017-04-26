@@ -17,14 +17,12 @@ public class SpringFrameworkLDAPClient {
 
             ContactDAO ldapContact = (LDAPContactDAO)factory.getBean("ldapContact");
 
-            //List contactList = ldapContact.getContactDetails("30662");
-            List contactList =ldapContact.getAllContactNames();
+            List contactList =ldapContact.getAllUserID();
             System.out.println(contactList.size());
 
             int count = 0;
             for( int i = 0 ; i < contactList.size(); i++){
-                System.out.print("CN: " + contactList.get(i) + "\n");
-                //System.out.println("SAP: " + ((ContactDTO) contactList.get(i)).getSap());
+                System.out.print("uid: " + contactList.get(i) + "\n");
                 count++;
             }
             System.out.println("\n" + count);

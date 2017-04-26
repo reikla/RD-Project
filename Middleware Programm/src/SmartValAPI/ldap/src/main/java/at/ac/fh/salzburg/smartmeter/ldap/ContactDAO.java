@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface ContactDAO {
 
-    List getAllContactNames();
+    List getAllUserID();
     List getContactDetails(String commonName);
 }
