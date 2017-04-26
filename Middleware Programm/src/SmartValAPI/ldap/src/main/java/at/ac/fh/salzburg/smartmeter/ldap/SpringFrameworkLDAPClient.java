@@ -1,24 +1,33 @@
 package at.ac.fh.salzburg.smartmeter.ldap;
 
-import java.util.List;
-
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
-
 import org.springframework.dao.DataAccessException;
+
+import java.util.List;
 
 public class SpringFrameworkLDAPClient {
 
     public static void main(String[] args) {
-        try {
-            
-            XmlBeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("springldap.xml"));
-            ContactDAO ldapContact = (LDAPContactDAO)beanFactory.getBean("ldapTemplate");
 
-            List contactList = ldapContact.getContactDetails("Max","Mustermann");
+        try {
+            BeanFactory factory = new XmlBeanFactory(new ClassPathResource("springldap.xml"));
+            System.out.println(factory.toString() + "\n");
+
+            ContactDAO ldapContact = (LDAPContactDAO)factory.getBean("ldapContact");
+
+            //List contactList = ldapContact.getContactDetails("30662");
+            List contactList =ldapContact.getAllContactNames();
+            System.out.println(contactList.size());
+
+            int count = 0;
             for( int i = 0 ; i < contactList.size(); i++){
-                System.out.println("Contact Name " + contactList.get(i));
+                System.out.print("CN: " + contactList.get(i) + "\n");
+                //System.out.println("SAP: " + ((ContactDTO) contactList.get(i)).getSap());
+                count++;
             }
+            System.out.println("\n" + count);
 
         } catch (DataAccessException e) {
             System.out.println("Error occured " + e.getCause());

@@ -1,36 +1,27 @@
 package at.ac.fh.salzburg.smartmeter.ldap;
 
 public class ContactDTO {
-    String commonName;
-    String lastName;
-    String description;
-    public String getCommonName() {
-        return commonName;
+
+    String mail;
+    String sap;
+    public String getSap() {
+        return sap;
     }
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
+    public void setSap(String sap) {
+        this.sap = sap;
     }
-    public String getDescription() {
-        return description;
+    public String getMail() {
+        return mail;
     }
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+
     public String toString() {
         StringBuffer contactDTOStr = new StringBuffer("Person=[");
-        contactDTOStr.append(" Common Name = " + commonName);
-        contactDTOStr.append(", Last Name = " + lastName);
-        contactDTOStr.append(", Description = " + description);
+
+        contactDTOStr.append(" mail = " + mail);
         contactDTOStr.append(" ]");
         return contactDTOStr.toString();
     }
-
-
-
 }

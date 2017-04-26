@@ -1,55 +1,37 @@
 package at.ac.fh.salzburg.smartmeter.ldap;
 
-import org.springframework.ldap.NamingException;
 import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.ldap.filter.AndFilter;
+import org.springframework.ldap.filter.EqualsFilter;
 
-import javax.naming.directory.Attributes;
 import java.util.List;
 
-/**
- * Created by wiela on 25.04.2017.
- */
+import javax.naming.NamingException;
+import javax.naming.directory.Attributes;
+
 public class LDAPContactDAO implements ContactDAO{
     private LdapTemplate ldapTemplate;
+
     public void setLdapTemplate(LdapTemplate ldapTemplate) {
         this.ldapTemplate = ldapTemplate;
     }
 
-    @Override
     public List getAllContactNames() {
-        return ldapTemplate.search("", "(objectclass=person)",
+        return ldapTemplate.search("", "(objectClass=inetOrgPerson)",
                 new AttributesMapper() {
                     public Object mapFromAttributes(Attributes attrs)
                             throws NamingException {
-                        try {
-                            return attrs.get("cn").get();
-                        } catch (javax.naming.NamingException e) {
-                            e.printStackTrace();
-                        }
-                        return null;
+                        return attrs.get("cn").get();
                     }
                 });
     }
 
-    @Override
-    public List getContactDetails(String commonName, String lastName) {
-        return null;
-    }
-
-    @Override
-    public void insertContact(ContactDTO contactDTO) {
+    public List getContactDetails(String objectclass){
+        AndFilter andFilter = new AndFilter();
+        andFilter.and(new EqualsFilter("objectClass",objectclass));
+        System.out.println("LDAP Query " + andFilter.encode());
+        return ldapTemplate.search("", andFilter.encode(),new ContactAttributeMapper());
 
     }
-
-    @Override
-    public void updateContact(ContactDTO contactDTO) {
-
-    }
-
-    @Override
-    public void deleteContact(ContactDTO contactDTO) {
-
-    }
-
 }
