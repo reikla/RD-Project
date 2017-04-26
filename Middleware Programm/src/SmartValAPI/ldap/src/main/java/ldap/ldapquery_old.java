@@ -3,27 +3,17 @@ package ldap;
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import at.ac.fh.salzburg.smartmeter.ldap.ILdapPermissionManager;
-import com.sun.org.apache.xml.internal.serializer.utils.Utils;
 
-import java.io.*;
-import java.security.KeyStore;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.*;
-import javax.net.ssl.*;
 
-import static java.lang.System.*;
-
-public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSourceContext {
+public class ldapquery_old implements ILdapPermissionManager, IUserContext, IDataSourceContext {
 
     public static void main(String[] args) {
-        ldapquery neu = new ldapquery();
+        ldapquery_old neu = new ldapquery_old();
 
         IUserContext kundea = new IUserContext() {
             @Override

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+    <bean id="contextSource"
+          class="org.springframework.ldap.support.LdapContextSource">
+        <property name="url" value="ldap://193.170.119.66:389" />
+        <property name="base" value="dc=maxcrc,dc=com" />
+        <property name="userName" value="cn=Manager,dc=maxcrc,dc=com" />
+        <property name="password" value="secret" />
+        <property name="pool" value="true"/>
+    </bean>
+    <bean id="ldapTemplate" class="org.springframework.ldap.LdapTemplate">
+        <constructor-arg ref="contextSource" />
+    </bean>
+    <bean id="ldapContact"
+          class="src.main.java.at.ac.fh.salzburg.smartmeter.ldap.LDAPContactDAO">
+        <property name="ldapTemplate" ref="ldapTemplate" />
+    </bean>
+</beans>
