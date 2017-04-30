@@ -3,27 +3,17 @@ package ldap;
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import at.ac.fh.salzburg.smartmeter.ldap.ILdapPermissionManager;
-import com.sun.org.apache.xml.internal.serializer.utils.Utils;
 
-import java.io.*;
-import java.security.KeyStore;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.*;
-import javax.net.ssl.*;
 
-import static java.lang.System.*;
-
-public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSourceContext {
+public class ldapquery_old implements ILdapPermissionManager, IUserContext, IDataSourceContext {
 
     public static void main(String[] args) {
-        ldapquery neu = new ldapquery();
+        ldapquery_old neu = new ldapquery_old();
 
         IUserContext kundea = new IUserContext() {
             @Override
@@ -244,78 +234,6 @@ public class ldapquery implements ILdapPermissionManager, IUserContext, IDataSou
         env.put(Context.SECURITY_CREDENTIALS,"secret");
         DirContext ctx = new InitialDirContext(env);
         return ctx;
-    }
-    public void SSLConnection(){
-
-        try {
-
-        //Enable CRL check
-        setProperty("com.sun.security.enableCRLDP", "true");
-        setProperty("com.sun.net.ssl.checkRevocation","true");
-
-        //import jks truststore from filesystem
-        KeyStore trustStore = KeyStore.getInstance("jks");
-        InputStream truststore=new FileInputStream("development.cer");
-        trustStore.load(truststore, "123456".toCharArray());
-        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
-        trustManagerFactory.init(trustStore);
-
-        //import jks keystore from filesystem
-        KeyStore keyStore = KeyStore.getInstance("jks");
-        InputStream keystore=new FileInputStream("development.cer");
-        keyStore.load(keystore, "123456".toCharArray());
-        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
-        keyManagerFactory.init(keyStore, "1234".toCharArray());
-
-
-            //create SSLContext - https://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLContext.html
-            SSLContext context = SSLContext.getInstance("TLS");
-            context.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), new SecureRandom());
-
-            //create serversocket with configured context
-            SSLServerSocketFactory sslserversocketfactory = context.getServerSocketFactory();
-            SSLServerSocket sslserversocket = (SSLServerSocket) sslserversocketfactory.createServerSocket(9999);
-
-            //display SSL Parameter
-            out.println("SSL Parameters: " + sslserversocket.getSSLParameters());
-
-            //display initial client auth settings
-            out.println("initial Clientauth: " + sslserversocket.getNeedClientAuth());
-
-            //enable, to request client authentication
-            sslserversocket.setNeedClientAuth( true );
-
-            sslserversocket.setEnabledCipherSuites(sslserversocketfactory.getSupportedCipherSuites());
-
-            //display final client auth settings
-            out.println("final Clientauth: " + sslserversocket.getNeedClientAuth());
-
-            //create sslsocket
-            SSLSocket sslsocket = (SSLSocket) sslserversocket.accept();
-
-            //get remote certifiacte details
-            SSLSession session = sslsocket.getSession();
-
-            //query remote certificates information
-            X509Certificate[] x509 = (X509Certificate[]) session.getPeerCertificates();
-            X509Certificate cert = x509[0];													//select first certificate in Array, which is the client certificate
-            String dn = cert.getSubjectDN().getName();										//save remote Subject DN for further Use (eg. Ldap Queries)
-            out.println("Remote Cert SubjectDN: " + cert.getSubjectDN().getName());	//print out remote SubjectDN
-            out.println("Remote Cert Serial Number: " + cert.getSerialNumber());		//print out Client Cert Serial Number
-
-            //client<->server Console Text Transfer
-            InputStream inputstream = sslsocket.getInputStream();
-            InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
-            BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
-
-            String string = null;
-            while ((string = bufferedreader.readLine()) != null) {
-                out.println(string);
-                out.flush();
-            }
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
     }
 
     @Override

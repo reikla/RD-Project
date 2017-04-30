@@ -1,16 +1,41 @@
 buildscript {
-    repositories { mavenCentral() }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    }
 }
+
 plugins { id "io.spring.dependency-management" version "1.0.0.RELEASE" }
 
-dependencies {
-    compile project(':common')
-    compile('org.springframework.boot:spring-boot-starter')
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+repositories {
+    mavenCentral()
 }
 
-dependencyManagement {
-    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// tag::security[]
+dependencies {
+    compile project(':common')
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.ldap:spring-ldap-core")
+    compile("org.springframework.security:spring-security-ldap")
+    compile("org.springframework:spring-tx")
+    compile("com.unboundid:unboundid-ldapsdk")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
+}
+// end::security[]
+
+jar {
+    baseName = 'gs-authenticating-ldap'
+    version =  '0.1.0'
 }
