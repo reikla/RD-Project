@@ -13,5 +13,4 @@ import java.util.List;
 @Transactional
 @Repository
 public interface CustomerDao extends CrudRepository<CustomerEntity, Integer> {
-
 }

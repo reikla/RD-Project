@@ -112,7 +112,7 @@ public class CustomerEntity {
     }
 
     @Basic
-    @Column(name = "`key")
+    @Column(name = "`key`")
     public String getKey() {
         return key;
     }
