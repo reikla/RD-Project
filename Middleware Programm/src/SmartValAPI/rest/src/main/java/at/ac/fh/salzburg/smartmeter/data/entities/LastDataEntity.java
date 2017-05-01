@@ -1,13 +1,14 @@
 package at.ac.fh.salzburg.smartmeter.data.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.hibernate.annotations.Immutable;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-
+@Entity
+@Immutable
 @Table(name = "last_data", schema = "smart_meter", catalog = "")
+@IdClass(MeterDataEntityPK.class)
 public class LastDataEntity {
     private int dataId;
     private int meterId;
@@ -26,7 +27,7 @@ public class LastDataEntity {
     private Double frequency;
     private Double voltage;
 
-    @Basic
+    @Id
     @Column(name = "data_id")
     public int getDataId() {
         return dataId;
@@ -36,7 +37,7 @@ public class LastDataEntity {
         this.dataId = dataId;
     }
 
-    @Basic
+    @Id
     @Column(name = "meter_id")
     public int getMeterId() {
         return meterId;

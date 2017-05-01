@@ -1,12 +1,11 @@
 package at.ac.fh.salzburg.smartmeter.data.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-
+@Entity
 @Table(name = "last_events", schema = "smart_meter", catalog = "")
+@IdClass(LogEventsEntityPK.class)
 public class LastEventsEntity {
     private int logId;
     private int idType;
@@ -14,7 +13,7 @@ public class LastEventsEntity {
     private String sourceTarget;
     private Timestamp timestamp;
 
-    @Basic
+    @Id
     @Column(name = "log_id")
     public int getLogId() {
         return logId;
@@ -24,7 +23,7 @@ public class LastEventsEntity {
         this.logId = logId;
     }
 
-    @Basic
+    @Id
     @Column(name = "id_type")
     public int getIdType() {
         return idType;
