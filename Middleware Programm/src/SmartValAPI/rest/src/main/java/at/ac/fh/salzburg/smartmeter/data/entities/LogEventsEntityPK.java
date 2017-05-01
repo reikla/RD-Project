@@ -1,9 +1,10 @@
 package at.ac.fh.salzburg.smartmeter.data.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Id;
 import java.io.Serializable;
-
+@Embeddable
 public class LogEventsEntityPK implements Serializable {
     private int logId;
     private int idType;

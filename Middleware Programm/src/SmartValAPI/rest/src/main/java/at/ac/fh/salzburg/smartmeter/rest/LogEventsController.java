@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class LogEventsController {
 
-    @Autowired
+    //@Autowired
     private LogEventsDao logEventsDao;
 
     @RequestMapping("/admin/logevents/{id}")
