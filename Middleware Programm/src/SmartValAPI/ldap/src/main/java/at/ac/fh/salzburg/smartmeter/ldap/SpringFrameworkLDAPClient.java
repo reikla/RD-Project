@@ -18,7 +18,6 @@ public class SpringFrameworkLDAPClient {
             ContactDAO ldapContact = (LDAPContactDAO)factory.getBean("ldapContact");
 
             List contactList =ldapContact.getAllUserID();
-            System.out.println(contactList.size());
 
             int count = 0;
             for( int i = 0 ; i < contactList.size(); i++){
