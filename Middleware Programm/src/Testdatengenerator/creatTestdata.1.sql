@@ -125,6 +125,6 @@ INSERT INTO `meter_management` (`id_meter`, `description`, `serial`, `key`, `id_
 
 
 
--- meter_data itself
---INSERT INTO `meter_data` (`data_id`, `meter_id`, `timestamp`, `count_total`, `count_register1`, `count_register2`, `count_register3`, `count_register4`, `power_p1`, `power_p2`, `power_p3`, `work_p1`, `work_p2`, `work_p3`, `frequency`, `voltage`) VALUES
---(1, 2, '2016-11-05 18:15:13', 241.52, 116.97, 124.56, 0, 0, 0, -1, -1, -1, -1, -1, 50.02, 237.59);
+-- meter_data itself -> do not create testdata here
+-- INSERT INTO `meter_data` (`data_id`, `meter_id`, `timestamp`, `count_total`, `count_register1`, `count_register2`, `count_register3`, `count_register4`, `power_p1`, `power_p2`, `power_p3`, `work_p1`, `work_p2`, `work_p3`, `frequency`, `voltage`) VALUES
+-- (1, 2, '2016-11-05 18:15:13', 241.52, 116.97, 124.56, 0, 0, 0, -1, -1, -1, -1, -1, 50.02, 237.59);
