@@ -2,6 +2,7 @@ package at.ac.fh.salzburg.smartmeter.rest;
 
 import at.ac.fh.salzburg.smartmeter.data.dao.CustomerDao;
 import at.ac.fh.salzburg.smartmeter.data.entities.CustomerEntity;
+import at.ac.fh.salzburg.smartmeter.ldap.ContactDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
