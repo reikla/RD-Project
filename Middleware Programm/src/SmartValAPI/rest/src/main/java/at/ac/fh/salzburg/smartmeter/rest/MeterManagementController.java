@@ -3,11 +3,13 @@ package at.ac.fh.salzburg.smartmeter.rest;
 import at.ac.fh.salzburg.smartmeter.data.dao.MeterManagementDao;
 import at.ac.fh.salzburg.smartmeter.data.entities.MeterManagementEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by maximilian on 30.04.2017.
  */
+@Controller
 public class MeterManagementController {
 
     @Autowired

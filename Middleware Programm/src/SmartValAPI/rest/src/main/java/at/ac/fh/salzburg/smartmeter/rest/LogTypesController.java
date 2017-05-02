@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by maximilian on 30.04.2017.
  */
+@Controller
 public class LogTypesController {
 
     @Autowired

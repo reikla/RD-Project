@@ -2,7 +2,6 @@ package at.ac.fh.salzburg.smartmeter.data.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 
 @Entity
