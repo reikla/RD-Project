@@ -195,7 +195,6 @@ public class LDAPContactDAO implements ContactDAO{
         }
         return false;
     }
-
     @Override
     public boolean DeleteMeterFromUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {

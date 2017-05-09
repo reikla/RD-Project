@@ -7,48 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
-public class SpringFrameworkLDAPClient implements IPermissionManager, IUserContext, IDataSourceContext{
-
-    public static void main(String[] args) {
-
-        SpringFrameworkLDAPClient neu = new SpringFrameworkLDAPClient();
-
-        //Neu erstellen
-         IUserContext JNDI = new IUserContext() {
-            @Override
-            public String userid() {
-                return "jn.di";
-            }
-
-            @Override
-            public String password() {
-                return "JNDI";
-            }
-        };
-         IUserContext JNDI2 = new IUserContext() {
-            @Override
-            public String userid() {
-                return "jn.di2";
-            }
-
-            @Override
-            public String password() {
-                return "JNDI2";
-            }
-        };
-
-         IDataSourceContext ID1234567890 = () -> "1234567890";
-         IDataSourceContext ID9876543210 = () -> "9876543210";
-         IDataSourceContext ID12345 = () -> "12345";
-         IDataSourceContext ID123456 = () -> "123456";
-
-        //neu.AddUserToGroup(JNDI2,"Administrator");
-        //neu.AddMeterToUser(JNDI2,ID12345);
-        //neu.CreateUser(JNDI, ID12345);
-        //neu.DeleteUser(JNDI2);
-        //neu.CreateSmartmeter(ID12345);
-        //neu.DeleteSmartmeter(ID12345);
-    }
+public class LDAPManager implements IPermissionManager, IUserContext, IDataSourceContext{
 
     //mitgegebener User darf auf mitgegebenen Smartmeter zugreifen
     @Override
