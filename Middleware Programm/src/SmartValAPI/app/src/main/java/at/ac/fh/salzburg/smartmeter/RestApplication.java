@@ -18,7 +18,6 @@ public class RestApplication {
         SpringApplication.run(RestApplication.class, args);
     }
 
-
     @Configuration
     @Order(1)
     public static class SecurityConfig extends WebSecurityConfigurerAdapter {
