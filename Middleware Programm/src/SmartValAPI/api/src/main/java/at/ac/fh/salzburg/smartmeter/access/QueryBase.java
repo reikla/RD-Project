@@ -1,10 +1,14 @@
 package at.ac.fh.salzburg.smartmeter.access;
 
 
+import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
+
+import java.sql.ResultSet;
+
 /**
  * A Baseclass to query the database
  */
-public abstract class QueryBase {
+public abstract class QueryBase<T> {
     private IUserContext _userContext;
     private IDataSourceContext _dataSourceContext;
 
@@ -36,4 +40,6 @@ public abstract class QueryBase {
      * @return
      */
     public abstract String getQuery();
+
+    public abstract QueryResult<T> parseDatabaseResultSet(ResultSet resultSet);
 }

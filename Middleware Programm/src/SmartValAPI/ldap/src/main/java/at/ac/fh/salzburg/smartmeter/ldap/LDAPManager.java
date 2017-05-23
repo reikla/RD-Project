@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
-public class LDAPManager implements IPermissionManager, IUserContext, IDataSourceContext{
+public class LDAPManager implements IPermissionManager {
 
     //mitgegebener User darf auf mitgegebenen Smartmeter zugreifen
     @Override
@@ -16,13 +16,13 @@ public class LDAPManager implements IPermissionManager, IUserContext, IDataSourc
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.IsAllowedToAccess(userContext,dataSourceContext)) {
+        if (ldapContact.IsAllowedToAccess(userContext, dataSourceContext)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
-        }
+    }
+
     //Erstellt einen User und pusht Ihn ins LDAP
     @Override
     public boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
@@ -30,13 +30,13 @@ public class LDAPManager implements IPermissionManager, IUserContext, IDataSourc
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.CreateUser(userContext,dataSourceContext)) {
+        if (ldapContact.CreateUser(userContext, dataSourceContext)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     //Löscht mitgegebenen Benutzer aus dem LDAP
     @Override
     public boolean DeleteUser(IUserContext userContext) {
@@ -44,7 +44,7 @@ public class LDAPManager implements IPermissionManager, IUserContext, IDataSourc
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(DeleteUserFromAll(userContext)) {
+        if (DeleteUserFromAll(userContext)) {
             if (ldapContact.DeleteUser(userContext)) {
 
                 return true;
@@ -54,26 +54,27 @@ public class LDAPManager implements IPermissionManager, IUserContext, IDataSourc
         }
         return false;
     }
+
     //Erstellt neuen Smartmeter
     @Override
     public boolean CreateSmartmeter(IDataSourceContext dataSourceContext) {
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.CreateSmartMeter(dataSourceContext)) {
+        if (ldapContact.CreateSmartMeter(dataSourceContext)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     //Löscht bekannten Smartmeter
     @Override
     public boolean DeleteSmartmeter(IDataSourceContext dataSourceContext) {
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(DeleteMeterfromAll(dataSourceContext)) {
+        if (DeleteMeterfromAll(dataSourceContext)) {
             if (ldapContact.DeleteSmartMeter(dataSourceContext)) {
                 return true;
             } else {
@@ -82,95 +83,82 @@ public class LDAPManager implements IPermissionManager, IUserContext, IDataSourc
         }
         return false;
     }
+
     //Fügt Smartmeter zu User hinzu
     @Override
     public boolean AddMeterToUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.AddMeterToUser(userContext, dataSourceContext)) {
+        if (ldapContact.AddMeterToUser(userContext, dataSourceContext)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     //fügt user einer Gruppe hinzu
     @Override
     public boolean AddUserToGroup(IUserContext userContext, String Group) {
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.AddUserToGroup(userContext, Group)) {
+        if (ldapContact.AddUserToGroup(userContext, Group)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     //Löscht Smartmeter von spezifischen user
     @Override
     public boolean DeleteMeterFromUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.DeleteMeterFromUser(userContext, dataSourceContext)) {
+        if (ldapContact.DeleteMeterFromUser(userContext, dataSourceContext)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     //Löscht meter aus allen usern
     @Override
     public boolean DeleteMeterfromAll(IDataSourceContext dataSourceContext) {
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.DeleteMeterfromAll(dataSourceContext)) {
+        if (ldapContact.DeleteMeterfromAll(dataSourceContext)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     //Löscht User aus spezifischer Gruppe
     @Override
     public boolean DeleteUserFromGroup(IUserContext userContext, String Group) {
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.DeleteUserFromGroup(userContext, Group)) {
+        if (ldapContact.DeleteUserFromGroup(userContext, Group)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     //Löscht User aus allen gruppen
     @Override
     public boolean DeleteUserFromAll(IUserContext userContext) {
         @SuppressWarnings("resource")
         ApplicationContext factory = new ClassPathXmlApplicationContext("springldap.xml");
         ContactDAO ldapContact = (LDAPContactDAO) factory.getBean("ldapContact");
-        if(ldapContact.DeleteUserFromAll(userContext)) {
+        if (ldapContact.DeleteUserFromAll(userContext)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
-    }
-
-    @Override
-    public String userid() {
-        return null;
-    }
-    @Override
-    public String password() {
-        return null;
-    }
-    @Override
-    public String MeterID() {
-        return null;
     }
 }

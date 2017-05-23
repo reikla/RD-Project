@@ -14,6 +14,7 @@ dependencies {
     compile("io.springfox:springfox-swagger-ui:2.6.1")
     compile project(':common')
     compile project(':ldap')
+    compile project(':api')
 
     //runtime 'mysql:mysql-connector-java'
     runtime 'org.mariadb.jdbc:mariadb-java-client:1.5.9'
