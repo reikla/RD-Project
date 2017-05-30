@@ -4,6 +4,8 @@ import at.ac.fh.salzburg.smartmeter.data.dao.CustomerDao;
 import at.ac.fh.salzburg.smartmeter.data.entities.CustomerEntity;
 import at.ac.fh.salzburg.smartmeter.ldap.ContactDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,7 @@ public class CustomerController {
     @RequestMapping("/admin/customer/{id}")
     @ResponseBody
     public CustomerEntity readCustomer(@PathVariable int id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return customerDao.findOne(id);
     }
 
