@@ -3,6 +3,7 @@ package at.ac.fh.salzburg.smartmeter.access;
 import at.ac.fh.salzburg.smartmeter.Constants;
 import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
 import at.ac.fh.salzburg.smartmeter.data.data.StringListQueryResult;
+import at.ac.fh.salzburg.smartmeter.data.data.VoidQueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
@@ -11,8 +12,7 @@ import java.sql.*;
  * Created by reimarklammer on 28.03.17.
  */
 public class SqlDatabaseAccess implements IDatabaseAccess {
-    @Autowired
-
+    
     @Override
     public QueryResult<?> QueryDatabase(QueryBase query) {
         Connection connection = null;
@@ -30,6 +30,7 @@ public class SqlDatabaseAccess implements IDatabaseAccess {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            result = new VoidQueryResult(false,"The SQL query went wrong.", QueryStatusCode.SqlError);
         }finally{
             if(connection != null)
                 try {

@@ -18,6 +18,7 @@ import java.util.List;
  */
 @Controller
 public class MyCustomQueryController extends CustomQueryControllerBase {
+
     @RequestMapping("/query/myCustomQuery")
     @ResponseBody
     public QueryResult<?> GetMyCustomData(){
@@ -40,7 +41,7 @@ public class MyCustomQueryController extends CustomQueryControllerBase {
         public QueryResult<List<String>> parseDatabaseResultSet(ResultSet resultSet) {
             StringListQueryResult result = new StringListQueryResult();
             try {
-                while(resultSet.next()){
+                while (resultSet.next()) {
                     result.getData().add(resultSet.getString("data_id"));
                 }
             } catch (SQLException e) {
