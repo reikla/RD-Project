@@ -21,7 +21,7 @@
         <property name="ignorePartialResultException" value="true"/>
     </bean>
     <bean id="ldapContact"
-          class="at.ac.fh.salzburg.smartmeter.ldap.LDAPContactDAO">
+          class="at.ac.fh.salzburg.smartmeter.ldap.LDAPILDAPManager">
         <property name="ldapTemplate" ref="ldapTemplate" />
     </bean>
 
