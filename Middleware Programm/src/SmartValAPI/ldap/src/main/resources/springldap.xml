@@ -20,7 +20,7 @@
         <constructor-arg ref="contextSource"/>
         <property name="ignorePartialResultException" value="true"/>
     </bean>
-    <bean id="ldapContact"
+    <bean id="ldapManager"
           class="at.ac.fh.salzburg.smartmeter.ldap.LDAPManager">
         <property name="ldapTemplate" ref="ldapTemplate" />
     </bean>

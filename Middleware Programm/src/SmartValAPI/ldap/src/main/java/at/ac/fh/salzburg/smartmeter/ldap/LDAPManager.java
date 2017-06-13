@@ -8,25 +8,61 @@ import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQueryBuilder;
-
 import javax.naming.NamingException;
 import javax.naming.directory.*;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
+import javax.naming.ldap.LdapName;
 
-public class LDAPManager implements ILDAPManager {
-    private LdapTemplate ldapTemplate;
+public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContext {
 
-    public void setLdapTemplate(LdapTemplate ldapTemplate) {
-        this.ldapTemplate = ldapTemplate;
+    public static LdapTemplate setResource() {
+
+        LdapTemplate ldapTemplate = null;
+        try
+
+        {
+            ApplicationContext appCtx = new ClassPathXmlApplicationContext("springldap.xml");
+            ldapTemplate = (LdapTemplate) appCtx.getBean("ldapTemplate");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ldapTemplate;
     }
+    private static LdapTemplate ldapTemplate = setResource();
+
+    public static void main(String[] args){
+
+        IUserContext user = new IUserContext() {
+            @Override
+            public String userid() {
+                return "567890";
+            }
+
+            @Override
+            public String password() {
+                return "test";
+            }
+        };
+        IDataSourceContext data = () -> "567890";
+
+        LDAPManager manager = new LDAPManager();
+        manager.CreateUser(user,data);
+    }
+
     @Override
     public boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
-        DistinguishedName distinguisedName = new DistinguishedName("ou=People");
-        distinguisedName.add("uid", userContext.userid());
 
+        DistinguishedName test = new DistinguishedName("ou=People");
+        test.add("uid", userContext.userid());
+
+        //LdapName test = new LdapName("ou=People");
+        //test.add(userContext.userid());
         //User Attributes
+
+        //Attribute useruid = new BasicAttribute("uid", userContext.userid());
         Attribute userCn = new BasicAttribute("cn", userContext.userid());
         Attribute userPassword = new BasicAttribute("userPassword",userContext.password());
         Attribute MeterID = new BasicAttribute("description",dataSourceContext.MeterID());
@@ -41,6 +77,7 @@ public class LDAPManager implements ILDAPManager {
         oc.add("PosixGroup");
 
         Attributes entry = new BasicAttributes();
+        //entry.put(useruid);
         entry.put(userCn);
         entry.put(Userhome);
         entry.put(Usergid);
@@ -49,7 +86,7 @@ public class LDAPManager implements ILDAPManager {
         entry.put(userPassword);
         entry.put(oc);
 
-        ldapTemplate.bind(distinguisedName, null, entry);
+        ldapTemplate.bind(test, null, entry);
         return true;
         }
         catch(Exception e){
@@ -325,5 +362,28 @@ public class LDAPManager implements ILDAPManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public String userid() {
+        return null;
+    }
+
+    @Override
+    public String password() {
+        return null;
+    }
+
+    @Override
+    public String MeterID() {
+        return null;
+    }
+
+    public void setLdapTemplate(LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
+
+    public LdapTemplate getLdapTemplate() {
+        return ldapTemplate;
     }
 }
