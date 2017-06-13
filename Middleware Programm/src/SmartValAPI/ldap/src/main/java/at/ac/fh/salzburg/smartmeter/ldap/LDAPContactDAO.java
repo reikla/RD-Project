@@ -3,6 +3,7 @@ package at.ac.fh.salzburg.smartmeter.ldap;
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.DistinguishedName;
@@ -15,11 +16,25 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 
 public class LDAPContactDAO implements ContactDAO{
+
+    private static LDAPContactDAO instance;
+
+
+    public static LDAPContactDAO Instance(){
+        if(instance == null){
+            instance = new LDAPContactDAO();
+        }
+        return instance;
+    }
+
+
+    private LDAPContactDAO()
+    {
+        this.ldapTemplate = new LdapTemplate(LdapContextSourceFactory.getContextSource());
+    }
+
     private LdapTemplate ldapTemplate;
 
-    public void setLdapTemplate(LdapTemplate ldapTemplate) {
-        this.ldapTemplate = ldapTemplate;
-    }
     @Override
     public boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
@@ -119,9 +134,6 @@ public class LDAPContactDAO implements ContactDAO{
     @Override
     public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
-            @SuppressWarnings("resource")
-            ApplicationContext appCtx = new ClassPathXmlApplicationContext("springldap.xml");
-            LdapTemplate ldapTemplate = (LdapTemplate) appCtx.getBean("ldapTemplate");
             final String[] cntemp = new String[1];
 
             ldapTemplate.search(
@@ -218,9 +230,6 @@ public class LDAPContactDAO implements ContactDAO{
     public boolean DeleteMeterfromAll(IDataSourceContext dataSourceContext) {
 
         try {
-            @SuppressWarnings("resource")
-            ApplicationContext appCtx = new ClassPathXmlApplicationContext("springldap.xml");
-            LdapTemplate ldapTemplate = (LdapTemplate) appCtx.getBean("ldapTemplate");
 
             final String[] test = new String[1];
 
@@ -284,7 +293,7 @@ public class LDAPContactDAO implements ContactDAO{
     public boolean DeleteUserFromAll(IUserContext userContext) {
         try {
             @SuppressWarnings("resource")
-            ApplicationContext appCtx = new ClassPathXmlApplicationContext("springldap.xml");
+            ApplicationContext appCtx = new ClassPathXmlApplicationContext("springldap.xml.old");
             LdapTemplate ldapTemplate = (LdapTemplate) appCtx.getBean("ldapTemplate");
 
             final String[] test = new String[1];
