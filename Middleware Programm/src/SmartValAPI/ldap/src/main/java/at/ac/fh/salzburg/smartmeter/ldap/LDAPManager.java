@@ -97,8 +97,8 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean CreateSmartMeter(IDataSourceContext dataSourceContext) {
         try{
-            DistinguishedName distinguisedName = new DistinguishedName("ou=Smartmeter");
-            distinguisedName.add("uid", dataSourceContext.MeterID());
+            DistinguishedName test = new DistinguishedName("ou=Smartmeter");
+            test.add("uid", dataSourceContext.MeterID());
 
             //User Attributes
             Attribute userCn = new BasicAttribute("cn", dataSourceContext.MeterID());
@@ -119,7 +119,7 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
             entry.put(UserID);
             entry.put(oc);
 
-            ldapTemplate.bind(distinguisedName, null, entry);
+            ldapTemplate.bind(test, null, entry);
             return true;
         }
         catch(Exception e){
@@ -130,9 +130,9 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteSmartMeter(IDataSourceContext dataSourceContext) {
         try{
-            DistinguishedName distinguisedName = new DistinguishedName("ou=Smartmeter");
-            distinguisedName.add("uid", dataSourceContext.MeterID());
-            ldapTemplate.unbind(distinguisedName);
+            DistinguishedName test = new DistinguishedName("ou=Smartmeter");
+            test.add("uid", dataSourceContext.MeterID());
+            ldapTemplate.unbind(test);
             return true;
         }
         catch(Exception e){
@@ -143,9 +143,9 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteUser(IUserContext userContext) {
         try{
-            DistinguishedName distinguisedName = new DistinguishedName("ou=People");
-            distinguisedName.add("uid", userContext.userid());
-            ldapTemplate.unbind(distinguisedName);
+            DistinguishedName test = new DistinguishedName("ou=People");
+            test.add("uid", userContext.userid());
+            ldapTemplate.unbind(test);
             return true;
         }
         catch(Exception e){
@@ -198,14 +198,14 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean AddMeterToUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
       try {
-          DistinguishedName distinguisedName = new DistinguishedName("ou=People");
-          distinguisedName.add("uid", userContext.userid());
+          DistinguishedName test = new DistinguishedName("ou=People");
+          test.add("uid", userContext.userid());
           Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
           ModificationItem ID = new ModificationItem(
 
                   DirContext.ADD_ATTRIBUTE, MeterID);
 
-          ldapTemplate.modifyAttributes(distinguisedName, new ModificationItem[]{ID});
+          ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
 
           return true;
       }
@@ -217,14 +217,14 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean AddUserToGroup(IUserContext userContext, String Group) {
         try {
-            DistinguishedName distinguisedName = new DistinguishedName("ou=Groups");
-            distinguisedName.add("cn", Group);
+            DistinguishedName test = new DistinguishedName("ou=Groups");
+            test.add("cn", Group);
             Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.ADD_ATTRIBUTE, UserID);
 
-            ldapTemplate.modifyAttributes(distinguisedName, new ModificationItem[]{ID});
+            ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
             return true;
         }
         catch(Exception e){
@@ -235,14 +235,14 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteMeterFromUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
-            DistinguishedName distinguisedName = new DistinguishedName("ou=People");
-            distinguisedName.add("uid", userContext.userid());
+            DistinguishedName test = new DistinguishedName("ou=People");
+            test.add("uid", userContext.userid());
             Attribute MeterID = new BasicAttribute("description", dataSourceContext.MeterID());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.REMOVE_ATTRIBUTE, MeterID);
 
-            ldapTemplate.modifyAttributes(distinguisedName, new ModificationItem[]{ID});
+            ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
 
             return true;
         }
@@ -277,12 +277,12 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
                             String cntemp = parts[1];
                             try {
 
-                                DistinguishedName distinguisedName = new DistinguishedName("ou=People");
-                                distinguisedName.add("uid", cntemp.substring(1));
+                                DistinguishedName test = new DistinguishedName("ou=People");
+                                test.add("uid", cntemp.substring(1));
                                 Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
                                 ModificationItem ID = new ModificationItem(DirContext.REMOVE_ATTRIBUTE, MeterID);
 
-                                ldapTemplate.modifyAttributes(distinguisedName, new ModificationItem[]{ID});
+                                ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
                             }
                             catch(Exception e){
                                 e.printStackTrace();
@@ -301,14 +301,14 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteUserFromGroup(IUserContext userContext, String Group) {
         try {
-            DistinguishedName distinguisedName = new DistinguishedName("ou=Groups");
-            distinguisedName.add("cn", Group);
+            DistinguishedName test = new DistinguishedName("ou=Groups");
+            test.add("cn", Group);
             Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.REMOVE_ATTRIBUTE, UserID);
 
-            ldapTemplate.modifyAttributes(distinguisedName, new ModificationItem[]{ID});
+            ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
 
             return true;
         }
@@ -342,12 +342,12 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
                             String cntemp = parts[1];
                             try {
 
-                                DistinguishedName distinguisedName = new DistinguishedName("ou=Groups");
-                                distinguisedName.add("cn", cntemp.substring(1));
+                                DistinguishedName test = new DistinguishedName("ou=Groups");
+                                test.add("cn", cntemp.substring(1));
                                 Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
                                 ModificationItem ID = new ModificationItem(DirContext.REMOVE_ATTRIBUTE, UserID);
 
-                                ldapTemplate.modifyAttributes(distinguisedName, new ModificationItem[]{ID});
+                                ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
                             }
                             catch(Exception e){
                                 e.printStackTrace();
@@ -382,7 +382,6 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     public void setLdapTemplate(LdapTemplate ldapTemplate) {
         this.ldapTemplate = ldapTemplate;
     }
-
     public LdapTemplate getLdapTemplate() {
         return ldapTemplate;
     }
