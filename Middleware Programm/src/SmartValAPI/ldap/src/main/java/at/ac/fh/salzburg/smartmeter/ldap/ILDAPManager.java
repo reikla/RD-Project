@@ -3,7 +3,7 @@ package at.ac.fh.salzburg.smartmeter.ldap;
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 
-public interface ContactDAO {
+public interface ILDAPManager {
 
     boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext);
     boolean CreateSmartMeter(IDataSourceContext dataSourceContext);
