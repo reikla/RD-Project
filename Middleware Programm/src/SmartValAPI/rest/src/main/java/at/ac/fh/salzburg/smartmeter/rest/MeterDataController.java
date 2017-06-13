@@ -1,9 +1,12 @@
 package at.ac.fh.salzburg.smartmeter.rest;
 import at.ac.fh.salzburg.smartmeter.data.dao.MeterDataDao;
 import at.ac.fh.salzburg.smartmeter.data.entities.MeterDataEntity;
+import at.ac.fh.salzburg.smartmeter.data.entities.MeterDataEntityPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by maximilian on 30.04.2017.
@@ -16,8 +19,9 @@ public class MeterDataController {
 
     @RequestMapping("/admin/meterdata/{id}")
     @ResponseBody
-    public MeterDataEntity readMeterData(@PathVariable int id) {
-        return meterdataDao.findOne(id);
+    public List<MeterDataEntity> readMeterData(@PathVariable int id) {
+
+        return meterdataDao.findAllByMeterId(id);
     }
 
     @RequestMapping(value = "/admin/meterdata", method = RequestMethod.PUT)
@@ -35,7 +39,7 @@ public class MeterDataController {
     @RequestMapping(value = "/admin/meterdata/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public boolean deleteMeterData(@PathVariable int id) {
-        meterdataDao.delete(id);
+        //return meterdataDao.deleteByMeterId(id);
         return true;
     }
 

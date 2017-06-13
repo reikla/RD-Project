@@ -15,9 +15,10 @@ public class CustomerController {
     @Autowired
     private CustomerDao customerDao;
 
+    /* TODO: hier überlegen ob es nicht besser ist die Parameter als Paramerter mit ? abzutrennen? */
     @RequestMapping("/admin/customer/{id}")
     @ResponseBody
-    public CustomerEntity readCustomer(@PathVariable int id) {
+    public CustomerEntity readCustomer(@PathVariable  int id) {
         return customerDao.findOne(id);
     }
 
@@ -27,7 +28,7 @@ public class CustomerController {
         return customerDao.save(customer);
     }
 
-    @RequestMapping(value = "/admin/customer/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/customer/{id}/{datum}", method = RequestMethod.POST)
     @ResponseBody
     public CustomerEntity updateCustomer(@RequestBody CustomerEntity customer) {
         return customerDao.save(customer);
