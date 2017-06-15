@@ -5,16 +5,14 @@ import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.ldap.core.AttributesMapper;
-import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQueryBuilder;
-import javax.naming.NamingException;
 import javax.naming.directory.*;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.ldap.LdapName;
 
-public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContext {
+public class LDAPManager implements ILDAPManager{
 
     public static LdapTemplate setResource() {
 
@@ -31,7 +29,7 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
         return ldapTemplate;
     }
     private static LdapTemplate ldapTemplate = setResource();
-
+/*
     public static void main(String[] args){
 
         IUserContext user = new IUserContext() {
@@ -50,19 +48,14 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
         LDAPManager manager = new LDAPManager();
         manager.CreateUser(user,data);
     }
-
+*/
     @Override
     public boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
+        LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
 
-        DistinguishedName test = new DistinguishedName("ou=People");
-        test.add("uid", userContext.userid());
-
-        //LdapName test = new LdapName("ou=People");
-        //test.add(userContext.userid());
         //User Attributes
 
-        //Attribute useruid = new BasicAttribute("uid", userContext.userid());
         Attribute userCn = new BasicAttribute("cn", userContext.userid());
         Attribute userPassword = new BasicAttribute("userPassword",userContext.password());
         Attribute MeterID = new BasicAttribute("description",dataSourceContext.MeterID());
@@ -77,7 +70,6 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
         oc.add("PosixGroup");
 
         Attributes entry = new BasicAttributes();
-        //entry.put(useruid);
         entry.put(userCn);
         entry.put(Userhome);
         entry.put(Usergid);
@@ -86,7 +78,7 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
         entry.put(userPassword);
         entry.put(oc);
 
-        ldapTemplate.bind(test, null, entry);
+        ldapTemplate.bind(dn, null, entry);
         return true;
         }
         catch(Exception e){
@@ -97,8 +89,7 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean CreateSmartMeter(IDataSourceContext dataSourceContext) {
         try{
-            DistinguishedName test = new DistinguishedName("ou=Smartmeter");
-            test.add("uid", dataSourceContext.MeterID());
+            LdapName dn = new LdapName("uid="+dataSourceContext.MeterID()+",ou=Smartmeter");
 
             //User Attributes
             Attribute userCn = new BasicAttribute("cn", dataSourceContext.MeterID());
@@ -119,7 +110,7 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
             entry.put(UserID);
             entry.put(oc);
 
-            ldapTemplate.bind(test, null, entry);
+            ldapTemplate.bind(dn, null, entry);
             return true;
         }
         catch(Exception e){
@@ -130,9 +121,8 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteSmartMeter(IDataSourceContext dataSourceContext) {
         try{
-            DistinguishedName test = new DistinguishedName("ou=Smartmeter");
-            test.add("uid", dataSourceContext.MeterID());
-            ldapTemplate.unbind(test);
+            LdapName dn = new LdapName("uid="+dataSourceContext.MeterID()+",ou=Smartmeter");
+            ldapTemplate.unbind(dn);
             return true;
         }
         catch(Exception e){
@@ -143,9 +133,8 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteUser(IUserContext userContext) {
         try{
-            DistinguishedName test = new DistinguishedName("ou=People");
-            test.add("uid", userContext.userid());
-            ldapTemplate.unbind(test);
+            LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+            ldapTemplate.unbind(dn);
             return true;
         }
         catch(Exception e){
@@ -156,28 +145,22 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
-            @SuppressWarnings("resource")
-            ApplicationContext appCtx = new ClassPathXmlApplicationContext("springldap.xml");
-            LdapTemplate ldapTemplate = (LdapTemplate) appCtx.getBean("ldapTemplate");
             final String[] cntemp = new String[1];
 
             ldapTemplate.search(
                     LdapQueryBuilder.query().where("description").is(dataSourceContext.MeterID()),
 
-                    new AttributesMapper<Void>() {
+                    (AttributesMapper<Void>) attrs -> {
 
-                        public Void mapFromAttributes(Attributes attrs) throws NamingException {
+                        Attribute MeterID = attrs.get("description");
+                        Attribute nameAttr = attrs.get("uid");
+                        System.out.printf("%s - %s%n",
+                                MeterID == null ? "" : MeterID.get(),
+                                nameAttr == null ? "" : nameAttr.get()
 
-                            Attribute MeterID = attrs.get("description");
-                            Attribute nameAttr = attrs.get("uid");
-                            System.out.printf("%s - %s%n",
-                                    MeterID == null ? "" : MeterID.get(),
-                                    nameAttr == null ? "" : nameAttr.get()
-
-                            );
-                            cntemp[0] = nameAttr.toString();
-                            return null;
-                        }
+                        );
+                        cntemp[0] = nameAttr.toString();
+                        return null;
                     });
             try {
                 if (cntemp[0].equals("uid: " + userContext.userid())) {
@@ -198,14 +181,13 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean AddMeterToUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
       try {
-          DistinguishedName test = new DistinguishedName("ou=People");
-          test.add("uid", userContext.userid());
+          LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
           Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
           ModificationItem ID = new ModificationItem(
 
                   DirContext.ADD_ATTRIBUTE, MeterID);
 
-          ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
+          ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});
 
           return true;
       }
@@ -217,14 +199,13 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean AddUserToGroup(IUserContext userContext, String Group) {
         try {
-            DistinguishedName test = new DistinguishedName("ou=Groups");
-            test.add("cn", Group);
+            LdapName dn = new LdapName("cn="+Group+",ou=Groups");
             Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.ADD_ATTRIBUTE, UserID);
 
-            ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
+            ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});
             return true;
         }
         catch(Exception e){
@@ -235,14 +216,13 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteMeterFromUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
-            DistinguishedName test = new DistinguishedName("ou=People");
-            test.add("uid", userContext.userid());
+            LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
             Attribute MeterID = new BasicAttribute("description", dataSourceContext.MeterID());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.REMOVE_ATTRIBUTE, MeterID);
 
-            ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
+            ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});
 
             return true;
         }
@@ -255,40 +235,31 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     public boolean DeleteMeterfromAll(IDataSourceContext dataSourceContext) {
 
         try {
-            @SuppressWarnings("resource")
-            ApplicationContext appCtx = new ClassPathXmlApplicationContext("springldap.xml");
-            LdapTemplate ldapTemplate = (LdapTemplate) appCtx.getBean("ldapTemplate");
-
             final String[] test = new String[1];
 
             ldapTemplate.search(
             LdapQueryBuilder.query().where("memberUid").is(dataSourceContext.MeterID()),
 
-                    new AttributesMapper<Void>() {
+                    (AttributesMapper<Void>) attrs -> {
 
-                        public Void mapFromAttributes(Attributes attrs) throws NamingException {
+                        Attribute nameAttr = attrs.get("cn");
+                        System.out.printf("%s%n",
+                                nameAttr == null ? "" : nameAttr.get()
+                        );
+                        test[0] = nameAttr.toString();
+                        final String[] parts = test[0].split(":");
+                        String cntemp = parts[1];
+                        try {
+                            LdapName dn = new LdapName("uid="+cntemp.substring(1)+",ou=People");
+                            Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
+                            ModificationItem ID = new ModificationItem(DirContext.REMOVE_ATTRIBUTE, MeterID);
 
-                            Attribute nameAttr = attrs.get("cn");
-                            System.out.printf("%s%n",
-                                    nameAttr == null ? "" : nameAttr.get()
-                            );
-                            test[0] = nameAttr.toString();
-                            final String[] parts = test[0].split(":");
-                            String cntemp = parts[1];
-                            try {
-
-                                DistinguishedName test = new DistinguishedName("ou=People");
-                                test.add("uid", cntemp.substring(1));
-                                Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
-                                ModificationItem ID = new ModificationItem(DirContext.REMOVE_ATTRIBUTE, MeterID);
-
-                                ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
-                            }
-                            catch(Exception e){
-                                e.printStackTrace();
-                            }
-                            return null;
+                            ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});
                         }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+                        return null;
                     });
 
         return true;
@@ -301,14 +272,13 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteUserFromGroup(IUserContext userContext, String Group) {
         try {
-            DistinguishedName test = new DistinguishedName("ou=Groups");
-            test.add("cn", Group);
+            LdapName dn = new LdapName("cn="+Group+",ou=Groups");
             Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.REMOVE_ATTRIBUTE, UserID);
 
-            ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
+            ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});
 
             return true;
         }
@@ -320,40 +290,31 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
     @Override
     public boolean DeleteUserFromAll(IUserContext userContext) {
         try {
-            @SuppressWarnings("resource")
-            ApplicationContext appCtx = new ClassPathXmlApplicationContext("springldap.xml");
-            LdapTemplate ldapTemplate = (LdapTemplate) appCtx.getBean("ldapTemplate");
-
             final String[] test = new String[1];
 
             ldapTemplate.search(
                     LdapQueryBuilder.query().where("memberUid").is(userContext.userid()),
 
-                    new AttributesMapper<Void>() {
+                    (AttributesMapper<Void>) attrs -> {
 
-                        public Void mapFromAttributes(Attributes attrs) throws NamingException {
+                        Attribute nameAttr = attrs.get("cn");
+                        System.out.printf("%s%n",
+                                nameAttr == null ? "" : nameAttr.get()
+                        );
+                        test[0] = nameAttr.toString();
+                        final String[] parts = test[0].split(":");
+                        String cntemp = parts[1];
+                        try {
+                            LdapName dn = new LdapName("cn="+cntemp.substring(1)+",ou=Groups");
+                            Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
+                            ModificationItem ID = new ModificationItem(DirContext.REMOVE_ATTRIBUTE, UserID);
 
-                            Attribute nameAttr = attrs.get("cn");
-                            System.out.printf("%s%n",
-                                    nameAttr == null ? "" : nameAttr.get()
-                            );
-                            test[0] = nameAttr.toString();
-                            final String[] parts = test[0].split(":");
-                            String cntemp = parts[1];
-                            try {
-
-                                DistinguishedName test = new DistinguishedName("ou=Groups");
-                                test.add("cn", cntemp.substring(1));
-                                Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
-                                ModificationItem ID = new ModificationItem(DirContext.REMOVE_ATTRIBUTE, UserID);
-
-                                ldapTemplate.modifyAttributes(test, new ModificationItem[]{ID});
-                            }
-                            catch(Exception e){
-                                e.printStackTrace();
-                            }
-                            return null;
+                            ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});
                         }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+                        return null;
                     });
 
             return true;
@@ -364,25 +325,7 @@ public class LDAPManager implements ILDAPManager,IUserContext, IDataSourceContex
         return false;
     }
 
-    @Override
-    public String userid() {
-        return null;
-    }
-
-    @Override
-    public String password() {
-        return null;
-    }
-
-    @Override
-    public String MeterID() {
-        return null;
-    }
-
     public void setLdapTemplate(LdapTemplate ldapTemplate) {
         this.ldapTemplate = ldapTemplate;
-    }
-    public LdapTemplate getLdapTemplate() {
-        return ldapTemplate;
     }
 }
