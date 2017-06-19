@@ -1,9 +1,10 @@
 package at.ac.fh.salzburg.smartmeter.ldap;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
+import at.ac.fh.salzburg.smartmeter.access.IPermissionManager;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 
-public interface ILDAPManager {
+public interface ILDAPManager extends IPermissionManager{
 
     boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext);
     boolean CreateSmartMeter(IDataSourceContext dataSourceContext);
