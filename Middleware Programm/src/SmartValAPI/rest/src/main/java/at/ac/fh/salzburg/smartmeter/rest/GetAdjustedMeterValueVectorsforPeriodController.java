@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 
@@ -36,7 +37,7 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(null, null, pmeterId1, pmeterId2, ptspvon, ptspbis));
     }
 
-    private class CustomMeterQuery extends QueryBase<List<List<MeterDataEntity>>> {
+    private class CustomMeterQuery extends QueryBase<HashMap<Integer, List<MeterDataEntity>>> {
 
         int _meterId1 = 0;
         int _meterId2 = 0;
@@ -53,10 +54,6 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
 
         @Override
         public String getQuery() {
-
-            // blöden Timestamp zerfledern
-            //long von = extractMilisfromTsp(_tspvon);
-            //long bis = extractMilisfromTsp(_tspbis);
 
 
             StringBuilder querystring = new StringBuilder("select data_id, meter_id, timestamp, count_total, count_register1, count_register2, count_register3, count_register4, power_p1, power_p2, power_p3, work_p1, work_p2, work_p3, frequency, voltage from meter_data where meter_id in (");
@@ -75,64 +72,33 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         }
 
         @Override
-        public QueryResult<List<List<MeterDataEntity>>> parseDatabaseResultSet(ResultSet resultSet) {
-            My2vectorsQueryResult result = new My2vectorsQueryResult();
+        public QueryResult<HashMap<Integer, List<MeterDataEntity>>> parseDatabaseResultSet(ResultSet resultSet) {
+
+            My2vectorsQueryResult result = null;
 
             try {
-                while (resultSet.next()) {
-                    MeterDataEntity c = new MeterDataEntity();
-                    c.setDataId(resultSet.getInt("data_id"));
-                    c.setMeterId(resultSet.getInt("meter_id"));
-                    c.setTimestamp(resultSet.getTimestamp("timestamp"));
-                    c.setCountTotal(resultSet.getDouble("count_total"));
-                    c.setCountRegister1(resultSet.getDouble("count_register1"));
-                    c.setCountRegister2(resultSet.getDouble("count_register2"));
-                    c.setCountRegister3(resultSet.getDouble("count_register3"));
-                    c.setCountRegister4(resultSet.getDouble("count_register4"));
-                    c.setPowerP1(resultSet.getDouble("power_p1"));
-                    c.setPowerP2(resultSet.getDouble("power_p2"));
-                    c.setPowerP3(resultSet.getDouble("power_p3"));
-                    c.setWorkP1(resultSet.getDouble("work_p1"));
-                    c.setWorkP2(resultSet.getDouble("work_p2"));
-                    c.setWorkP3(resultSet.getDouble("work_p3"));
-                    c.setFrequency(resultSet.getDouble("frequency"));
-                    c.setVoltage(resultSet.getDouble("voltage"));
-                    if (c.getDataId() != result.getlastMeterId()) {
-                        // bisherige umhängen und mit dem ELement eine neue beginnen
-                        result.finishMeterIdList();
-                    }
-                    // ein Element an die aktuelle Liste dran
-                    result.AddElement(c);
+                if (resultSet.first()) {
+                    result = new My2vectorsQueryResult();
+                    ResultsetParser resultsetParser = new ResultsetParser();
+
+                    HashMap<Integer, List<MeterDataEntity>> aufbereiten = resultsetParser.aufbereiten(resultSet);
+
+                    result.data = aufbereiten;
+                } else {
+                    result = new My2vectorsQueryResult(false, "No data", QueryStatusCode.Error);
                 }
             } catch (SQLException e) {
+                result = new My2vectorsQueryResult(false, e.getMessage(), QueryStatusCode.SqlError);
+
                 e.printStackTrace();
-                return null;
             }
-            // wenn nicht leer, noch die letzte Liste dazu
             return result;
         }
     }
 
-    private class My2vectorsQueryResult extends QueryResult<List<List<MeterDataEntity>>> {
+    private class My2vectorsQueryResult extends QueryResult<HashMap<Integer, List<MeterDataEntity>>> {
 
-        private List<List<MeterDataEntity>> data = new ArrayList<>();
-        private List<MeterDataEntity> wertezueinermeterId = new ArrayList<>();
-
-        public int getlastMeterId() {
-            List<MeterDataEntity> lmdE = null;
-            MeterDataEntity mdE = null;
-
-            if (!data.isEmpty()) {
-                lmdE = data.get(data.size() - 1);
-                if (lmdE.isEmpty()) {
-                    mdE = lmdE.get(0);
-                    if (mdE != null) return mdE.getMeterId();
-                }
-            }
-            return -1;
-        }
-
-        ;
+        private HashMap<Integer, List<MeterDataEntity>> data = new HashMap<>();
 
         protected My2vectorsQueryResult(boolean isSuccessful, String errorMessage, QueryStatusCode queryStatusCode) {
             super(isSuccessful, errorMessage, queryStatusCode);
@@ -142,22 +108,10 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
             super(true, null, QueryStatusCode.OK);
         }
 
-
         @Override
-        public List<List<MeterDataEntity>> getData() {
+        public HashMap<Integer, List<MeterDataEntity>> getData() {
             return data;
         }
-
-        public void AddElement(MeterDataEntity c) {
-            wertezueinermeterId.add(c);
-        }
-
-        public void finishMeterIdList() {
-            data.add(wertezueinermeterId);
-            wertezueinermeterId.clear();
-        }
-
-        ;
     }
 
     private long extractMilisfromTsp(String tspIn) {
@@ -174,5 +128,40 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         return date.getTime();
     }
 
+    private class ResultsetParser {
+        HashMap<Integer, List<MeterDataEntity>> aufbereiten(ResultSet resultSet) throws SQLException {
+            int lastmeterId = -1;
+            HashMap<Integer, List<MeterDataEntity>> ergebnis = new HashMap<>();
+            List<MeterDataEntity> currentList = null;
 
+            while (resultSet.next()) {
+                MeterDataEntity c = new MeterDataEntity();
+                c.setDataId(resultSet.getInt("data_id"));
+                c.setMeterId(resultSet.getInt("meter_id"));
+                c.setTimestamp(resultSet.getTimestamp("timestamp"));
+                c.setCountTotal(resultSet.getDouble("count_total"));
+                c.setCountRegister1(resultSet.getDouble("count_register1"));
+                c.setCountRegister2(resultSet.getDouble("count_register2"));
+                c.setCountRegister3(resultSet.getDouble("count_register3"));
+                c.setCountRegister4(resultSet.getDouble("count_register4"));
+                c.setPowerP1(resultSet.getDouble("power_p1"));
+                c.setPowerP2(resultSet.getDouble("power_p2"));
+                c.setPowerP3(resultSet.getDouble("power_p3"));
+                c.setWorkP1(resultSet.getDouble("work_p1"));
+                c.setWorkP2(resultSet.getDouble("work_p2"));
+                c.setWorkP3(resultSet.getDouble("work_p3"));
+                c.setFrequency(resultSet.getDouble("frequency"));
+                c.setVoltage(resultSet.getDouble("voltage"));
+
+                if (c.getMeterId() != lastmeterId) {
+                    currentList = new ArrayList<>();
+                    ergebnis.put(c.getMeterId(), currentList);
+                    lastmeterId = c.getMeterId();
+                }
+                currentList.add(c);
+            }
+            // hier gehen wir synchronizen
+            return ergebnis;
+        }
+    }
 }
