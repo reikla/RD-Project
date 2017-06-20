@@ -12,7 +12,7 @@ import java.sql.*;
  * Created by reimarklammer on 28.03.17.
  */
 public class SqlDatabaseAccess implements IDatabaseAccess {
-    
+
     @Override
     public QueryResult<?> QueryDatabase(QueryBase query) {
         Connection connection = null;
