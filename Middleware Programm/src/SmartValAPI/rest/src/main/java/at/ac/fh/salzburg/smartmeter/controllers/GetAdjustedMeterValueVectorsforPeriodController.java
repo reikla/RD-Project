@@ -1,7 +1,6 @@
-package at.ac.fh.salzburg.smartmeter.rest;
+package at.ac.fh.salzburg.smartmeter.controllers;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
-import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import at.ac.fh.salzburg.smartmeter.access.QueryBase;
 import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
 import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
@@ -9,6 +8,7 @@ import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
 import at.ac.fh.salzburg.smartmeter.data.entities.MeterDataEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,14 +27,14 @@ import java.util.Date;
  */
 @Controller
 public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQueryControllerBase {
-    @RequestMapping("/query/adjustedmeterdatavectors")
+    @RequestMapping(value = "/query/adjustedmeterdatavectors", method = RequestMethod.GET)
     @ResponseBody
 
     public QueryResult<?> GetAdjustedMeterValueVectorsforPeriod(@RequestParam(value = "meterId1") String pmeterId1,
                                                                 @RequestParam(value = "meterId2") String pmeterId2,
                                                                 @RequestParam(value = "tspvon") String ptspvon,
                                                                 @RequestParam(value = "tspbis") String ptspbis) {
-        return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(null, null, pmeterId1, pmeterId2, ptspvon, ptspbis));
+        return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(pmeterId1, pmeterId2, ptspvon, ptspbis));
     }
 
     private class CustomMeterQuery extends QueryBase<HashMap<Integer, List<MeterDataEntity>>> {
@@ -44,12 +44,21 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         String _tspvon = "";
         String _tspbis = "";
 
-        public CustomMeterQuery(IUserContext userContext, IDataSourceContext dataSourceContext, String pmeterId1, String pmeterId2, String ptspvon, String ptspbis) {
-            super(userContext, dataSourceContext);
+        private IDataSourceContext _dataSourceContext = null;
+
+        public CustomMeterQuery(String pmeterId1, String pmeterId2, String ptspvon, String ptspbis) {
             _meterId1 = Integer.parseInt(pmeterId1);
             _meterId2 = Integer.parseInt(pmeterId2);
             _tspvon = ptspvon;
             _tspbis = ptspbis;
+
+            //todo: Datasource context ausfüllen!
+        }
+
+        @Override
+        public IDataSourceContext getDataSourceContext() {
+
+            return _dataSourceContext;
         }
 
         @Override

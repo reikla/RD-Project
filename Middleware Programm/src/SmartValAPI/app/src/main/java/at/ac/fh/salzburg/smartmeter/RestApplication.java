@@ -4,6 +4,7 @@ import at.ac.fh.salzburg.smartmeter.ldap.LdapContextSourceFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.annotation.Order;
@@ -21,36 +22,22 @@ import java.util.Arrays;
  * Created by reimarklammer on 04.04.17.
  */
 @SpringBootApplication
+@ComponentScan(basePackages = "at.ac.fh.salzburg.smartmeter")
 public class RestApplication {
     public static void main(String[] args) {
         SpringApplication.run(RestApplication.class, args);
     }
 
-    @Configuration
-    @Order(2)
-    public static class SecurityConfig extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-
-            http.csrf().disable()
-                    .antMatcher("**")
-                    .authorizeRequests()
-                    .anyRequest().authenticated()
-                    .and()
-                    .httpBasic()
-                    .and()
-                    .sessionManagement().disable();
-        }
-    }
 
     @Configuration
     @Order(1)
     public static class AdminSecurityConfig extends WebSecurityConfigurerAdapter{
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                    .antMatchers("/admin/**")
-                    .hasRole("ADMINISTRATOR")
+            http.csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers("/admin/**").hasRole("ADMINISTRATOR")
+                    .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**","/swagger-resources/configuration/ui","/swagge‌​r-ui.html").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .httpBasic()

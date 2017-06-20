@@ -1,4 +1,4 @@
-package at.ac.fh.salzburg.smartmeter.rest;
+package at.ac.fh.salzburg.smartmeter.controllers;
 
 import at.ac.fh.salzburg.smartmeter.data.dao.LastDataDao;
 import at.ac.fh.salzburg.smartmeter.data.entities.LastDataEntity;

@@ -1,4 +1,4 @@
-package at.ac.fh.salzburg.smartmeter.rest;
+package at.ac.fh.salzburg.smartmeter.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

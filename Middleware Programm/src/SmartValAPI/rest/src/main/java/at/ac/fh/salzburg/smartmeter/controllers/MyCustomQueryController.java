@@ -1,7 +1,6 @@
-package at.ac.fh.salzburg.smartmeter.rest;
+package at.ac.fh.salzburg.smartmeter.controllers;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
-import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import at.ac.fh.salzburg.smartmeter.access.QueryBase;
 import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
 import at.ac.fh.salzburg.smartmeter.data.data.StringListQueryResult;
@@ -22,14 +21,16 @@ public class MyCustomQueryController extends CustomQueryControllerBase {
     @RequestMapping("/query/myCustomQuery")
     @ResponseBody
     public QueryResult<?> GetMyCustomData(){
-        return databaseAccess.QueryDatabase(new MyCustomQuery(null,null));
+        return databaseAccess.QueryDatabase(new MyCustomQuery());
     }
 
 
     private class MyCustomQuery extends QueryBase<List<String>> {
 
-        public MyCustomQuery(IUserContext userContext, IDataSourceContext dataSourceContext) {
-            super(userContext, dataSourceContext);
+
+        @Override
+        public IDataSourceContext getDataSourceContext() {
+            return null;
         }
 
         @Override

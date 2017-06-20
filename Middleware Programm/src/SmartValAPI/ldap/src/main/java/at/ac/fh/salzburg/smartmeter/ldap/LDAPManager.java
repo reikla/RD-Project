@@ -5,10 +5,12 @@ import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQueryBuilder;
+import org.springframework.stereotype.Component;
 
 import javax.naming.directory.*;
 import javax.naming.ldap.LdapName;
 
+@Component
 public class LDAPManager implements ILDAPManager{
 
     private static LdapTemplate ldapTemplate = new LdapTemplate(LdapContextSourceFactory.getContextSource());

@@ -1,12 +1,10 @@
-package at.ac.fh.salzburg.smartmeter.rest;
+package at.ac.fh.salzburg.smartmeter.controllers;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
-import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import at.ac.fh.salzburg.smartmeter.access.QueryBase;
 import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
 import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
 import at.ac.fh.salzburg.smartmeter.data.entities.CustomerEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,14 +24,18 @@ public class MyFancyQueryController extends CustomQueryControllerBase {
     @RequestMapping("/query/myfancycustomerquery")
     @ResponseBody
     public QueryResult<?> GetCustomers(){
-        return databaseAccess.QueryDatabase(new MyFancyCustomerQuery(null,null));
+        return databaseAccess.QueryDatabase(new MyFancyCustomerQuery());
     }
 
 
     private class MyFancyCustomerQuery extends QueryBase<List<CustomerEntity>>{
 
-        public MyFancyCustomerQuery(IUserContext userContext, IDataSourceContext dataSourceContext) {
-            super(userContext, dataSourceContext);
+        public MyFancyCustomerQuery() {
+        }
+
+        @Override
+        public IDataSourceContext getDataSourceContext() {
+            return null;
         }
 
         @Override

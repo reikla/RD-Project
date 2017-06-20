@@ -1,4 +1,4 @@
-package at.ac.fh.salzburg.smartmeter.rest;
+package at.ac.fh.salzburg.smartmeter.controllers;
 import at.ac.fh.salzburg.smartmeter.data.dao.LogEventsDao;
 import at.ac.fh.salzburg.smartmeter.data.entities.LogEventsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
