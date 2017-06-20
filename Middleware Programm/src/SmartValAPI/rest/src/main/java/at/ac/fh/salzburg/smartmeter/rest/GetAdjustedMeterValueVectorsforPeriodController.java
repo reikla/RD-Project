@@ -4,7 +4,6 @@ import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
 import at.ac.fh.salzburg.smartmeter.access.QueryBase;
 import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
-import at.ac.fh.salzburg.smartmeter.data.data.StringListQueryResult;
 import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
 
 import at.ac.fh.salzburg.smartmeter.data.entities.MeterDataEntity;
@@ -15,11 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -30,14 +26,8 @@ import java.util.Date;
  */
 @Controller
 public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQueryControllerBase {
-
-
-    //public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQueryControllerBase {
     @RequestMapping("/query/adjustedmeterdatavectors")
     @ResponseBody
-
-    //int meterId1 = 0;
-    //int meterId2 = 0;
 
     public QueryResult<?> GetAdjustedMeterValueVectorsforPeriod(@RequestParam(value = "meterId1") String pmeterId1,
                                                                 @RequestParam(value = "meterId2") String pmeterId2,
@@ -46,7 +36,7 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(null, null, pmeterId1, pmeterId2, ptspvon, ptspbis));
     }
 
-    private class CustomMeterQuery extends QueryBase<List<MeterDataEntity>> {
+    private class CustomMeterQuery extends QueryBase<List<List<MeterDataEntity>>> {
 
         int _meterId1 = 0;
         int _meterId2 = 0;
@@ -65,32 +55,31 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         public String getQuery() {
 
             // blöden Timestamp zerfledern
-            long von = extractMilisfromTsp(_tspvon);
-            long bis = extractMilisfromTsp(_tspbis);
+            //long von = extractMilisfromTsp(_tspvon);
+            //long bis = extractMilisfromTsp(_tspbis);
+
 
             StringBuilder querystring = new StringBuilder("select data_id, meter_id, timestamp, count_total, count_register1, count_register2, count_register3, count_register4, power_p1, power_p2, power_p3, work_p1, work_p2, work_p3, frequency, voltage from meter_data where meter_id in (");
             querystring.append(Integer.toString(_meterId1));
             querystring.append(", ");
             querystring.append(Integer.toString(_meterId2));
-            querystring.append(") and timestamp between \"");
-            //querystring.append(Long.toString(von));
+            querystring.append(") ");
+            querystring.append(" and timestamp between \"");
             querystring.append(_tspvon);
             querystring.append("\" and \"");
-
-            //querystring.append(Long.toString(bis));
             querystring.append(_tspbis);
-
-            querystring.append("\" order by meter_id, data_id;");
+            querystring.append("\" ");
+            querystring.append("order by meter_id, data_id;");
 
             return querystring.toString();
         }
 
         @Override
-        public QueryResult<List<MeterDataEntity>> parseDatabaseResultSet(ResultSet resultSet) {
+        public QueryResult<List<List<MeterDataEntity>>> parseDatabaseResultSet(ResultSet resultSet) {
             My2vectorsQueryResult result = new My2vectorsQueryResult();
+
             try {
                 while (resultSet.next()) {
-                    //System.out.println("Sätze:" + ZonedDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME));
                     MeterDataEntity c = new MeterDataEntity();
                     c.setDataId(resultSet.getInt("data_id"));
                     c.setMeterId(resultSet.getInt("meter_id"));
@@ -108,17 +97,42 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
                     c.setWorkP3(resultSet.getDouble("work_p3"));
                     c.setFrequency(resultSet.getDouble("frequency"));
                     c.setVoltage(resultSet.getDouble("voltage"));
+                    if (c.getDataId() != result.getlastMeterId()) {
+                        // bisherige umhängen und mit dem ELement eine neue beginnen
+                        result.finishMeterIdList();
+                    }
+                    // ein Element an die aktuelle Liste dran
                     result.AddElement(c);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
                 return null;
             }
+            // wenn nicht leer, noch die letzte Liste dazu
             return result;
         }
     }
 
-    private class My2vectorsQueryResult extends QueryResult<List<MeterDataEntity>> {
+    private class My2vectorsQueryResult extends QueryResult<List<List<MeterDataEntity>>> {
+
+        private List<List<MeterDataEntity>> data = new ArrayList<>();
+        private List<MeterDataEntity> wertezueinermeterId = new ArrayList<>();
+
+        public int getlastMeterId() {
+            List<MeterDataEntity> lmdE = null;
+            MeterDataEntity mdE = null;
+
+            if (!data.isEmpty()) {
+                lmdE = data.get(data.size() - 1);
+                if (lmdE.isEmpty()) {
+                    mdE = lmdE.get(0);
+                    if (mdE != null) return mdE.getMeterId();
+                }
+            }
+            return -1;
+        }
+
+        ;
 
         protected My2vectorsQueryResult(boolean isSuccessful, String errorMessage, QueryStatusCode queryStatusCode) {
             super(isSuccessful, errorMessage, queryStatusCode);
@@ -128,23 +142,31 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
             super(true, null, QueryStatusCode.OK);
         }
 
-        private List<MeterDataEntity> data = new ArrayList<>();
 
         @Override
-        public List<MeterDataEntity> getData() {
+        public List<List<MeterDataEntity>> getData() {
             return data;
         }
 
         public void AddElement(MeterDataEntity c) {
-            data.add(c);
+            wertezueinermeterId.add(c);
         }
+
+        public void finishMeterIdList() {
+            data.add(wertezueinermeterId);
+            wertezueinermeterId.clear();
+        }
+
+        ;
     }
 
     private long extractMilisfromTsp(String tspIn) {
         Date date = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         try {
-            tspIn.replace("'", "");
+            if (tspIn.contains("'")) {
+                tspIn.replace("'", "");
+            }
             date = sdf.parse(tspIn);
         } catch (ParseException e) {
             e.printStackTrace();
