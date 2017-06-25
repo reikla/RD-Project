@@ -9,6 +9,7 @@ import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQueryBuilder;
 import org.springframework.stereotype.Component;
 
+import javax.naming.InvalidNameException;
 import javax.naming.directory.*;
 import javax.naming.ldap.LdapName;
 
@@ -16,29 +17,65 @@ import javax.naming.ldap.LdapName;
 public class LDAPManager implements ILDAPManager {
 
     private static LdapTemplate ldapTemplate = new LdapTemplate(LdapContextSourceFactory.getContextSource());
-
+/*
     public static void main(String[] args) {
 
-        UserContext user1 = new UserContext("user1","user1");
-        IDataSourceContext sm1 = () -> "12345";
+        UserContext cons1 = new UserContext("consultant2","consultant2");
+        UserContext cust1 = new UserContext("customer5","customer5");
+        //IDataSourceContext sm1 = () -> "5";
 
         LDAPManager manager = new LDAPManager();
-        //manager.CreateUser(user1,sm1);
-        //manager.CreateSmartMeter(sm1);
-        //manager.AddMeterToUser(user1,sm1);
-        manager.AddUserToGroup(user1,"Energieberater");
-
+        //manager.CreateConsultant(cust1,cons1);
+        manager.AddUserToUser(cust1,cons1);
+        //manager.AddUserToGroup(cons1,"Energieberater");
     }
-
+*/
     @Override
-    public boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext){
+    public boolean CreateCustomer(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
-        LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+            LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+
+            //User Attributes
+            Attribute userCn = new BasicAttribute("cn", userContext.userid());
+            Attribute userPassword = new BasicAttribute("userPassword",userContext.password());
+            Attribute UserID = new BasicAttribute("uidNumber","0");
+            Attribute Usergid = new BasicAttribute("gidNumber","0");
+            Attribute Userhome = new BasicAttribute("homeDirectory","/home/user/");
+
+            //ObjectClass attributes
+            Attribute oc = new BasicAttribute("objectClass");
+            oc.add("top");
+            oc.add("PosixAccount");
+            oc.add("PosixGroup");
+
+            Attributes entry = new BasicAttributes();
+            entry.put(userCn);
+            entry.put(Userhome);
+            entry.put(Usergid);
+            entry.put(UserID);
+            entry.put(userPassword);
+            entry.put(oc);
+
+            ldapTemplate.bind(dn, null, entry);
+
+            CreateSmartMeter(dataSourceContext);
+            AddMeterToUser(userContext,dataSourceContext);
+
+            return true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    @Override
+    public boolean CreateConsultant(IUserContext Customer, IUserContext Consultant){
+        try{
+        LdapName dn = new LdapName("uid="+Consultant.userid()+",ou=People");
 
         //User Attributes
-        Attribute userCn = new BasicAttribute("cn", userContext.userid());
-        Attribute userPassword = new BasicAttribute("userPassword",userContext.password());
-        Attribute MeterID = new BasicAttribute("description",dataSourceContext.MeterID());
+        Attribute userCn = new BasicAttribute("cn", Consultant.userid());
+        Attribute userPassword = new BasicAttribute("userPassword",Consultant.password());
         Attribute UserID = new BasicAttribute("uidNumber","0");
         Attribute Usergid = new BasicAttribute("gidNumber","0");
         Attribute Userhome = new BasicAttribute("homeDirectory","/home/user/");
@@ -54,12 +91,13 @@ public class LDAPManager implements ILDAPManager {
         entry.put(Userhome);
         entry.put(Usergid);
         entry.put(UserID);
-        entry.put(MeterID);
         entry.put(userPassword);
         entry.put(oc);
 
-
         ldapTemplate.bind(dn, null, entry);
+
+        AddUserToUser(Customer, Consultant);
+
         return true;
         }
         catch(Exception e){
@@ -175,6 +213,24 @@ public class LDAPManager implements ILDAPManager {
       catch(Exception e){
           e.printStackTrace();
       }
+      return false;
+    }
+    @Override
+    public boolean AddUserToUser(IUserContext Customer, IUserContext Consultant) {
+
+        try {
+            LdapName dn = new LdapName("uid=" + Consultant.userid() + ",ou=People");
+            Attribute UserID = new BasicAttribute("memberUid", Customer.userid());
+            ModificationItem ID = new ModificationItem(
+
+                    DirContext.ADD_ATTRIBUTE, UserID);
+
+            ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});
+
+            return true;
+        } catch (InvalidNameException e) {
+            e.printStackTrace();
+        }
       return false;
     }
     @Override
