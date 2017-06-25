@@ -2,7 +2,9 @@ package at.ac.fh.salzburg.smartmeter.ldap;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
+import at.ac.fh.salzburg.smartmeter.access.UserContext;
 import org.springframework.ldap.core.AttributesMapper;
+import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQueryBuilder;
 import org.springframework.stereotype.Component;
@@ -11,9 +13,22 @@ import javax.naming.directory.*;
 import javax.naming.ldap.LdapName;
 
 @Component
-public class LDAPManager implements ILDAPManager{
+public class LDAPManager implements ILDAPManager {
 
     private static LdapTemplate ldapTemplate = new LdapTemplate(LdapContextSourceFactory.getContextSource());
+
+    public static void main(String[] args) {
+
+        UserContext user1 = new UserContext("user1","user1");
+        IDataSourceContext sm1 = () -> "12345";
+
+        LDAPManager manager = new LDAPManager();
+        //manager.CreateUser(user1,sm1);
+        //manager.CreateSmartMeter(sm1);
+        //manager.AddMeterToUser(user1,sm1);
+        manager.AddUserToGroup(user1,"Energieberater");
+
+    }
 
     @Override
     public boolean CreateUser(IUserContext userContext, IDataSourceContext dataSourceContext){
@@ -42,6 +57,7 @@ public class LDAPManager implements ILDAPManager{
         entry.put(MeterID);
         entry.put(userPassword);
         entry.put(oc);
+
 
         ldapTemplate.bind(dn, null, entry);
         return true;

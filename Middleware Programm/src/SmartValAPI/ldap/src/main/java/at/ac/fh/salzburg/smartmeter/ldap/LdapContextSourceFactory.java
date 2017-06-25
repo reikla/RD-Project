@@ -14,6 +14,9 @@ public class LdapContextSourceFactory {
         contextSource.setPassword("secret");
         contextSource.setUrl("ldap://193.170.119.66:389/");
         contextSource.setBase("dc=maxcrc,dc=com");
+        contextSource.setPooled(false);
+        contextSource.afterPropertiesSet();
         return contextSource;
     }
+
 }
