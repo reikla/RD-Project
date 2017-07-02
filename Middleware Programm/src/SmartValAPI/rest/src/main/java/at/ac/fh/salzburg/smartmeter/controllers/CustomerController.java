@@ -15,7 +15,6 @@ public class CustomerController {
     @Autowired
     private CustomerDao customerDao;
 
-    /* TODO: hier überlegen ob es nicht besser ist die Parameter als Paramerter mit ? abzutrennen? */
     @RequestMapping("/admin/customer/{id}")
     @ResponseBody
     public CustomerEntity readCustomer(@PathVariable  int id) {

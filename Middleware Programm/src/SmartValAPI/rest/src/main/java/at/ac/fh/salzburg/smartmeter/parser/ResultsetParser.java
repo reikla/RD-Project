@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class ResultsetParser {
 
-    public HashMap<Integer, List<MeterDataEntity>> aufbereiten(ResultSet resultSet) throws SQLException {
+    public HashMap<Integer, List<MeterDataEntity>> aufbereiten(ResultSet resultSet, MeterDataMetaData meterDataMetaData) throws SQLException {
         int lastmeterId = -1;
         HashMap<Integer, List<MeterDataEntity>> ergebnis = new HashMap<>();
         List<MeterDataEntity> currentList = null;
@@ -60,7 +60,6 @@ public class ResultsetParser {
             endTimestamp = new Timestamp(Math.min(endTimestamp.getTime(), getEndTsp(ergebnis.get(key)).getTime()));
         }
 
-
         // alle Listen auf diese Timestamp Begrenzeung zuschneiden
         for (Integer key : keys) {
             List<MeterDataEntity> temp = getonlyTspsbetween(ergebnis.get(key), startTimestamp, endTimestamp);
@@ -73,9 +72,14 @@ public class ResultsetParser {
             System.out.println("meter_id: " + key);
             List<MeterDataEntity> x = ergebnis.get(key);
             System.out.println("Messdatenwerte" + x.size());
-            System.out.println("Samplerate: " + getSampleRate(x));
-            largestSampleDistance = Math.max(largestSampleDistance, getSampleRate(x));
+            System.out.println("Samplerate: " + getAvgSampleRate(x));
+            largestSampleDistance = Math.max(largestSampleDistance, getAvgSampleRate(x));
         }
+
+        /// Metadaten merken
+        meterDataMetaData.minTimestamp = startTimestamp;
+        meterDataMetaData.maxTimestmap = endTimestamp;
+        meterDataMetaData.samplingRateMillis = largestSampleDistance;
 
         if (largestSampleDistance > 0)
             // umschreiben auf längesten SampleAbstand
@@ -85,7 +89,6 @@ public class ResultsetParser {
                 System.out.println("rewritten: " + y.size());
                 hm.put(key, y);
             }
-
 
         //return ergebnis;
         return hm;
@@ -132,7 +135,7 @@ public class ResultsetParser {
     }
 
 
-    private Integer getSampleRate(List<MeterDataEntity> meterDataEntityList) {
+    private Integer getAvgSampleRate(List<MeterDataEntity> meterDataEntityList) {
 
         // nicht für leere Listen
         if (meterDataEntityList.isEmpty())
@@ -194,7 +197,7 @@ public class ResultsetParser {
                     startTimestamp = endTimestamp;
                     ///endTimestamp = endTimestamp + samplerate;
 
-                    cal.add(Calendar.SECOND, samplerate);
+                    cal.add(Calendar.MILLISECOND, samplerate);
                     ende = new Timestamp(cal.getTime().getTime());
                     endTimestamp = ende.getTime();
 

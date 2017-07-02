@@ -6,6 +6,7 @@ import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
 import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
 import at.ac.fh.salzburg.smartmeter.parser.ResultsetParser;
 import at.ac.fh.salzburg.smartmeter.parser.MeterDataMetaData;
+import at.ac.fh.salzburg.smartmeter.parser.AdjustedMeterValueVectorsforPeriod;
 
 import at.ac.fh.salzburg.smartmeter.data.entities.MeterDataEntity;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(pmeterId1, pmeterId2, ptspvon, ptspbis));
     }
 
-    private class CustomMeterQuery extends QueryBase<HashMap<Integer, List<MeterDataEntity>>> {
+    private class CustomMeterQuery extends QueryBase<AdjustedMeterValueVectorsforPeriod> {
 
         int _meterId1 = 0;
         int _meterId2 = 0;
@@ -81,7 +82,7 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         }
 
         @Override
-        public QueryResult<HashMap<Integer, List<MeterDataEntity>>> parseDatabaseResultSet(ResultSet resultSet) {
+        public QueryResult<AdjustedMeterValueVectorsforPeriod> parseDatabaseResultSet(ResultSet resultSet) {
 
             My2vectorsQueryResult result = null;
 
@@ -89,10 +90,13 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
                 if (resultSet.first()) {
                     result = new My2vectorsQueryResult();
                     ResultsetParser resultsetParser = new ResultsetParser();
+                    MeterDataMetaData meterDataMetaData = new MeterDataMetaData();
 
-                    HashMap<Integer, List<MeterDataEntity>> aufbereiten = resultsetParser.aufbereiten(resultSet);
+                    HashMap<Integer, List<MeterDataEntity>> aufbereiten = resultsetParser.aufbereiten(resultSet, meterDataMetaData);
 
-                    result.data = aufbereiten;
+                    result.data.meterData = aufbereiten;
+                    result.data.metaData = meterDataMetaData;
+
                 } else {
                     result = new My2vectorsQueryResult(false, "No data", QueryStatusCode.Error);
                 }
@@ -105,9 +109,9 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         }
     }
 
-    private class My2vectorsQueryResult extends QueryResult<HashMap<Integer, List<MeterDataEntity>>> {
+    private class My2vectorsQueryResult extends QueryResult<AdjustedMeterValueVectorsforPeriod> {
         private MeterDataMetaData metaData = new MeterDataMetaData();
-        private HashMap<Integer, List<MeterDataEntity>> data = new HashMap<>();
+        private AdjustedMeterValueVectorsforPeriod data = new AdjustedMeterValueVectorsforPeriod();
 
         protected My2vectorsQueryResult(boolean isSuccessful, String errorMessage, QueryStatusCode queryStatusCode) {
             super(isSuccessful, errorMessage, queryStatusCode);
@@ -118,8 +122,12 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         }
 
         @Override
-        public HashMap<Integer, List<MeterDataEntity>> getData() {
+        public AdjustedMeterValueVectorsforPeriod getData() {
             return data;
+        }
+
+        public void setData(AdjustedMeterValueVectorsforPeriod p) {
+            data = p;
         }
     }
 
