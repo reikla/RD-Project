@@ -33,23 +33,50 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
 
     public QueryResult<?> GetAdjustedMeterValueVectorsforPeriod(@RequestParam(value = "meterId1") String pmeterId1,
                                                                 @RequestParam(value = "meterId2") String pmeterId2,
+                                                                @RequestParam(value = "meterId3", required = false) String pmeterId3,
                                                                 @RequestParam(value = "tspvon") String ptspvon,
-                                                                @RequestParam(value = "tspbis") String ptspbis) {
-        return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(pmeterId1, pmeterId2, ptspvon, ptspbis));
+                                                                @RequestParam(value = "tspbis") String ptspbis,
+                                                                @RequestParam(value = "maxSamplefreq", required = false) String maxSamplefreq) {
+        return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(pmeterId1, pmeterId2, pmeterId3, ptspvon, ptspbis, maxSamplefreq));
     }
 
     private class CustomMeterQuery extends QueryBase<AdjustedMeterValueVectorsforPeriod> {
 
-        int _meterId1 = 0;
-        int _meterId2 = 0;
+        int _meterId1 = -1;
+        int _meterId2 = -1;
+        int _meterId3 = -1;
+        int _maxSamplefreq = 0;
         String _tspvon = "";
         String _tspbis = "";
 
         private IDataSourceContext _dataSourceContext = null;
 
-        public CustomMeterQuery(String pmeterId1, String pmeterId2, String ptspvon, String ptspbis) {
-            _meterId1 = Integer.parseInt(pmeterId1);
-            _meterId2 = Integer.parseInt(pmeterId2);
+        public CustomMeterQuery(String pmeterId1, String pmeterId2, String pmeterId3, String ptspvon, String ptspbis, String maxSamplefreq) {
+            try {
+                _meterId1 = Integer.parseInt(pmeterId1);
+            } catch (NumberFormatException e) {
+            }
+            ;
+
+            try {
+                _meterId2 = Integer.parseInt(pmeterId2);
+            } catch (NumberFormatException e) {
+            }
+            ;
+
+            try {
+                _meterId3 = Integer.parseInt(pmeterId3);
+            } catch (NumberFormatException e) {
+            }
+            ;
+
+            // übergebene Samplefrequenz übernehmen
+            try {
+                _maxSamplefreq = Integer.parseInt(maxSamplefreq);
+            } catch (NumberFormatException e) {
+                _maxSamplefreq = 0;
+            }
+            ;
             _tspvon = ptspvon;
             _tspbis = ptspbis;
 
@@ -70,6 +97,10 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
             querystring.append(Integer.toString(_meterId1));
             querystring.append(", ");
             querystring.append(Integer.toString(_meterId2));
+            if (_meterId3 != -1) {
+                querystring.append(", ");
+                querystring.append(Integer.toString(_meterId3));
+            }
             querystring.append(") ");
             querystring.append(" and timestamp between \"");
             querystring.append(_tspvon);
@@ -91,6 +122,7 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
                     result = new My2vectorsQueryResult();
                     ResultsetParser resultsetParser = new ResultsetParser();
                     MeterDataMetaData meterDataMetaData = new MeterDataMetaData();
+                    resultsetParser.setlargestSampleDistance(_maxSamplefreq);
 
                     HashMap<Integer, List<MeterDataEntity>> aufbereiten = resultsetParser.aufbereiten(resultSet, meterDataMetaData);
 
