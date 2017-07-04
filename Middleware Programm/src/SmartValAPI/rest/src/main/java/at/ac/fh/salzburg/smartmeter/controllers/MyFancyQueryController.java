@@ -34,7 +34,7 @@ public class MyFancyQueryController extends CustomQueryControllerBase {
         }
 
         @Override
-        public IDataSourceContext getDataSourceContext() {
+        public IDataSourceContext[] getDataSourceContexts() {
             return null;
         }
 
