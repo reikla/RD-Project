@@ -31,42 +31,28 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
     @RequestMapping(value = "/query/adjustedmeterdatavectors", method = RequestMethod.GET)
     @ResponseBody
 
-    public QueryResult<?> GetAdjustedMeterValueVectorsforPeriod(@RequestParam(value = "meterId1") String pmeterId1,
-                                                                @RequestParam(value = "meterId2") String pmeterId2,
-                                                                @RequestParam(value = "meterId3", required = false) String pmeterId3,
+    public QueryResult<?> GetAdjustedMeterValueVectorsforPeriod(@RequestParam(value = "meterIds") String[] pmeterIds,
                                                                 @RequestParam(value = "tspvon") String ptspvon,
                                                                 @RequestParam(value = "tspbis") String ptspbis,
                                                                 @RequestParam(value = "maxSamplefreq", required = false) String maxSamplefreq) {
-        return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(pmeterId1, pmeterId2, pmeterId3, ptspvon, ptspbis, maxSamplefreq));
+        return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(pmeterIds, ptspvon, ptspbis, maxSamplefreq));
     }
 
     private class CustomMeterQuery extends QueryBase<AdjustedMeterValueVectorsforPeriod> {
 
-        int _meterId1 = -1;
-        int _meterId2 = -1;
-        int _meterId3 = -1;
+        List<Integer> _meterIds = new ArrayList<>();
         int _maxSamplefreq = 0;
         String _tspvon = "";
         String _tspbis = "";
 
         private IDataSourceContext _dataSourceContext = null;
 
-        public CustomMeterQuery(String pmeterId1, String pmeterId2, String pmeterId3, String ptspvon, String ptspbis, String maxSamplefreq) {
-            try {
-                _meterId1 = Integer.parseInt(pmeterId1);
-            } catch (NumberFormatException e) {
-            }
-            ;
-
-            try {
-                _meterId2 = Integer.parseInt(pmeterId2);
-            } catch (NumberFormatException e) {
-            }
-            ;
-
-            try {
-                _meterId3 = Integer.parseInt(pmeterId3);
-            } catch (NumberFormatException e) {
+        public CustomMeterQuery(String[] pmeterIds, String ptspvon, String ptspbis, String maxSamplefreq) {
+            for (String item : pmeterIds) {
+                try {
+                    _meterIds.add(Integer.parseInt(item));
+                } catch (NumberFormatException e) {
+                }
             }
             ;
 
@@ -93,13 +79,13 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         public String getQuery() {
 
 
+            boolean first = true;
             StringBuilder querystring = new StringBuilder("select data_id, meter_id, timestamp, count_total, count_register1, count_register2, count_register3, count_register4, power_p1, power_p2, power_p3, work_p1, work_p2, work_p3, frequency, voltage from meter_data where meter_id in (");
-            querystring.append(Integer.toString(_meterId1));
-            querystring.append(", ");
-            querystring.append(Integer.toString(_meterId2));
-            if (_meterId3 != -1) {
-                querystring.append(", ");
-                querystring.append(Integer.toString(_meterId3));
+            for (int item : _meterIds) {
+                if (first != true)
+                    querystring.append(", ");
+                else first = false;
+                querystring.append(Integer.toString(item));
             }
             querystring.append(") ");
             querystring.append(" and timestamp between \"");
@@ -108,6 +94,7 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
             querystring.append(_tspbis);
             querystring.append("\" ");
             querystring.append("order by meter_id, data_id;");
+            System.out.println("Query: " + querystring.toString());
 
             return querystring.toString();
         }
