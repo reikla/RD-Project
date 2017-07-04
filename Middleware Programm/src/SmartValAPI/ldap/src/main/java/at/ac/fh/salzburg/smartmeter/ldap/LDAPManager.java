@@ -2,9 +2,7 @@ package at.ac.fh.salzburg.smartmeter.ldap;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
-import at.ac.fh.salzburg.smartmeter.access.UserContext;
 import org.springframework.ldap.core.AttributesMapper;
-import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQueryBuilder;
 import org.springframework.stereotype.Component;

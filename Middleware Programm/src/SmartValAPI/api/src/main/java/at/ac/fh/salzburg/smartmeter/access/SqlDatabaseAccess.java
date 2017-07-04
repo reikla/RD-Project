@@ -28,32 +28,31 @@ public class SqlDatabaseAccess implements IDatabaseAccess {
         QueryResult<?> result = null;
 
 
-
         IUserContext usercontext = userContextFactory.getUserContext();
 
-        if(query.getDataSourceContext() != null){
-            if(!permissionManager.IsAllowedToAccess(usercontext,query.getDataSourceContext())){
-                return new PermissionDeniedQueryResult();
+        if (query.getDataSourceContexts() != null) {
+            for (IDataSourceContext dataSourcecontext : query.getDataSourceContexts()) {
+                if (!permissionManager.IsAllowedToAccess(usercontext, dataSourcecontext)) {
+                    return new PermissionDeniedQueryResult();
+                }
             }
         }
 
-
-
-        try{
+        try {
             connection = DriverManager.getConnection(
                     Constants.METER_DATA_CONNECTION_STRING,
                     Constants.METER_DATA_CONNECTION_USERNAME,
                     Constants.METER_DATA_CONNECTION_PASSWORD);
             Statement statement = connection.createStatement();
-            if(statement.execute(query.getQuery())){
+            if (statement.execute(query.getQuery())) {
                 ResultSet resultSet = statement.getResultSet();
                 result = query.parseDatabaseResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            result = new VoidQueryResult(false,"The SQL query went wrong.", QueryStatusCode.SqlError);
-        }finally{
-            if(connection != null)
+            result = new VoidQueryResult(false, "The SQL query went wrong.", QueryStatusCode.SqlError);
+        } finally {
+            if (connection != null)
                 try {
                     connection.close();
                     connection = null;

@@ -15,7 +15,7 @@ public abstract class QueryBase<T> {
      *
      * @return the dataSourceContext of the query
      */
-    public abstract IDataSourceContext getDataSourceContext();
+    public abstract IDataSourceContext[] getDataSourceContexts();
 
     /**
      * Implement this method for the query.
