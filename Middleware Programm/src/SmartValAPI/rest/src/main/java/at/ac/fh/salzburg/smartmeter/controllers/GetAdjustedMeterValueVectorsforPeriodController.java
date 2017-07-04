@@ -70,9 +70,9 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         }
 
         @Override
-        public IDataSourceContext getDataSourceContext() {
+        public IDataSourceContext[] getDataSourceContexts() {
 
-            return _dataSourceContext;
+            return new IDataSourceContext[0];
         }
 
         @Override
