@@ -2,32 +2,50 @@ package at.ac.fh.salzburg.smartmeter.ldap;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
+import at.ac.fh.salzburg.smartmeter.access.UserContext;
+import org.springframework.ldap.NamingException;
 import org.springframework.ldap.core.AttributesMapper;
+import org.springframework.ldap.core.ContextMapper;
+import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.ldap.filter.AndFilter;
+import org.springframework.ldap.filter.EqualsFilter;
+import org.springframework.ldap.filter.WhitespaceWildcardsFilter;
 import org.springframework.ldap.query.LdapQueryBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.naming.InvalidNameException;
+import javax.naming.NamingEnumeration;
 import javax.naming.directory.*;
 import javax.naming.ldap.LdapName;
+import java.util.List;
 
 @Component
 public class LDAPManager implements ILDAPManager {
 
     private static LdapTemplate ldapTemplate = new LdapTemplate(LdapContextSourceFactory.getContextSource());
-/*
+
     public static void main(String[] args) {
 
         UserContext cons1 = new UserContext("consultant2","consultant2");
         UserContext cust1 = new UserContext("customer5","customer5");
-        //IDataSourceContext sm1 = () -> "5";
+        IDataSourceContext sm1 = () -> "5";
 
         LDAPManager manager = new LDAPManager();
+        if(manager.IsAllowedToAccess(cust1, sm1)){
+            System.out.println("\nhat Zugriff ßn");
+        }
+        else{
+            System.out.println("\nhat keinen Zugriff\n");
+        }
+
+
+
         //manager.CreateConsultant(cust1,cons1);
-        manager.AddUserToUser(cust1,cons1);
+        //manager.AddUserToUser(cust1,cons1);
         //manager.AddUserToGroup(cons1,"Energieberater");
     }
-*/
+
     @Override
     public boolean CreateCustomer(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
@@ -159,35 +177,56 @@ public class LDAPManager implements ILDAPManager {
         }
         return false;
     }
+
     @Override
     public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
             final String[] cntemp = new String[1];
 
+            //Hol dir die Gruppenzugehörigkeit              TODO HOLT NUR LETZTEN GRUPPENTYPEN
             ldapTemplate.search(
-                    LdapQueryBuilder.query().where("description").is(dataSourceContext.MeterID()),
+                    LdapQueryBuilder.query().where("memberUid").is(userContext.userid()),
 
                     (AttributesMapper<Void>) attrs -> {
-
-                        Attribute MeterID = attrs.get("description");
-                        Attribute nameAttr = attrs.get("uid");
-                        System.out.printf("%s - %s%n",
-                                MeterID == null ? "" : MeterID.get(),
-                                nameAttr == null ? "" : nameAttr.get()
-
-                        );
+                        Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
+                        Attribute nameAttr = attrs.get("cn");
                         cntemp[0] = nameAttr.toString();
                         return null;
                     });
-            try {
-                if (cntemp[0].equals("uid: " + userContext.userid())) {
-                    return true;
-                } else {
-                    return false;
-                }
+            System.out.printf(cntemp[0]);
+
+            if(cntemp[0].contains("cn: Energieberater")){
+                //Hole dir alle Customer seiner Member
+                //Hol dir alle Smartmeter aller Customer in eine Liste
+
             }
-            catch(NullPointerException ne){
-                //
+            else if(cntemp[0].contains("cn: Kunden")){
+
+                ldapTemplate.search(
+                        LdapQueryBuilder.query().where("memberUid").is(dataSourceContext.MeterID()),
+
+                        (AttributesMapper<Void>) attrs -> {
+
+                            Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
+                            Attribute nameAttr = attrs.get("uid");
+                            System.out.printf("%s - %s%n",
+                                    MeterID == null ? "" : MeterID.get(),
+                                    nameAttr == null ? "" : nameAttr.get()
+
+                            );
+                            cntemp[0] = nameAttr.toString();
+                            return null;
+                        });
+                try {
+                    if (cntemp[0].equals("uid: " + userContext.userid())) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                catch(NullPointerException ne){
+                    //
+                }
             }
 
         } catch (Exception e){
@@ -239,7 +278,6 @@ public class LDAPManager implements ILDAPManager {
             ModificationItem ID = new ModificationItem(
 
                     DirContext.ADD_ATTRIBUTE, UserID);
-
             ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});
             return true;
         }
@@ -248,11 +286,15 @@ public class LDAPManager implements ILDAPManager {
         }
         return false;
     }
+
+
+
+
     @Override
     public boolean DeleteMeterFromUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
             LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
-            Attribute MeterID = new BasicAttribute("description", dataSourceContext.MeterID());
+            Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.REMOVE_ATTRIBUTE, MeterID);
