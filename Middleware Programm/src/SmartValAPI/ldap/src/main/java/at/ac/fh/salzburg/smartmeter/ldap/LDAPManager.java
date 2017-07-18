@@ -29,26 +29,31 @@ import static sun.net.InetAddressCachePolicy.get;
 public class LDAPManager implements ILDAPManager {
 
     private static LdapTemplate ldapTemplate = new LdapTemplate(LdapContextSourceFactory.getContextSource());
- /*
+
     public static void main(String[] args) {
 
         UserContext cons1 = new UserContext("consultant2","consultant2");
-        UserContext cust1 = new UserContext("customer5","customer5");
+        UserContext prov1 = new UserContext("provider1","provider1");
+        //UserContext cust1 = new UserContext("customer5","customer5");
         IDataSourceContext sm1 = () -> "5";
 
         LDAPManager manager = new LDAPManager();
-        if(manager.IsAllowedToAccess(cons1, sm1)){
+
+        if(manager.IsAllowedToAccess(prov1, sm1)){
             System.out.println("\nhat Zugriff\n");
         }
         else{
             System.out.println("\nhat keinen Zugriff\n");
         }
 
+        //manager.CreateConsultant(cons1,prov1);
+        //manager.AddUserToGroup(prov1,"Netzbetreiber");
+
         //manager.CreateConsultant(cust1,cons1);
         //manager.AddUserToUser(cust1,cons1);
         //manager.AddUserToGroup(cons1,"Energieberater");
     }
-*/
+
     @Override
     public boolean CreateCustomer(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
@@ -198,10 +203,79 @@ public class LDAPManager implements ILDAPManager {
                             if(nameAttr.contains("Energieberater")){
                                 gruppe[0] = "cn: Energieberater";
                             }
+                            if(nameAttr.contains("Netzbetreiber")){
+                               gruppe[0] = "cn: Netzbetreiber";
+                            }
+
                         return null;
                     });
 
-            if(gruppe[0].contains("cn: Energieberater")){
+            if(gruppe[0].contains("cn: Netzbetreiber")){
+
+                LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+                List consultants = new ArrayList();
+                List customers = new ArrayList();
+
+                //Holt alle Energieberater des Netzbetreibers
+                ldapTemplate.lookup(
+                        dn,
+                        (AttributesMapper<Void>) attrs -> {
+                            Attribute nameAttr = attrs.get("memberUid");
+                            cntemp[0] = nameAttr.toString();
+                            String[] parts = cntemp[0].split("[:,]");
+                            for(int i = 1; i< parts.length; i++){
+                                consultants.add(parts[i].toString());
+                            }
+                            return null;
+                        });
+
+                for(int i = 0; i < consultants.size(); i++) {
+
+                    LdapName dn2 = new LdapName("uid="+consultants.get(i).toString()+",ou=People");
+                    //Holt alle Kunden aller Energieberater
+                    ldapTemplate.lookup(
+                            dn2,
+                            (AttributesMapper<Void>) attrs -> {
+                                Attribute nameAttr = attrs.get("memberUid");
+                                cntemp[0] = nameAttr.toString();
+                                String[] parts = cntemp[0].split("[:,]");
+                                for(int n = 1; n< parts.length; n++){
+                                    customers.add(parts[n].toString());
+                                }
+                                return null;
+                            });
+
+                    //Abfrage, ob deren Mitglieder den angegebenen Smartmeter besitzen
+                    int check = 0;
+                    for(int n = 0; n < customers.size(); n++) {
+                        ldapTemplate.search(
+                                LdapQueryBuilder.query().where("memberUid").is(dataSourceContext.MeterID()),
+                                (AttributesMapper<Void>) attrs -> {
+                                    Attribute nameAttr = attrs.get("uid");
+                                    cntemp[0] = nameAttr.toString();
+                                    return null;
+                                });
+                        try {
+                            if (cntemp[0].equals("uid:" + customers.get(n))) {
+
+                                check = 1;
+                                break;
+                            } else {
+                                check = 0;
+                            }
+                        } catch (NullPointerException ne) {
+                            //
+                        }
+                    }
+                    if(check == 1){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+            else if(gruppe[0].contains("cn: Energieberater")){
 
                 LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
                 List mitglieder = new ArrayList();
