@@ -29,7 +29,7 @@ import static sun.net.InetAddressCachePolicy.get;
 public class LDAPManager implements ILDAPManager {
 
     private static LdapTemplate ldapTemplate = new LdapTemplate(LdapContextSourceFactory.getContextSource());
-
+/*
     public static void main(String[] args) {
 
         UserContext cons1 = new UserContext("consultant2","consultant2");
@@ -53,7 +53,7 @@ public class LDAPManager implements ILDAPManager {
         //manager.AddUserToUser(cust1,cons1);
         //manager.AddUserToGroup(cons1,"Energieberater");
     }
-
+*/
     @Override
     public boolean CreateCustomer(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
