@@ -15,16 +15,21 @@ import org.springframework.ldap.query.LdapQueryBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.naming.InvalidNameException;
+import javax.naming.Name;
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.*;
 import javax.naming.ldap.LdapName;
-import java.util.List;
+import java.util.*;
+
+import static com.sun.deploy.config.JREInfo.getAll;
+import static java.util.stream.Collectors.toSet;
+import static sun.net.InetAddressCachePolicy.get;
 
 @Component
 public class LDAPManager implements ILDAPManager {
 
     private static LdapTemplate ldapTemplate = new LdapTemplate(LdapContextSourceFactory.getContextSource());
-
+ /*
     public static void main(String[] args) {
 
         UserContext cons1 = new UserContext("consultant2","consultant2");
@@ -32,20 +37,18 @@ public class LDAPManager implements ILDAPManager {
         IDataSourceContext sm1 = () -> "5";
 
         LDAPManager manager = new LDAPManager();
-        if(manager.IsAllowedToAccess(cust1, sm1)){
-            System.out.println("\nhat Zugriff ßn");
+        if(manager.IsAllowedToAccess(cons1, sm1)){
+            System.out.println("\nhat Zugriff\n");
         }
         else{
             System.out.println("\nhat keinen Zugriff\n");
         }
 
-
-
         //manager.CreateConsultant(cust1,cons1);
         //manager.AddUserToUser(cust1,cons1);
         //manager.AddUserToGroup(cons1,"Energieberater");
     }
-
+*/
     @Override
     public boolean CreateCustomer(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
@@ -177,43 +180,82 @@ public class LDAPManager implements ILDAPManager {
         }
         return false;
     }
-
     @Override
     public boolean IsAllowedToAccess(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
             final String[] cntemp = new String[1];
+            final String[] gruppe = new String[1];
 
-            //Hol dir die Gruppenzugehörigkeit              TODO HOLT NUR LETZTEN GRUPPENTYPEN
+            //Hol die größte Gruppenzugehörigkeit
             ldapTemplate.search(
                     LdapQueryBuilder.query().where("memberUid").is(userContext.userid()),
 
                     (AttributesMapper<Void>) attrs -> {
-                        Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
                         Attribute nameAttr = attrs.get("cn");
-                        cntemp[0] = nameAttr.toString();
+                            if(nameAttr.contains("Kunden")){
+                                gruppe[0] = "cn: Kunden";
+                            }
+                            if(nameAttr.contains("Energieberater")){
+                                gruppe[0] = "cn: Energieberater";
+                            }
                         return null;
                     });
-            System.out.printf(cntemp[0]);
 
-            if(cntemp[0].contains("cn: Energieberater")){
-                //Hole dir alle Customer seiner Member
-                //Hol dir alle Smartmeter aller Customer in eine Liste
+            if(gruppe[0].contains("cn: Energieberater")){
 
+                LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+                List mitglieder = new ArrayList();
+
+                //Holt alle Mitglieder des Energieberaters
+                ldapTemplate.lookup(
+                        dn,
+                        (AttributesMapper<Void>) attrs -> {
+                            Attribute nameAttr = attrs.get("memberUid");
+                            cntemp[0] = nameAttr.toString();
+                            String[] parts = cntemp[0].split("[:,]");
+                            for(int i = 1; i< parts.length; i++){
+                                mitglieder.add(parts[i].toString());
+                            }
+                            return null;
+                        });
+
+                //Abfrage, ob deren Mitglieder den angegebenen Smartmeter besitzen
+                int check = 0;
+                for(int i = 0; i < mitglieder.size(); i++) {
+
+                    ldapTemplate.search(
+                            LdapQueryBuilder.query().where("memberUid").is(dataSourceContext.MeterID()),
+
+                            (AttributesMapper<Void>) attrs -> {
+                                Attribute nameAttr = attrs.get("uid");
+                                cntemp[0] = nameAttr.toString();
+                                return null;
+                            });
+                    try {
+                        if (cntemp[0].equals("uid:" + mitglieder.get(i))) {
+                            check = 1;
+                            break;
+                        } else {
+                           check = 0;
+                        }
+                    } catch (NullPointerException ne) {
+                        //
+                    }
+                }
+                if(check == 1){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
-            else if(cntemp[0].contains("cn: Kunden")){
+            else if(gruppe[0].contains("cn: Kunden")){
 
                 ldapTemplate.search(
                         LdapQueryBuilder.query().where("memberUid").is(dataSourceContext.MeterID()),
 
                         (AttributesMapper<Void>) attrs -> {
-
-                            Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
                             Attribute nameAttr = attrs.get("uid");
-                            System.out.printf("%s - %s%n",
-                                    MeterID == null ? "" : MeterID.get(),
-                                    nameAttr == null ? "" : nameAttr.get()
-
-                            );
                             cntemp[0] = nameAttr.toString();
                             return null;
                         });
@@ -286,10 +328,6 @@ public class LDAPManager implements ILDAPManager {
         }
         return false;
     }
-
-
-
-
     @Override
     public boolean DeleteMeterFromUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
