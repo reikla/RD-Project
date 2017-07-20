@@ -38,6 +38,9 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         return databaseAccess.QueryDatabase(new GetAdjustedMeterValueVectorsforPeriodController.CustomMeterQuery(pmeterIds, ptspvon, ptspbis, maxSamplefreq));
     }
 
+    /**
+     * This class handles the custom Query
+     */
     private class CustomMeterQuery extends QueryBase<AdjustedMeterValueVectorsforPeriod> {
 
         List<Integer> _meterIds = new ArrayList<>();
@@ -47,6 +50,15 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
 
         private IDataSourceContext _dataSourceContext = null;
 
+        /**
+         * extracts the meterIds passed by the get request and fills the array for accessing,
+         * checks the timestamps and eventually a maximum sample frequence to be returned
+         *
+         * @param pmeterIds
+         * @param ptspvon
+         * @param ptspbis
+         * @param maxSamplefreq
+         */
         public CustomMeterQuery(String[] pmeterIds, String ptspvon, String ptspbis, String maxSamplefreq) {
             for (String item : pmeterIds) {
                 try {
@@ -75,7 +87,11 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
             return new IDataSourceContext[0];
         }
 
+
         @Override
+        /**
+         * generates the query string from template and variables
+         */
         public String getQuery() {
 
 
