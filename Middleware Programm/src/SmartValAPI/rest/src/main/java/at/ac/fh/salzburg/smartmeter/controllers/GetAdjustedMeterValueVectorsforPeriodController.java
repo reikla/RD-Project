@@ -48,7 +48,7 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
         String _tspvon = "";
         String _tspbis = "";
 
-        private IDataSourceContext _dataSourceContext = null;
+        private IDataSourceContext _dataSourceContext[] = null;
 
         /**
          * extracts the meterIds passed by the get request and fills the array for accessing,
@@ -78,13 +78,15 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
             _tspvon = ptspvon;
             _tspbis = ptspbis;
 
-            //todo: Datasource context ausfüllen!
+            //todo: ist der IDataSourceContext richtig ausgefüllt?
+            _dataSourceContext = getDataSourceContexts();
         }
 
         @Override
         public IDataSourceContext[] getDataSourceContexts() {
 
             return new IDataSourceContext[0];
+
         }
 
 

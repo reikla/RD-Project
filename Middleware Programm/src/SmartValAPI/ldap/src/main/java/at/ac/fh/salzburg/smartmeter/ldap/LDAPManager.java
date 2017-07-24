@@ -21,9 +21,9 @@ import javax.naming.directory.*;
 import javax.naming.ldap.LdapName;
 import java.util.*;
 
-import static com.sun.deploy.config.JREInfo.getAll;
+/*import static com.sun.deploy.config.JREInfo.getAll;*/
 import static java.util.stream.Collectors.toSet;
-import static sun.net.InetAddressCachePolicy.get;
+/*import static sun.net.InetAddressCachePolicy.get;*/
 
 @Component
 public class LDAPManager implements ILDAPManager {

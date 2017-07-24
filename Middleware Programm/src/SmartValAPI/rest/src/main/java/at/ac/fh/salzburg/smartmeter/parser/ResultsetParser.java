@@ -71,10 +71,7 @@ public class ResultsetParser {
         // sample Abstand: größten ermitteln
         int largestSampleDistance = _largestSampleDistance;
         for (Integer key : keys) {
-            System.out.println("meter_id: " + key);
             List<MeterDataEntity> x = ergebnis.get(key);
-            System.out.println("Messdatenwerte" + x.size());
-            System.out.println("Samplerate(Original): " + getAvgSampleRate(x));
             largestSampleDistance = Math.max(largestSampleDistance, getAvgSampleRate(x));
         }
 
@@ -83,17 +80,13 @@ public class ResultsetParser {
         meterDataMetaData.maxTimestmap = endTimestamp;
         meterDataMetaData.samplingRateMillis = largestSampleDistance;
 
-        System.out.println("berechneter largestSampleDistance" + largestSampleDistance);
         if (largestSampleDistance > 0)
             // umschreiben auf längesten SampleAbstand
             for (Integer key : keys) {
                 List<MeterDataEntity> x = ergebnis.get(key);
                 List<MeterDataEntity> y = rewriteSamplerate(x, largestSampleDistance);
-                System.out.println("rewritten: " + y.size());
                 hm.put(key, y);
             }
-
-        //return ergebnis;
         return hm;
     }
 
@@ -195,13 +188,10 @@ public class ResultsetParser {
                     curElement.setVoltage(curElement.getVoltage() / collectedElems);
 
                     reformatted.add(curElement);
-                    System.out.println("collected: " + collectedElems);
 
                     firstValFlag = true;
                     collectedElems = 0;
                     startTimestamp = endTimestamp;
-
-                    ///endTimestamp = endTimestamp + samplerate;
 
                     cal.add(Calendar.MILLISECOND, samplerate);
                     ende = new Timestamp(cal.getTime().getTime());
