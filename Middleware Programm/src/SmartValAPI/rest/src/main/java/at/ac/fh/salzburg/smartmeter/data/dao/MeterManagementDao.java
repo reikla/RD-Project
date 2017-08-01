@@ -1,6 +1,7 @@
 package at.ac.fh.salzburg.smartmeter.data.dao;
 
 import at.ac.fh.salzburg.smartmeter.data.entities.MeterManagementEntity;
+import at.ac.fh.salzburg.smartmeter.data.entities.MeterManagementEntityPK;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,5 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Repository
-public interface MeterManagementDao extends CrudRepository<MeterManagementEntity, Integer> {
+public interface MeterManagementDao extends CrudRepository<MeterManagementEntity, MeterManagementEntityPK> {
+    MeterManagementEntity findByIdMeter(int id);
+    boolean deleteByIdMeter(int id);
 }

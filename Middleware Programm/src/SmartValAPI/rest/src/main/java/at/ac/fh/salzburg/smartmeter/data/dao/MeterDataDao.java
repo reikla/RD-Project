@@ -14,6 +14,6 @@ import java.util.List;
 @Transactional
 @Repository
 public interface MeterDataDao extends CrudRepository<MeterDataEntity, MeterDataEntityPK>{
-    public List<MeterDataEntity> findAllByMeterId(int meterId);
-    //boolean deleteByMeterId(int meterId);
+    List<MeterDataEntity> findAllByMeterId(int meterId);
+    boolean deleteByDataId(int dataId);
 }

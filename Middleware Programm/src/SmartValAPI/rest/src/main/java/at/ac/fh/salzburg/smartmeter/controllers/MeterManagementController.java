@@ -2,6 +2,7 @@ package at.ac.fh.salzburg.smartmeter.controllers;
 
 import at.ac.fh.salzburg.smartmeter.data.dao.MeterManagementDao;
 import at.ac.fh.salzburg.smartmeter.data.entities.MeterManagementEntity;
+import at.ac.fh.salzburg.smartmeter.data.entities.MeterManagementEntityPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class MeterManagementController {
     @RequestMapping("/admin/metermanangement/{id}")
     @ResponseBody
     public MeterManagementEntity readMeterManagement(@PathVariable int id) {
-        return meterManagementDao.findOne(id);
+        return meterManagementDao.findByIdMeter(id);
     }
 
     @RequestMapping(value = "/admin/metermanangement", method = RequestMethod.PUT)
@@ -36,7 +37,7 @@ public class MeterManagementController {
     @RequestMapping(value = "/admin/metermanangement/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public boolean deleteMeterManagement(@PathVariable int id) {
-        meterManagementDao.delete(id);
+        meterManagementDao.deleteByIdMeter(id);
         return true;
     }
 

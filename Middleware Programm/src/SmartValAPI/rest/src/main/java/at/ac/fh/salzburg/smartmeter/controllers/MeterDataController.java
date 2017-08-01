@@ -20,7 +20,6 @@ public class MeterDataController {
     @RequestMapping("/admin/meterdata/{id}")
     @ResponseBody
     public List<MeterDataEntity> readMeterData(@PathVariable int id) {
-
         return meterdataDao.findAllByMeterId(id);
     }
 
@@ -39,8 +38,7 @@ public class MeterDataController {
     @RequestMapping(value = "/admin/meterdata/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public boolean deleteMeterData(@PathVariable int id) {
-        //return meterdataDao.deleteByMeterId(id);
-        return true;
+        return meterdataDao.deleteByDataId(id);
     }
 
 
