@@ -50,6 +50,7 @@ public class MyFancyQueryController extends CustomQueryControllerBase {
             try {
                 while(resultSet.next()){
                     CustomerEntity c = new CustomerEntity();
+                    c.setCustomerId(resultSet.getInt("customerId"));
                     c.setFirstname(resultSet.getString("firstname"));
                     c.setLastname(resultSet.getString("lastname"));
                     result.AddCustomer(c);
