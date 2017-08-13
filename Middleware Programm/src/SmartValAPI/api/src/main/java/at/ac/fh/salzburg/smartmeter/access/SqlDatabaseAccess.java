@@ -1,6 +1,5 @@
 package at.ac.fh.salzburg.smartmeter.access;
 
-import at.ac.fh.salzburg.smartmeter.Constants;
 import at.ac.fh.salzburg.smartmeter.data.PermissionDeniedQueryResult;
 import at.ac.fh.salzburg.smartmeter.data.QueryResult;
 import at.ac.fh.salzburg.smartmeter.data.VoidQueryResult;
@@ -8,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
+import java.util.ResourceBundle;
 
 /**
  * Created by reimarklammer on 28.03.17.
@@ -39,10 +39,11 @@ public class SqlDatabaseAccess implements IDatabaseAccess {
         }
 
         try {
+            ResourceBundle bundle = ResourceBundle.getBundle("application");
             connection = DriverManager.getConnection(
-                    Constants.METER_DATA_CONNECTION_STRING,
-                    Constants.METER_DATA_CONNECTION_USERNAME,
-                    Constants.METER_DATA_CONNECTION_PASSWORD);
+                    bundle.getString("spring.datasource.url"),
+                    bundle.getString("spring.datasource.username"),
+                    bundle.getString("spring.datasource.password"));
             Statement statement = connection.createStatement();
             if (statement.execute(query.getQuery())) {
                 ResultSet resultSet = statement.getResultSet();

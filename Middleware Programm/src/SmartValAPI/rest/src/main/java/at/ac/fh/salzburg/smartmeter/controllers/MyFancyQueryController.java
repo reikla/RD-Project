@@ -50,12 +50,13 @@ public class MyFancyQueryController extends CustomQueryControllerBase {
             try {
                 while(resultSet.next()){
                     CustomerEntity c = new CustomerEntity();
-                    c.setCustomerId(resultSet.getInt("customerId"));
+                    c.setCustomerId(resultSet.getInt("customer_id"));
                     c.setFirstname(resultSet.getString("firstname"));
                     c.setLastname(resultSet.getString("lastname"));
                     result.AddCustomer(c);
                 }
             } catch (SQLException e) {
+                result = new MyFancyCustomerQueryResult(false,e.getMessage(),QueryStatusCode.SqlError);
                 e.printStackTrace();
             }
 
@@ -84,6 +85,8 @@ public class MyFancyQueryController extends CustomQueryControllerBase {
         public void AddCustomer(CustomerEntity c){
             data.add(c);
         }
+
+
     }
 
 
