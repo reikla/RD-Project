@@ -2,8 +2,8 @@ package at.ac.fh.salzburg.smartmeter.controllers;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.QueryBase;
-import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
-import at.ac.fh.salzburg.smartmeter.data.data.StringListQueryResult;
+import at.ac.fh.salzburg.smartmeter.data.QueryResult;
+import at.ac.fh.salzburg.smartmeter.data.StringListQueryResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

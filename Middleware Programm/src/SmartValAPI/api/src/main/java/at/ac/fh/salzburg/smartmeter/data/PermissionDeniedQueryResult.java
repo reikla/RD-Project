@@ -1,4 +1,4 @@
-package at.ac.fh.salzburg.smartmeter.data.data;
+package at.ac.fh.salzburg.smartmeter.data;
 
 import at.ac.fh.salzburg.smartmeter.access.QueryStatusCode;
 

@@ -1,9 +1,9 @@
 package at.ac.fh.salzburg.smartmeter.access;
 
 import at.ac.fh.salzburg.smartmeter.Constants;
-import at.ac.fh.salzburg.smartmeter.data.data.PermissionDeniedQueryResult;
-import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
-import at.ac.fh.salzburg.smartmeter.data.data.VoidQueryResult;
+import at.ac.fh.salzburg.smartmeter.data.PermissionDeniedQueryResult;
+import at.ac.fh.salzburg.smartmeter.data.QueryResult;
+import at.ac.fh.salzburg.smartmeter.data.VoidQueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,11 +28,11 @@ public class SqlDatabaseAccess implements IDatabaseAccess {
         QueryResult<?> result = null;
 
 
-        IUserContext usercontext = userContextFactory.getUserContext();
+        IUserContext userContext = userContextFactory.getUserContext();
 
         if (query.getDataSourceContexts() != null) {
-            for (IDataSourceContext dataSourcecontext : query.getDataSourceContexts()) {
-                if (!permissionManager.IsAllowedToAccess(usercontext, dataSourcecontext)) {
+            for (IDataSourceContext dataSourceContext : query.getDataSourceContexts()) {
+                if (!permissionManager.IsAllowedToAccess(userContext, dataSourceContext)) {
                     return new PermissionDeniedQueryResult();
                 }
             }

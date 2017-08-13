@@ -1,4 +1,4 @@
-package at.ac.fh.salzburg.smartmeter.data.data;
+package at.ac.fh.salzburg.smartmeter.data;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,27 +2,17 @@ package at.ac.fh.salzburg.smartmeter.ldap;
 
 import at.ac.fh.salzburg.smartmeter.access.IDataSourceContext;
 import at.ac.fh.salzburg.smartmeter.access.IUserContext;
-import at.ac.fh.salzburg.smartmeter.access.UserContext;
-import org.springframework.ldap.NamingException;
 import org.springframework.ldap.core.AttributesMapper;
-import org.springframework.ldap.core.ContextMapper;
-import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.LdapTemplate;
-import org.springframework.ldap.filter.AndFilter;
-import org.springframework.ldap.filter.EqualsFilter;
-import org.springframework.ldap.filter.WhitespaceWildcardsFilter;
 import org.springframework.ldap.query.LdapQueryBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.naming.InvalidNameException;
-import javax.naming.Name;
-import javax.naming.NamingEnumeration;
 import javax.naming.directory.*;
 import javax.naming.ldap.LdapName;
 import java.util.*;
 
 /*import static com.sun.deploy.config.JREInfo.getAll;*/
-import static java.util.stream.Collectors.toSet;
 /*import static sun.net.InetAddressCachePolicy.get;*/
 
 @Component
@@ -57,10 +47,10 @@ public class LDAPManager implements ILDAPManager {
     @Override
     public boolean CreateCustomer(IUserContext userContext, IDataSourceContext dataSourceContext){
         try{
-            LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+            LdapName dn = new LdapName("uid="+userContext.userId()+",ou=People");
 
             //User Attributes
-            Attribute userCn = new BasicAttribute("cn", userContext.userid());
+            Attribute userCn = new BasicAttribute("cn", userContext.userId());
             Attribute userPassword = new BasicAttribute("userPassword",userContext.password());
             Attribute UserID = new BasicAttribute("uidNumber","0");
             Attribute Usergid = new BasicAttribute("gidNumber","0");
@@ -95,10 +85,10 @@ public class LDAPManager implements ILDAPManager {
     @Override
     public boolean CreateConsultant(IUserContext Customer, IUserContext Consultant){
         try{
-        LdapName dn = new LdapName("uid="+Consultant.userid()+",ou=People");
+        LdapName dn = new LdapName("uid="+Consultant.userId()+",ou=People");
 
         //User Attributes
-        Attribute userCn = new BasicAttribute("cn", Consultant.userid());
+        Attribute userCn = new BasicAttribute("cn", Consultant.userId());
         Attribute userPassword = new BasicAttribute("userPassword",Consultant.password());
         Attribute UserID = new BasicAttribute("uidNumber","0");
         Attribute Usergid = new BasicAttribute("gidNumber","0");
@@ -176,7 +166,7 @@ public class LDAPManager implements ILDAPManager {
     @Override
     public boolean DeleteUser(IUserContext userContext) {
         try{
-            LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+            LdapName dn = new LdapName("uid="+userContext.userId()+",ou=People");
             ldapTemplate.unbind(dn);
             return true;
         }
@@ -193,7 +183,7 @@ public class LDAPManager implements ILDAPManager {
 
             //Hol die größte Gruppenzugehörigkeit
             ldapTemplate.search(
-                    LdapQueryBuilder.query().where("memberUid").is(userContext.userid()),
+                    LdapQueryBuilder.query().where("memberUid").is(userContext.userId()),
 
                     (AttributesMapper<Void>) attrs -> {
                         Attribute nameAttr = attrs.get("cn");
@@ -212,7 +202,7 @@ public class LDAPManager implements ILDAPManager {
 
             if(gruppe[0].contains("cn: Netzbetreiber")){
 
-                LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+                LdapName dn = new LdapName("uid="+userContext.userId()+",ou=People");
                 List consultants = new ArrayList();
                 List customers = new ArrayList();
 
@@ -277,7 +267,7 @@ public class LDAPManager implements ILDAPManager {
             }
             else if(gruppe[0].contains("cn: Energieberater")){
 
-                LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+                LdapName dn = new LdapName("uid="+userContext.userId()+",ou=People");
                 List mitglieder = new ArrayList();
 
                 //Holt alle Mitglieder des Energieberaters
@@ -334,7 +324,7 @@ public class LDAPManager implements ILDAPManager {
                             return null;
                         });
                 try {
-                    if (cntemp[0].equals("uid: " + userContext.userid())) {
+                    if (cntemp[0].equals("uid: " + userContext.userId())) {
                         return true;
                     } else {
                         return false;
@@ -353,7 +343,7 @@ public class LDAPManager implements ILDAPManager {
     @Override
     public boolean AddMeterToUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
       try {
-          LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+          LdapName dn = new LdapName("uid="+userContext.userId()+",ou=People");
           Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
           ModificationItem ID = new ModificationItem(
 
@@ -372,8 +362,8 @@ public class LDAPManager implements ILDAPManager {
     public boolean AddUserToUser(IUserContext Customer, IUserContext Consultant) {
 
         try {
-            LdapName dn = new LdapName("uid=" + Consultant.userid() + ",ou=People");
-            Attribute UserID = new BasicAttribute("memberUid", Customer.userid());
+            LdapName dn = new LdapName("uid=" + Consultant.userId() + ",ou=People");
+            Attribute UserID = new BasicAttribute("memberUid", Customer.userId());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.ADD_ATTRIBUTE, UserID);
@@ -390,7 +380,7 @@ public class LDAPManager implements ILDAPManager {
     public boolean AddUserToGroup(IUserContext userContext, String Group) {
         try {
             LdapName dn = new LdapName("cn="+Group+",ou=Groups");
-            Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
+            Attribute UserID = new BasicAttribute("memberUid", userContext.userId());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.ADD_ATTRIBUTE, UserID);
@@ -405,7 +395,7 @@ public class LDAPManager implements ILDAPManager {
     @Override
     public boolean DeleteMeterFromUser(IUserContext userContext, IDataSourceContext dataSourceContext) {
         try {
-            LdapName dn = new LdapName("uid="+userContext.userid()+",ou=People");
+            LdapName dn = new LdapName("uid="+userContext.userId()+",ou=People");
             Attribute MeterID = new BasicAttribute("memberUid", dataSourceContext.MeterID());
             ModificationItem ID = new ModificationItem(
 
@@ -462,7 +452,7 @@ public class LDAPManager implements ILDAPManager {
     public boolean DeleteUserFromGroup(IUserContext userContext, String Group) {
         try {
             LdapName dn = new LdapName("cn="+Group+",ou=Groups");
-            Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
+            Attribute UserID = new BasicAttribute("memberUid", userContext.userId());
             ModificationItem ID = new ModificationItem(
 
                     DirContext.REMOVE_ATTRIBUTE, UserID);
@@ -482,7 +472,7 @@ public class LDAPManager implements ILDAPManager {
             final String[] test = new String[1];
 
             ldapTemplate.search(
-                    LdapQueryBuilder.query().where("memberUid").is(userContext.userid()),
+                    LdapQueryBuilder.query().where("memberUid").is(userContext.userId()),
 
                     (AttributesMapper<Void>) attrs -> {
 
@@ -495,7 +485,7 @@ public class LDAPManager implements ILDAPManager {
                         String cntemp = parts[1];
                         try {
                             LdapName dn = new LdapName("cn="+cntemp.substring(1)+",ou=Groups");
-                            Attribute UserID = new BasicAttribute("memberUid", userContext.userid());
+                            Attribute UserID = new BasicAttribute("memberUid", userContext.userId());
                             ModificationItem ID = new ModificationItem(DirContext.REMOVE_ATTRIBUTE, UserID);
 
                             ldapTemplate.modifyAttributes(dn, new ModificationItem[]{ID});

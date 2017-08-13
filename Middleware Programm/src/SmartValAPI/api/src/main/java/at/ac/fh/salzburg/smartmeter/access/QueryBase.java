@@ -1,7 +1,7 @@
 package at.ac.fh.salzburg.smartmeter.access;
 
 
-import at.ac.fh.salzburg.smartmeter.data.data.QueryResult;
+import at.ac.fh.salzburg.smartmeter.data.QueryResult;
 
 import java.sql.ResultSet;
 

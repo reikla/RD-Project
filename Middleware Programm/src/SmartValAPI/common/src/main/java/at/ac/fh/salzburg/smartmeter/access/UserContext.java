@@ -16,7 +16,7 @@ public class UserContext implements IUserContext {
 
 
     @Override
-    public String userid() {
+    public String userId() {
         return userId;
     }
 
