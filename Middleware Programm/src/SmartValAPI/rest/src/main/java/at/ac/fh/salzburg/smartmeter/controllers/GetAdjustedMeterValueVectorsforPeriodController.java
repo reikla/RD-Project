@@ -27,9 +27,9 @@ import java.util.*;
  */
 @Controller
 public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQueryControllerBase {
+
     @RequestMapping(value = "/query/adjustedmeterdatavectors", method = RequestMethod.GET)
     @ResponseBody
-
     public QueryResult<?> GetAdjustedMeterValueVectorsforPeriod(@RequestParam(value = "meterIds") String[] pmeterIds,
                                                                 @RequestParam(value = "tspvon") String ptspvon,
                                                                 @RequestParam(value = "tspbis") String ptspbis,
