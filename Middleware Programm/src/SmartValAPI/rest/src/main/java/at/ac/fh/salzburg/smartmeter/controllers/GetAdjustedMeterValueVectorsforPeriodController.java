@@ -76,8 +76,6 @@ public class GetAdjustedMeterValueVectorsforPeriodController extends CustomQuery
             ;
             _tspvon = ptspvon;
             _tspbis = ptspbis;
-
-            //todo: ist der IDataSourceContext richtig ausgefüllt?
             _dataSourceContext = getDataSourceContexts();
         }
 
