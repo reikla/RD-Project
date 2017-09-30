@@ -28,7 +28,7 @@ public class MyMongoMeterDataQuery extends QueryBase<List<MeterDataEntity>> {
     private MongoDatabase mongoDatabase_;
     private MongoCollection meterDataCollection_;
 
-    private String mongoserver = "localhost";  // Todo: auslagern!
+    private String mongoserver = "localhost";
     private int mongoportport = 27017;
     private String database = "SmartValAPI";
     private String meterCollection = "meter_data";
