@@ -20,7 +20,7 @@ Die folgenden Komponenten sind optional:
 * Zur komfortablen Anpassung von Tabellen, Indizes oder Datenbankschemata: MySQL Workbench 6.3
 
 ## Installation 
-Im Auslieferungsumfang von SmartValAPI befindet sich die übersetzte Software in Form eines Web Archives (**Pfad ergänzen**). Dieses wird mit 
+Im Auslieferungsumfang von SmartValAPI befindet sich die übersetzte Software in Form eines Web Archives (.\src\SmartValAPI\app\build\libs\SmartValAPI-1.0.0.war). Dieses wird mit 
 ```
 java -jar SmartValAPI-1.0.0.war
 ```
@@ -29,54 +29,33 @@ gestartet. Vor dem Start ist zu gewährleisten, dass alle notwendigen Dienste (L
 ## Konfiguration
 
 ### LDAP 
-**Strukturen??** Benutzerberechtigung, sonst was??
+In der ausgelieferten Version geht SmartValAPI davon aus, dass ein LDAP Server am landsteiner.fh-salzburg.ac.at erreichbar ist 
+Basisknoten ist dc=maxcrc,dc=com. Konkrete Details bzüglich der Hierachie der Berechtigungen und der Hierachie finden sich im Abschlussbericht.
+Mögliche Rollen sind Administrator, Energieberater, Forschungszentrum, Kunde und Netzbetreiber. Diese Rollen sind als Attribute hinzuzufügen.
 
 ### MySQL 
-SmartValAPI setzt ein Datebankschema mit dem Namen *smart_meter* voraus, mit einem Benutzer, der die Berechtigungen auf diese Datenbank hat, werden das Schema, die Tabellen und Indizes mit den Skripts *DB_und_Test_Skripts/db_meters.sql* und  *DB_und_Test_Skripts/createSchema.sql* erstellt. Der Listener der Datenbank wird am Standardport 3306 erwartet. Die Applikation verwendet den Benutzer *smartvalapi*, dieser ist mit allen Berechtigungen bereitzustellen. Abweichende Konfigurationen, wie auch das Passwort sind in der Datei *application.properties* zu hinterlegen.
+SmartValAPI setzt ein Datenbankschema mit dem Namen *smart_meter* voraus, mit einem Benutzer, der die Berechtigungen auf diese Datenbank hat, werden das Schema, die Tabellen und Indizes mit den Skripts *DB_und_Test_Skripts/db_meters.sql* und  *DB_und_Test_Skripts/createSchema.sql* erstellt. Der Listener der Datenbank wird am Standardport 3306 erwartet. Die Applikation verwendet den Benutzer *smartvalapi*, dieser ist mit allen Berechtigungen bereitzustellen. Abweichende Konfigurationen, wie auch das Passwort sind in der Datei *application.properties* zu hinterlegen.
 
 ### MongoDB
-In der ausgelieferten Version erwartet SmartValAPI, dass der Import von Messdaten in der Datenbank *meterData* in der Collection *meterTable erfolgte*. Der Benutzername, mit dem Der Zugriff erfolgt lautet, wie für die SQL Datenbank *smartvalapi*. Für die NoSQLDatenbank können alle Konfigurationsparameter in der Datei den Notwendigkeiten entsprechend angepasst werden.
-
-Hier die application.properties einfügen, die es betrifft: MongoServer noch hierherverlagern:
-```sh
-# DataSource settings: set here your own configurations for the database
-# connection. In this example we have "netgloo_blog" as database name and
-# "root" as username and password.
-spring.datasource.url = jdbc:mysql://localhost:3306/smart_meter
-spring.datasource.username = smartvalapi
-spring.datasource.password = smartval
-
-# Keep the connection alive if idle for a long time (needed in production)
-spring.datasource.testWhileIdle = true
-spring.datasource.validationQuery = SELECT 1
-spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
-#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
-
-# Show or not log for each sql query
-spring.jpa.show-sql = true
-
-# Hibernate ddl auto (create, create-drop, update)
-spring.jpa.hibernate.ddl-auto = update
-
-# Naming strategy
-spring.jpa.hibernate.naming-strategy = org.hibernate.cfg.ImprovedNamingStrategy
-
-# Use spring.jpa.properties.* for Hibernate native properties (the prefix is
-# stripped before adding them to the entity manager)
-
-# The SQL dialect makes Hibernate generate better SQL for the chosen database
-spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-log4j.logger.org.springframework.jdbc.core = TRACE
-```
+In der ausgelieferten Version erwartet SmartValAPI, dass der Import von Messdaten in der Datenbank *meterData* in der Collection *meterTable erfolgte*. Der Benutzername, mit dem Der Zugriff erfolgt lautet, wie für die SQL Datenbank *smartvalapi*. 
 
 ## Auslieferung des Softwarepakets
-Eine Installation von SmartValAPI steht unter folgender Url zur Verfügung: 
+Eine lauffähige Installation von SmartValAPI steht unter folgender Url zur Verfügung: 
 ``` 
 http://landsteiner.fh-salzburg.ac.at:8080
 ``` 
-## Beispielzugriff
-Dieser Zugriff muss erst im Abschlussdokument eingefügt werden, ausserdem sollen die Bilder vom Vergleichen der angeglichenen Messdatenreiheneingefügt werden.
-Ausserdem gehört das ViererBild dazu, um zu demonstrieren, dass die Auflösung mit einem Zugriff geregelt werden kann.
+## Beispielzugriffe
+Beispielhaft werden hier zwei Zugriffe angegeben, wie sie SmartValAPI zur Verfügung stellt, für Details zu den Parametern steht das Abschlussdokument zur VErfügung.
+
+### Adminschnittstelle
+Diese Schnittstelle dient dem Administrator zum Im- und Export von Meterdaten, im Beispielfall werden die Daten des Kunden (customer-Entität) als Ergebnis zur VErfügung gestellt. Dieses Ergebnis entspricht dem Zugriff auf einen Datensatz, losgelöst von der Infrastruktur in welcher die Daten gespeichert vorliegen.
 ``` 
-/admin/customer/1 und so weiter, das gehört noch angepasst.
+http://uri:8080/admin/customer/1 
+``` 
+
+### Benutzerschnittstelle
+
+Die Benutzerschnittstelle dient den Applikationsprogrammen als abstrakter Zugriff, ohne die Notwendigkeit sich um die Speicherung kümmern zu müssen. Im Beispielaufruf wird auf die Daten eines Smartmeters mit der id 103 zugegriffen. Abgefragt werden Messdaten in einem Zeitraum am 1. Mai 2011, die gewünschte Auflösung beträgt eine Viertelstunde. Abhängig von der vorliegenden Auflösung und der Berechtigung kann diese Auflösung verringert ausfallen.
+``` 
+http://uri:8080/query/adjustedmeterdatavectors?tspvon=2011-05-01 00:00:00&tspbis=2011-05-01 05:40:00&maxSamplefreq=9000&meterIds=103
 ``` 

@@ -48,8 +48,7 @@ public class ResultsetParser {
 
 
         /// mehr als einer?
-
-        /// hier angleichen der Vektoren - synchronisieren
+        /// angleichen der Vektoren - synchronisieren
 
         HashMap<Integer, List<MeterDataEntity>> hm = new HashMap<>();
         Set<Integer> keys = ergebnis.keySet();
@@ -125,11 +124,6 @@ public class ResultsetParser {
         }
         return ergebnis;
     }
-
-    private List<MeterDataEntity> messwerteinterpolieren(List<MeterDataEntity> meterDataEntityList, int sampleRate) {
-        return new ArrayList<MeterDataEntity>();
-    }
-
 
     private Integer getAvgSampleRate(List<MeterDataEntity> meterDataEntityList) {
 
